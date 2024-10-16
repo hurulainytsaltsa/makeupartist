@@ -119,7 +119,7 @@
 <body>
 
     <div class="wrapper" >
-        <div class="inner" style="background-color: #de8d9b">
+        <div class="inner" style="background-color: #de8d9b; border-radius: 1rem;">
             <div class="image-holder">
                 <img src="images/form1.jpg" alt="">
             </div>
