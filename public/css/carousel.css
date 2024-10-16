@@ -17,9 +17,33 @@ body {
   margin-bottom: 4rem;
 }
 /* Since positioning the image, we need to help out the caption */
+.carousel-item {
+    position: relative;
+}
+
 .carousel-caption {
-  bottom: 3rem;
-  z-index: 10;
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 100%; /* Agar card tetap di tengah */
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    width: 18rem;
+    background-color: rgba(255, 255, 255, 0.8); /* Card transparan agar menyatu dengan gambar */
+    border: none; /* Menghapus border card */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sedikit bayangan agar card terlihat */
+}
+
+.card-img-top {
+    width: 100%;
+    height: 98%;
+    object-fit: cover;
 }
 
 /* Declare heights because of positioning of img element */
