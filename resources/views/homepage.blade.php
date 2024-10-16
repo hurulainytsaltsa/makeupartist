@@ -39,6 +39,12 @@
             user-select: none;
         }
 
+        .card-img-top {
+            width: 100%; /* Gambar mengikuti lebar card */
+            height: auto; /* Tinggi mengikuti rasio asli */
+            object-fit: cover; /* Isi card tanpa merusak rasio */
+        }
+
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
@@ -210,18 +216,12 @@
 
         <div class="nav-scroller py-1 mb-3 border-bottom">
             <nav class="nav nav-underline justify-content-between">
-                <a class="nav-item nav-link link-body-emphasis active" href="#">World</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">U.S.</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">Technology</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">Design</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">Culture</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">Business</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">Politics</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">Opinion</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">Science</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">Health</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">Style</a>
-                <a class="nav-item nav-link link-body-emphasis" href="#">Travel</a>
+                <a class="nav-item nav-link link-body-emphasis active" href="/homepage">Home</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/portfolio">Portfolio</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/booking">Booking</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/about">About Us</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/package">Package</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/account">My Account</a>
             </nav>
         </div>
 
@@ -240,17 +240,15 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
+                    <img src="images/headline.png" class="card-img-top" alt="">
+                        <rect width="100%" height="90%" fill="var(--bs-secondary-color)" />
                     </svg>
                     <div class="container">
-                        <div class="carousel-caption text-start">
-                            <h1>Example headline.</h1>
-                            <p class="opacity-75">Some representative placeholder content for the first slide of the
-                                carousel.</p>
-                            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
-                        </div>
+                        {{-- <div class="carousel-caption">
+                            <div class="card" style="width: 100%;">
+                                <img src="images/headline2.png" class="card-img-top" >
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="carousel-item">
