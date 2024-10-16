@@ -240,7 +240,7 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="images/headline.png" class="card-img-top" alt="">
+                    <img src="images/headline.png" class="card-img-top" alt="" >
                         <rect width="100%" height="90%" fill="var(--bs-secondary-color)" />
                     </svg>
                     <div class="container">
@@ -252,29 +252,27 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <img src="images/headline2.png" class="card-img-top1" alt="">
                         <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
                     </svg>
                     <div class="container">
-                        <div class="carousel-caption">
+                        {{-- <div class="carousel-caption">
                             <h1>Another example headline.</h1>
                             <p>Some representative placeholder content for the second slide of the carousel.</p>
                             <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <img src="images/headline3.png" class="card-img-top1" alt="">
                         <rect width="100%" height="100%" fill="var(--bs-secondary-color)" />
                     </svg>
                     <div class="container">
-                        <div class="carousel-caption text-end">
+                        {{-- <div class="carousel-caption text-end">
                             <h1>One more for good measure.</h1>
                             <p>Some representative placeholder content for the third slide of this carousel.</p>
                             <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
