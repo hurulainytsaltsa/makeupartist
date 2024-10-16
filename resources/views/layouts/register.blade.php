@@ -126,31 +126,31 @@
             <form action="">
                 <h3 style="color: #ffffff">Registration Form</h3>
                 <div class="form-wrapper">
-                    <input type="text" placeholder="Nama" class="form-control">
+                    <input type="text" placeholder="Nama" class="form-control" style="border-color: #ffffff">
                     <i class="bi bi-person"></i>
                 </div>
                 <div class="form-wrapper">
-                    <input type="text" placeholder="Username" class="form-control">
+                    <input type="text" placeholder="Username" class="form-control" style="border-color: #ffffff">
                     <i class="bi bi-person-badge"></i>
                 </div>
                 <div class="form-wrapper">
-                    <input type="text" placeholder="Email" class="form-control">
+                    <input type="text" placeholder="Email" class="form-control" style="border-color: #ffffff">
                     <i class="bi bi-envelope-open-heart"></i>
                 </div>
                 <div class="form-wrapper">
-                    <input type="text" placeholder="Nomor Telepon" class="form-control">
+                    <input type="text" placeholder="Nomor Telepon" class="form-control" style="border-color: #ffffff">
                     <i class="bi bi-telephone"></i>
                 </div>
                 <div class="form-wrapper">
-                    <input type="text-area" placeholder="Alamat" class="form-control">
+                    <input type="text-area" placeholder="Alamat" class="form-control" style="border-color: #ffffff">
                     <i class="bi bi-house-heart"></i>
                 </div>
                 <div class="form-wrapper">
-                    <input type="password" placeholder="Password" class="form-control">
+                    <input type="password" placeholder="Password" class="form-control"  style="border-color: #ffffff">
                     <i class="bi bi-lock"></i>
                 </div>
                 <div class="form-wrapper">
-                    <input type="password" placeholder="Confirm Password" class="form-control">
+                    <input type="password" placeholder="Confirm Password" class="form-control" style="border-color: #ffffff">
                     <i class="bi bi-lock"></i>
                 </div>
                 <button>Register
