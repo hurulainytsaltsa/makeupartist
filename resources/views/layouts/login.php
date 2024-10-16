@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <section class="vh-100" style="background-color: #E8E9EB;">
+    <section class="vh-100" style="background-color: #ffc1cb;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-7">
@@ -44,9 +44,9 @@
                                             <i class="bi bi-lock"></i>
                                         </div>
 
-                                        <div class="pt-1 mb-4">
+                                        <div class="pt-1 mb-4" style="">
                                             <button data-mdb-button-init data-mdb-ripple-init
-                                                class="btn btn-dark btn-lg btn-block" type="button">Login</button>
+                                                class="btn btn-dark btn-block" type="button">Login</button>
                                         </div>
 
                                         <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a

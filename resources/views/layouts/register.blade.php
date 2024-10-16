@@ -118,13 +118,13 @@
 
 <body>
 
-    <div class="wrapper" style="background-image: url('images/form1.jpg');">
-        <div class="inner">
+    <div class="wrapper" >
+        <div class="inner" style="background-color: #de8d9b">
             <div class="image-holder">
                 <img src="images/form1.jpg" alt="">
             </div>
             <form action="">
-                <h3>Registration Form</h3>
+                <h3 style="color: #ffffff">Registration Form</h3>
                 <div class="form-wrapper">
                     <input type="text" placeholder="Nama" class="form-control">
                     <i class="bi bi-person"></i>
