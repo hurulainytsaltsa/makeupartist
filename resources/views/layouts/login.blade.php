@@ -20,7 +20,7 @@
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col col-xl-7">
-                    <div class="card" style="border-radius: 1rem; background-color: #ffc1cb">
+                    <div class="card" style="border-radius: 1rem; background-color: #ffc1cb; border-color: white;">
                         <div class="row g-0">
                             <div class="col-md-6 col-lg-5 d-none d-md-block">
                                 <img src="images/form1.jpg"
