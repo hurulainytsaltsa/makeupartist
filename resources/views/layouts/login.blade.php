@@ -29,24 +29,29 @@
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
 
-                                    <form>
-
+                                    <form method="POST" action="/login" enctype="multipart/form-data">
+                                        @csrf
                                         <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; color: #ffffff">Sign into your
                                             account</h5>
 
                                         <div class="form-wrapper">
-                                            <input type="text" placeholder="Email" class="form-control">
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="floatingInput" placeholder="name@example.com" value="{{ old('email') }}">
                                             <i class="bi bi-telephone"></i>
+                                            @error('email')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                             @enderror
                                         </div>
 
                                         <div class="form-wrapper">
-                                            <input type="password" placeholder="Password" class="form-control">
+                                            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
                                             <i class="bi bi-lock"></i>
                                         </div>
 
                                         <div class="pt-1 mb-4 text-center">
                                             <button data-mdb-button-init data-mdb-ripple-init
-                                                class="btn btn-block" type="button"
+                                                class="btn btn-block" type="submit"
                                                 style="height: 40px; background-color: #d17676; color: white; position: relative; width: 200px;">
                                                 Login
                                             </button>
