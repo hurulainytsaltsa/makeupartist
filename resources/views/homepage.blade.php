@@ -295,7 +295,7 @@
         }
 
         .icon-wrapper-i {
-            font-size: 90px;
+            font-size: 70px;
             /* Adjust the size of the icon as needed */
             color: #ffc1cb;
             /* Change this to your desired color */
@@ -324,6 +324,7 @@
             transition: background-color 0.3s ease;
         }
 
+
         .btn:hover {
             background-color: #d75a6e;
         }
@@ -334,6 +335,76 @@
 
         .bd-mode-toggle .dropdown-menu .active .bi {
             display: block !important;
+        }
+
+        .testimonial-section {
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .testimonial {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .testimonial-image {
+            flex-shrink: 0;
+            margin-right: 20px;
+        }
+
+        .testimonial-image img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-text {
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .testimonial-quote {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .testimonial-client {
+            font-size: 16px;
+            color: #d75a6e;
+        }
+
+        .testimonial-client span {
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .testimonial {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .testimonial-image {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .testimonial-text {
+                text-align: center;
+            }
         }
     </style>
     <script>
@@ -546,9 +617,9 @@
                     <h2 class="font" style="color: #d75a6e">Graduation Makeup</h2>
                     <p>Our Graduation Makeup service is designed to enhance your natural beauty while giving you a
                         flawless, long-lasting look for your big day.</p>
-                    <p><a class="btn btn-secondary" href="#"
-                            style="background-color: #ffc1cb; border-color:#ffc1cb">View details
-                            &raquo;</a></p>
+                    <p><a class="btn btn-secondary custom-btn" href="#"
+                            style="background-color: #ffc1cb; border-color:#ffc1cb">View details &raquo;</a>
+                    </p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
                     <svg class="bd-placeholder-img rounded-circle" width="140" height="140"
@@ -597,66 +668,46 @@
 
             <hr class="featurette-divider">
 
-            <div class="row featurette">
-                <h2 class="font-review" style="text-align: center; color:#d75a6e ">See What Our Clients Are Raving
-                    About!</h2>
-                <div class="col-md-7">
-                    <h2 class="featurette-heading fw-normal lh-1">First featurette heading. <span
-                            class="text-body-secondary">It’ll blow your mind.</span></h2>
-                    <p class="lead">Some great placeholder content for the first featurette here. Imagine some
-                        exciting prose here.</p>
+            <div class="testimonial-section">
+                <h2 class="font-review" style="color:#d75a6e ">What's Ours Clients Are Saying</h2>
+
+                <div class="testimonial">
+                    <div class="testimonial-image">
+                        <img src="images/review1.jpg" alt="Client Review 1">
+                    </div>
+                    <div class="testimonial-text">
+                        <p class="testimonial-quote">Kemaren Ica mandi dipantai abis wisuda kak. Makeupnya masih bagus
+                            walaupun udah malam trus banyak yg komen ke ig ica pangling liat ica!</p>
+                        <p class="testimonial-client"><strong>Ica Comel Manja Manis</strong><br><span>Graduation
+                                Makeup</span></p>
+                    </div>
                 </div>
-                <div class="col-md-5">
-                    <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-                        width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img"
-                        aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%"
-                            fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-                    </svg>
+
+                <div class="testimonial">
+                    <div class="testimonial-image">
+                        <img src="images/review2.jpg" alt="Client Review 2">
+                    </div>
+                    <div class="testimonial-text">
+                        <p class="testimonial-quote">MashaAllah Kak! Makeup nya tahan banget, ga retak bahkan ga geser
+                            sama sekali</p>
+                        <p class="testimonial-client"><strong>Siti Oktavia</strong><br><span>Regular Makeup</span></p>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-image">
+                        <img src="images/review3.jpg" alt="Client Review 3">
+                    </div>
+                    <div class="testimonial-text">
+                        <p class="testimonial-quote">Tahan banget kak. Makeup nya anti badai walau keringetan tetap ga
+                            longsor makeupnya</p>
+                        <p class="testimonial-client"><strong>Rahmiati</strong><br><span>Wedding Makeup</span>
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <hr class="featurette-divider">
 
-            <div class="row featurette">
-                <div class="col-md-7 order-md-2">
-                    <h2 class="featurette-heading fw-normal lh-1">Oh yeah, it’s that good. <span
-                            class="text-body-secondary">See for yourself.</span></h2>
-                    <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea
-                        of how this layout would work with some actual real-world content in place.</p>
-                </div>
-                <div class="col-md-5 order-md-1">
-                    <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-                        width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img"
-                        aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%"
-                            fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-                    </svg>
-                </div>
-            </div>
-
-            <hr class="featurette-divider">
-
-            <div class="row featurette">
-                <div class="col-md-7">
-                    <h2 class="featurette-heading fw-normal lh-1">And lastly, this one. <span
-                            class="text-body-secondary">Checkmate.</span></h2>
-                    <p class="lead">And yes, this is the last block of representative placeholder content. Again, not
-                        really intended to be actually read, simply here to give you a better view of what this would
-                        look like with some actual content. Your content.</p>
-                </div>
-                <div class="col-md-5">
-                    <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-                        width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img"
-                        aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%"
-                            fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-                    </svg>
-                </div>
-            </div>
 
             <hr class="featurette-divider">
 
