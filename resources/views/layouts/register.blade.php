@@ -118,47 +118,104 @@
 
 <body>
 
-    <div class="wrapper" >
+    <div class="wrapper">
         <div class="inner" style="background-color: #de8d9b; border-radius: 1rem;">
             <div class="image-holder">
-                <img src="images/form1.jpg" alt="">
+                <img src="images/form1.jpg" alt="Form Image">
             </div>
-            <form action="">
+
+            <form method="POST" action="/register">
+                {{-- CSRF protection untuk validasi form --}}
+                @csrf
                 <h3 style="color: #ffffff">Registration Form</h3>
+
                 <div class="form-wrapper">
-                    <input type="text" placeholder="Nama" class="form-control" style="border-color: #ffffff">
+                    <input type="text" name="name" placeholder="Nama" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" style="border-color: #ffffff">
                     <i class="bi bi-person"></i>
+                    @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
+
                 <div class="form-wrapper">
-                    <input type="text" placeholder="Username" class="form-control" style="border-color: #ffffff">
+                    <input type="text" name="username" placeholder="Username" class="form-control @error('username') is-invalid @enderror" style="border-color: #ffffff">
                     <i class="bi bi-person-badge"></i>
+                    @error('username')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
+
                 <div class="form-wrapper">
-                    <input type="text" placeholder="Email" class="form-control" style="border-color: #ffffff">
+                    <input type="email" name="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" style="border-color: #ffffff">
                     <i class="bi bi-envelope-open-heart"></i>
+                    @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
+
                 <div class="form-wrapper">
-                    <input type="text" placeholder="Nomor Telepon" class="form-control" style="border-color: #ffffff">
-                    <i class="bi bi-telephone"></i>
-                </div>
-                <div class="form-wrapper">
-                    <input type="text-area" placeholder="Alamat" class="form-control" style="border-color: #ffffff">
+                    <textarea name="alamat" placeholder="Alamat" class="form-control @error('alamat') is-invalid @enderror" style="border-color: #ffffff"></textarea>
                     <i class="bi bi-house-heart"></i>
+                    @error('alamat')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
+
                 <div class="form-wrapper">
-                    <input type="password" placeholder="Password" class="form-control"  style="border-color: #ffffff">
-                    <i class="bi bi-lock"></i>
+                    <input type="text" name="no_telp" placeholder="Nomor Telepon" class="form-control @error('no_telp') is-invalid @enderror" style="border-color: #ffffff">
+                    <i class="bi bi-telephone"></i>
+                    @error('no_telp')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
+
                 <div class="form-wrapper">
-                    <input type="password" placeholder="Confirm Password" class="form-control" style="border-color: #ffffff">
+                    <input type="password" name="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror" style="border-color: #ffffff">
                     <i class="bi bi-lock"></i>
+                    @error('password')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
-                <button>Register
+
+                <div class="form-wrapper">
+                    <input type="password" name="password_confirmation" placeholder="Confirm Password" class="form-control @error('password_confirmation') is-invalid @enderror" style="border-color: #ffffff">
+                    <i class="bi bi-lock"></i>
+                    @error('password_confirmation')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                {{-- <div class="form-wrapper">
+                    <img src="{{ captcha_src() }}" alt="Captcha" class="mb-2">
+                    <input type="text" name="captcha" placeholder="Please Insert Captcha" class="form-control @error('captcha') is-invalid @enderror" style="border-color: #ffffff">
+                    @error('captcha')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div> --}}
+
+                <button type="submit" class="btn btn-primary w-100 py-2">Register
                     <i class="bi bi-arrow-through-heart"></i>
                 </button>
             </form>
         </div>
     </div>
+
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
