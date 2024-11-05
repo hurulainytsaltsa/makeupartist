@@ -18,6 +18,8 @@ class UserProfileController extends Controller
 
         // Mengembalikan data user ke view
         return view('layouts.UserProfile.UserProfile', compact('user'));
+
+
     }
 
     /**
