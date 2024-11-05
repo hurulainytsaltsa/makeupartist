@@ -19,7 +19,6 @@
     <link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json">
     <link rel="mask-icon" href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
     <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <meta name="theme-color" content="#712cf9">
 
     <!-- Bootstrap CSS -->
@@ -102,72 +101,6 @@
         .profile-heading {
             margin-bottom: 40px;
         }
-
-        .footer {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-top: 2px solid #e9ecef;
-            text-align: left;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .footer-info {
-            flex: 1;
-            margin-right: 20px;
-        }
-
-        .footer-info h4 {
-            color: #d75a6e;
-            margin-bottom: 10px;
-        }
-
-        .footer-info p {
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            /* Align icon and text vertically */
-        }
-
-        .footer-info p i {
-            margin-right: 10px;
-            /* Spacing between icon and text */
-            color: #d75a6e;
-            /* Icon color */
-        }
-
-        .footer-info a {
-            color: #d75a6e;
-            text-decoration: none;
-        }
-
-        .footer-info a:hover {
-            text-decoration: underline;
-        }
-
-        .footer-map {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .footer-map iframe {
-            width: 100%;
-            height: 200px;
-            border: none;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .float-end {
-            float: right;
-        }
     </style>
 
     {{-- Script for Navbar Active --}}
@@ -225,92 +158,40 @@
         </div>
     </div>
 
-    <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
-            <div class="profile-card">
-                <img src="{{ asset('images/profile_photos/' . $mua->profile_photo) }}" alt="Profile of {{ $mua->nama }}" class="profile-img">
-                <div class="profile-info text-center">
-                    <h2 class="profile-name">{{ $mua->nama }}</h2>
-                    <p class="profile-description">
-                        {{ $mua->pengalaman }} years of experience based in {{ $mua->lokasi }}.
-                    </p>
-                    <p class="profile-description">
-                        {{ $mua->description }} <!-- Add description or bio if needed -->
-                    </p>
-                    <a href="/portfolio" class="btn btn-profile">View Portfolio</a>
-
-                    <!-- Buttons for Edit and Delete -->
-                    <div class="mt-3">
-                        <a href="/ourprofile/{{ $mua->id }}/edit" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
-                        <form action="/ourprofile/{{ $mua->id }}" method="post" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this profile?');">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    </div>
+    <div class="container">
+        <div class="row g-4">
+            <h2 class="text-center profile-heading">Add New Package Make Up</h2>
+            <form action="/package" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-3">
+                    <label for="nama_paket" class="form-label">Nama Paket</label>
+                    <input type="text" class="form-control" id="nama_paket" name="nama_paket" required>
                 </div>
-            </div>
-
-            <p>
-                <strong>Instagram:</strong>
-                <a href="{{ $mua->portfolio_link }}" target="_blank">
-                    <i class="fab fa-instagram"></i> {{ $mua->portfolio_link }}
-                </a>
-            </p>
-
-            <!-- Additional MUA details -->
-            <div class="mt-4">
-                <h4>About {{ $mua->nama }}</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vehicula orci ut dui placerat, eget bibendum ipsum pharetra.
-                </p>
-            </div>
+                <div class="mb-3">
+                    <label for="deskripsi" class="form-label">Deskripsi</label>
+                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="harga" class="form-label">Range Harga</label>
+                    <textarea class="form-control" id="harga" name="harga" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="photo" class="form-label">Photo</label>
+                    <input type="file" class="form-control" id="photo" name="photo">
+                </div>
+                <button type="submit" class="btn btn-primary btn-profile">Add Package</button>
+            </form>
         </div>
     </div>
-</div>
 
-    <!-- FOOTER -->
-    <footer class="container footer">
-        <div class="footer-content">
-            <div class="footer-info">
-                <h4>Contact Us</h4>
-                <p>
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Utara, Jl. Cendrawasih Jl. Elang 2 No.17, Air Tawar Bar., Kec. Padang Utara, Kota Padang,
-                        Sumatera Barat 25132</span>
-                </p>
-                <p>
-                    <i class="fab fa-whatsapp"></i>
-                    <a href="https://wa.me/081378326457">+6281378326457</a>
-                </p>
-                <p>
-                    <i class="fab fa-instagram"></i>
-                    <a href="https://instagram.com/ranikhaira_makeupart">@ranikhaira_makeupart</a>
-                </p>
-            </div>
-            <div class="footer-map">
-                <h4 style="color: #d75a6e">Find Us Here</h4>
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15957.338410205926!2d100.33765230068948!3d-0.8921984999999991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b90d472be851%3A0x6f7d3382f7567bd9!2sRani%20khaira%20makeup%20art!5e0!3m2!1sid!2sid!4v1729143177942!5m2!1sid!2sid"
-                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p class="float-end"><a href="#" class="back-to-top">Back to top</a></p>
-            <p>&copy; 2017–2024 Company, Inc. &middot; <a href="#" class="footer-link">Privacy</a> &middot;
-                <a href="#" class="footer-link">Terms</a>
-            </p>
-        </div>
-
+    <footer class="container">
+        <p class="float-end"><a href="#">Back to top</a></p>
+        <p>&copy; 2017–2024 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a>
+        </p>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
-
-
