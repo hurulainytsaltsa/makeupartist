@@ -47,7 +47,7 @@ class PortofolioController extends Controller
             'gambar' => $filename,
         ]);
 
-        return redirect('/portofolio')->with('success', 'Portofolio added successfully.');
+        return redirect('/portfolio')->with('success', 'Portofolio added successfully.');
     }
 
     /**
@@ -106,7 +106,7 @@ class PortofolioController extends Controller
         $portofolio->save();
 
         // Redirect kembali ke halaman profil dengan pesan sukses
-        return redirect('/portofolio')->with('success', 'MUA portfolio updated successfully.');
+        return redirect('/portfolio')->with('success', 'MUA portfolio updated successfully.');
     }
 
     /**
@@ -126,6 +126,6 @@ class PortofolioController extends Controller
         $portofolio->delete();
 
         // Redirect kembali ke halaman profil dengan pesan sukses
-        return redirect('/portofolio')->with('pesan', 'Data sudah berhasil dihapus');
+        return redirect('/portfolio')->with('pesan', 'Data sudah berhasil dihapus');
     }
 }
