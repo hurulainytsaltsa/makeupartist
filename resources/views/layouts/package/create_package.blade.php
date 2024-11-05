@@ -19,7 +19,6 @@
     <link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json">
     <link rel="mask-icon" href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
     <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <meta name="theme-color" content="#712cf9">
 
     <!-- Bootstrap CSS -->
@@ -159,52 +158,31 @@
         </div>
     </div>
 
-    <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
-            <div class="profile-card">
-                <img src="{{ asset('images/profile_photos/' . $mua->profile_photo) }}" alt="Profile of {{ $mua->nama }}" class="profile-img">
-                <div class="profile-info text-center">
-                    <h2 class="profile-name">{{ $mua->nama }}</h2>
-                    <p class="profile-description">
-                        {{ $mua->pengalaman }} years of experience based in {{ $mua->lokasi }}.
-                    </p>
-                    <p class="profile-description">
-                        {{ $mua->description }} <!-- Add description or bio if needed -->
-                    </p>
-                    <a href="/portfolio" class="btn btn-profile">View Portfolio</a>
-
-                    <!-- Buttons for Edit and Delete -->
-                    <div class="mt-3">
-                        <a href="/ourprofile/{{ $mua->id }}/edit" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
-                        <form action="/ourprofile/{{ $mua->id }}" method="post" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this profile?');">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </form>
-                    </div>
+    <div class="container">
+        <div class="row g-4">
+            <h2 class="text-center profile-heading">Add New Package Make Up</h2>
+            <form action="/package" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-3">
+                    <label for="nama_paket" class="form-label">Nama Paket</label>
+                    <input type="text" class="form-control" id="nama_paket" name="nama_paket" required>
                 </div>
-            </div>
-
-            <p>
-                <strong>Instagram:</strong>
-                <a href="{{ $mua->portfolio_link }}" target="_blank">
-                    <i class="fab fa-instagram"></i> {{ $mua->portfolio_link }}
-                </a>
-            </p>
-
-            <!-- Additional MUA details -->
-            {{-- <div class="mt-4">
-                <h4>About {{ $mua->nama }}</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vehicula orci ut dui placerat, eget bibendum ipsum pharetra.
-                </p>
-            </div> --}}
+                <div class="mb-3">
+                    <label for="deskripsi" class="form-label">Deskripsi</label>
+                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="harga" class="form-label">Range Harga</label>
+                    <textarea class="form-control" id="harga" name="harga" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="photo" class="form-label">Photo</label>
+                    <input type="file" class="form-control" id="photo" name="photo">
+                </div>
+                <button type="submit" class="btn btn-primary btn-profile">Add Package</button>
+            </form>
         </div>
     </div>
-</div>
 
     <footer class="container">
         <p class="float-end"><a href="#">Back to top</a></p>
@@ -215,6 +193,5 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
-
-
