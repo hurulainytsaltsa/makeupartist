@@ -21,6 +21,8 @@
     <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
     <meta name="theme-color" content="#712cf9">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts for more chic typography -->
@@ -101,6 +103,7 @@
         .profile-heading {
             margin-bottom: 40px;
         }
+
         .footer {
             background-color: #f8f9fa;
             padding: 20px;
@@ -166,6 +169,72 @@
         .float-end {
             float: right;
         }
+
+        .profile-card {
+            max-width: 500px;
+            margin: 50px auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .profile-card .card-header {
+            background-color: #de8d9b;
+            color: #fff;
+            font-size: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 25px;
+            font-family: "Poppins-SemiBold";
+            text-transform: uppercase;
+        }
+
+        .profile-card .card-body {
+            padding: 20px;
+        }
+
+        .profile-detail {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            font-size: 1rem;
+            color: #555;
+            border: 2px solid #de8d9b;
+            /* Light border for card */
+            border-radius: 10px;
+            /* Rounded corners */
+            padding: 15px;
+            /* Increase padding for larger card */
+
+            margin-bottom: 15px;
+            /* Space between cards */
+        }
+
+        .profile-detail i {
+            font-size: 1.2rem;
+            color: #ffb6c1;
+            margin-right: 10px;
+        }
+
+        .profile-detail strong {
+            margin-right: 5px;
+        }
+
+
+        .btn-edit-profile {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            background-color: #de8d9b;
+            color: #fff;
+            border-radius: 25px;
+        }
+
+        .btn-edit-profile:hover {
+            background-color: #c77a88;
+        }
     </style>
 
     {{-- Script for Navbar Active --}}
@@ -223,91 +292,74 @@
         </div>
     </div>
 
-    <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
-            <div class="profile-card">
-                <img src="{{ asset('images/profile_photos/' . $mua->profile_photo) }}" alt="Profile of {{ $mua->nama }}" class="profile-img">
-                <div class="profile-info text-center">
-                    <h2 class="profile-name">{{ $mua->nama }}</h2>
-                    <p class="profile-description">
-                        {{ $mua->pengalaman }} years of experience based in {{ $mua->lokasi }}.
-                    </p>
-                    <p class="profile-description">
-                        {{ $mua->description }} <!-- Add description or bio if needed -->
-                    </p>
-                    <a href="/portfolio" class="btn btn-profile">View Portfolio</a>
-
-                    <!-- Buttons for Edit and Delete -->
-                    <div class="mt-3">
-                        <a href="/ourprofile/{{ $mua->id }}/edit" class="btn btn-primary">Edit Profile</a>
-                        <form action="/ourprofile/{{ $mua->id }}" method="post" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this profile?');">
-                                Delete Profile
-                            </button>
-                        </form>
-                    </div>
-                </div>
+    <div class="container">
+        <div class="profile-card card">
+            <div class="card-header">
+                User Profile
             </div>
+            <div class="card-body">
+                <div class="profile-detail">
+                    <i class="bi bi-person-fill"></i>
+                    <strong>Name :</strong> <span class="ms-2">{{ $user->name }}</span>
+                </div>
+                <div class="profile-detail">
+                    <i class="bi bi-person-badge-fill"></i>
+                    <strong>Username :</strong> <span class="ms-2">{{ $user->username }}</span>
+                </div>
+                <div class="profile-detail">
+                    <i class="bi bi-envelope-fill"></i>
+                    <strong>Email :</strong> <span class="ms-2">{{ $user->email }}</span>
+                </div>
+                <div class="profile-detail">
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <strong>Alamat :</strong> <span class="ms-2">{{ $user->alamat }}</span>
+                </div>
+                <div class="profile-detail">
+                    <i class="bi bi-telephone-fill"></i>
+                    <strong>No Telp :</strong> <span class="ms-2">{{ $user->no_telp }}</span>
+                </div>
+                <a href="/account/{{ $user->id }}/edit" class="btn btn-edit-profile">Edit Profile</a>
+            </div>
+        </div>
+    </div>
 
-            <p>
-                <strong>Instagram:</strong>
-                <a href="{{ $mua->portfolio_link }}" target="_blank">
-                    <i class="fab fa-instagram"></i> {{ $mua->portfolio_link }}
-                </a>
-            </p>
-
-            <!-- Additional MUA details -->
-            {{-- <div class="mt-4">
-                <h4>About {{ $mua->nama }}</h4>
+    <footer class="container footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <h4>Contact Us</h4>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vehicula orci ut dui placerat, eget bibendum ipsum pharetra.
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Utara, Jl. Cendrawasih Jl. Elang 2 No.17, Air Tawar Bar., Kec. Padang Utara, Kota Padang,
+                        Sumatera Barat 25132</span>
                 </p>
-            </div> --}}
+                <p>
+                    <i class="fab fa-whatsapp"></i>
+                    <a href="https://wa.me/081378326457">+6281378326457</a>
+                </p>
+                <p>
+                    <i class="fab fa-instagram"></i>
+                    <a href="https://instagram.com/ranikhaira_makeupart">@ranikhaira_makeupart</a>
+                </p>
+            </div>
+            <div class="footer-map">
+                <h4 style="color: #d75a6e">Find Us Here</h4>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15957.338410205926!2d100.33765230068948!3d-0.8921984999999991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b90d472be851%3A0x6f7d3382f7567bd9!2sRani%20khaira%20makeup%20art!5e0!3m2!1sid!2sid!4v1729143177942!5m2!1sid!2sid"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
         </div>
-    </div>
-</div>
+        <div class="footer-bottom">
+            <p class="float-end"><a href="#" class="back-to-top">Back to top</a></p>
+            <p>&copy; 2017–2024 Company, Inc. &middot; <a href="#" class="footer-link">Privacy</a> &middot;
+                <a href="#" class="footer-link">Terms</a>
+            </p>
+        </div>
 
-<footer class="container footer">
-    <div class="footer-content">
-        <div class="footer-info">
-            <h4>Contact Us</h4>
-            <p>
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Utara, Jl. Cendrawasih Jl. Elang 2 No.17, Air Tawar Bar., Kec. Padang Utara, Kota Padang,
-                    Sumatera Barat 25132</span>
-            </p>
-            <p>
-                <i class="fab fa-whatsapp"></i>
-                <a href="https://wa.me/081378326457">+6281378326457</a>
-            </p>
-            <p>
-                <i class="fab fa-instagram"></i>
-                <a href="https://instagram.com/ranikhaira_makeupart">@ranikhaira_makeupart</a>
-            </p>
-        </div>
-        <div class="footer-map">
-            <h4 style="color: #d75a6e">Find Us Here</h4>
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15957.338410205926!2d100.33765230068948!3d-0.8921984999999991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4b90d472be851%3A0x6f7d3382f7567bd9!2sRani%20khaira%20makeup%20art!5e0!3m2!1sid!2sid!4v1729143177942!5m2!1sid!2sid"
-                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p class="float-end"><a href="#" class="back-to-top">Back to top</a></p>
-        <p>&copy; 2017–2024 Company, Inc. &middot; <a href="#" class="footer-link">Privacy</a> &middot;
-            <a href="#" class="footer-link">Terms</a>
-        </p>
-    </div>
-
-</footer>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
-
-

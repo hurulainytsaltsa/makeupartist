@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Carousel Template · Bootstrap v5.3</title>
+    <title>Makeup By Rani</title>
 
     {{-- <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/carousel/"> --}}
 
@@ -515,7 +515,7 @@
                             <path d="M21 21l-5.2-5.2" />
                         </svg>
                     </a>
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign up</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="/login" style="border-color: white;">Sign up</a>
                 </div>
             </div>
         </header>
