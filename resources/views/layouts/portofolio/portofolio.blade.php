@@ -158,6 +158,20 @@
             float: right;
         }
     </style>
+     {{-- Script for Navbar Active --}}
+     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const currentLocation = location.pathname; // Ambil URL halaman saat ini
+            const menuItems = document.querySelectorAll("#navbar .nav-link"); // Pilih semua item navbar
+
+            // Iterasi setiap item navbar untuk mencocokkan URL
+            menuItems.forEach(item => {
+                if (item.getAttribute("href") === currentLocation) {
+                    item.classList.add("active"); // Tambahkan kelas 'active' jika cocok dengan URL
+                }
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -190,7 +204,7 @@
         <div class="nav-scroller py-1 mb-3 border-bottom">
             <nav class="nav nav-underline justify-content-between" id="navbar">
                 <a class="nav-item nav-link link-body-emphasis" href="/home">Home</a>
-                <a class="nav-item nav-link link-body-emphasis" href="/portofolio">Portfolio</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/portfolio">Portfolio</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/booking">Booking</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/about">About Us</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/package">Package</a>
@@ -203,7 +217,7 @@
 
         <!-- Button to add new MUA -->
         <div class="text-end mb-4">
-            <a href="/portofolio/create" class="btn btn-profile">Add New Portfolio MUA</a>
+            <a href="/portfolio/create" class="btn btn-profile">Add New Portfolio MUA</a>
         </div>
 
         <div class="row g-4">
@@ -216,7 +230,7 @@
                         <div class="profile-info">
                             <h4 class="profile-name">{{ $mua->nama_mua }}</h4>
                             <p class="review-text">"{{ $mua->review }}"</p>
-                            <a href="/portofolio/{{ $mua->id }}" class="btn btn-profile">View Portfolio</a>
+                            <a href="/portfolio/{{ $mua->id }}" class="btn btn-profile">View Portfolio</a>
                         </div>
                     </div>
                 </div>
