@@ -32,8 +32,12 @@ class LoginController extends Controller
             // Regenerasi session
             $request->session()->regenerate();
 
-            // Redirect ke halaman /ourprofile
-            return redirect()->intended('/home');
+            // Arahkan berdasarkan nilai isAdmin
+            if (Auth::user()->isAdmin) {
+                return redirect()->intended('/dashboard'); // Admin
+            } else {
+                return redirect()->intended('/home'); // Non-admin
+            }
         }
 
         // Jika gagal, kembali ke halaman login dengan error

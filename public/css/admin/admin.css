@@ -1,0 +1,17 @@
+/* Gaya untuk sidebar mini */
+.mini_sidebar {
+    width: 50px; /* Atur lebar mini sidebar */
+    transition: width 0.3s ease; /* Animasi transisi */
+}
+
+/* Gaya untuk konten utama */
+.full_main_content {
+    margin-left: 50px; /* Atur margin kiri konten utama untuk memberi ruang pada sidebar mini */
+    transition: margin-left 0.3s ease; /* Animasi transisi */
+}
+
+/* Gaya untuk footer */
+.full_footer {
+    padding: 10px 50px; /* Menyesuaikan padding footer */
+    transition: padding 0.3s ease; /* Animasi transisi */
+}

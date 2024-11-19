@@ -30,32 +30,33 @@ class RegisterController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    // Validasi input
-    $validated = $request->validate([
-        'name' => 'required|min:3',
-        'username' => 'required|unique:users|min:3',
-        'email' => 'required|email|unique:users',
-        'alamat' => 'required|min:5',
-        'no_telp' => 'required|numeric',
-        'password' => 'required|min:4|confirmed',
-    ]);
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'name' => 'required|min:3',
+            'username' => 'required|unique:users|min:3',
+            'email' => 'required|email|unique:users',
+            'alamat' => 'required|min:5',
+            'no_telp' => 'required|numeric',
+            'password' => 'required|min:4|confirmed',
+        ]);
 
-    // Simpan data ke database
-    User::create([
-        'name' => $validated['name'],
-        'username' => $validated['username'],
-        'email' => $validated['email'],
-        'alamat' => $validated['alamat'],
-        'no_telp' => $validated['no_telp'],
-        'password' => Hash::make($validated['password']),
-        'email_verified_at' => now(),
-        'remember_token' => Str::random(10),
-    ]);
+        // Simpan data ke database
+        User::create([
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'alamat' => $validated['alamat'],
+            'no_telp' => $validated['no_telp'],
+            'password' => Hash::make($validated['password']),
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
+            'isAdmin' => 0, // Set field isAdmin dengan nilai 0
+        ]);
 
-    // Redirect dengan pesan sukses
-    return redirect('/login')->with('pesan', 'Data sudah berhasil disimpan');
-}
+        // Redirect dengan pesan sukses
+        return redirect('/login')->with('pesan', 'Data sudah berhasil disimpan');
+    }
 
 
     /**
