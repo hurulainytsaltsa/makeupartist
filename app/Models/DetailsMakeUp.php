@@ -12,12 +12,12 @@ class DetailsMakeUp extends Model
     protected $table = 'detail_packages';
 
     protected $fillable = [
-        'name',          // e.g., Paket A, Paket B
-        'type',          // package, addon, or service
-        'description',   // Additional details, if any
-        'price',         // Price of the package or add-on
-        'bonus',         // Bonus description, if applicable
-        'package_makeup_id', // Foreign key linking to package_makeup
+        'name',
+        'type',
+        'description',
+        'price',
+        'bonus',
+        'package_makeup_id',
     ];
 
     public function package()

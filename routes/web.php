@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\DetailsMakeUpController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MuaProfileController;
+use App\Http\Controllers\PackageMakeUpController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,11 +33,7 @@ Route::get('/details', function () {
     return view('layouts.detail_profile');
 });
 
-Route::resource('/account', UserProfileController::class);
+Route::get('/package', [PackageMakeUpController::class, 'index']);
+Route::resource('/package', PackageMakeUpController::class);
 
-// Route::get('/package', [PackageMakeUpController::class, 'index']);
-// Route::resource('/package', PackageMakeUpController::class);
-
-// Route::resource('/details_package', DetailsMakeUpController::class);
-
-// Route::resource('/portofolio', PortofolioController::class);
+Route::resource('/details_package', DetailsMakeUpController::class);

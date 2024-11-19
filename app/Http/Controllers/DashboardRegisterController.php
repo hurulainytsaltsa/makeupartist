@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class RegisterController extends Controller
+class DashboardRegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('layouts.register');
+        return view('admin.layouts.register');
     }
 
     /**
@@ -23,7 +23,7 @@ class RegisterController extends Controller
     public function create()
     {
         $users = User::latest()->paginate(10);
-        return view('layouts.register', ['users' => $users]);
+        return view('admin.layouts.register', ['users' => $users]);
     }
 
     /**
@@ -51,13 +51,12 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
-            'isAdmin' => 0, // Set field isAdmin dengan nilai 0
+            'isAdmin' => true,
         ]);
 
         // Redirect dengan pesan sukses
-        return redirect('/login')->with('pesan', 'Data sudah berhasil disimpan');
+        return redirect('/dashboard')->with('pesan', 'Data sudah berhasil disimpan');
     }
-
 
     /**
      * Display the specified resource.
