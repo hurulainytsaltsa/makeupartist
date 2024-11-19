@@ -21,7 +21,8 @@ class Booking extends Model
         'tgl_makeup',
         'pkt_makeup',
         'jam',
-        'jenis_paket'
+        'jenis_paket',
+        'user_id'
     ];
 
     public function packagesMakeUp()
@@ -36,6 +37,6 @@ class Booking extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
