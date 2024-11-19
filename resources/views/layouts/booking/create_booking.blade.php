@@ -231,6 +231,7 @@
             <h2 class="text-center profile-heading">Booking Now</h2>
             <form action="/booking" method="post" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="user_id" value="{{ $userId }}">
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
                     <input type="text" class="form-control" id="nama" name="nama" required>
