@@ -28,8 +28,8 @@ class BookingController extends Controller
     {
         $paketMakeup = PackageMakeUp::all();
         $details = DetailsMakeUp::all();
-
-        return view('layouts.booking.create_booking', compact('paketMakeup', 'details'));
+        $userId = Auth::id();  // Get the user ID
+        return view('layouts.booking.create_booking', compact('paketMakeup', 'details', 'userId'));
     }
 
     /**
@@ -38,9 +38,9 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'user_id' => Auth::id(),
+            'user_id' => 'required|exists:users,id',
             'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email',
             'no_telp' => 'required|numeric',
             'alamat' => 'required|min:5',
             'tgl_makeup' => 'required|date',
@@ -49,8 +49,11 @@ class BookingController extends Controller
             'jenis_paket' => 'required|integer',
         ]);
 
+        $validatedData['user_id'] = Auth::id();
+
         // Create a new MUA profile
         $booking = Booking::create([
+            'user_id' => $validatedData['user_id'],
             'nama' => $validatedData['nama'],
             'email' => $validatedData['email'],
             'no_telp' => $validatedData['no_telp'],
@@ -60,6 +63,8 @@ class BookingController extends Controller
             'jam' => $validatedData['jam'],
             'jenis_paket' => $validatedData['jenis_paket'],
         ]);
+
+        $userId = $validatedData['user_id'];
 
         return redirect('/booking')->with('success', 'Portofolio added successfully.');
     }
