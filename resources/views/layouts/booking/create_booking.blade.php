@@ -101,6 +101,7 @@
         .profile-heading {
             margin-bottom: 40px;
         }
+
         .footer {
             background-color: #f8f9fa;
             padding: 20px;
@@ -166,6 +167,7 @@
         .float-end {
             float: right;
         }
+
         #jenis_paket option {
             color: black;
         }
@@ -208,7 +210,20 @@
                             <path d="M21 21l-5.2-5.2" />
                         </svg>
                     </a>
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign up</a>
+                    @auth
+                        <!-- Jika user sudah login -->
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-secondary" style="border-color: white;">
+                                Log Out
+                            </button>
+                        </form>
+                    @else
+                        <!-- Jika user belum login -->
+                        <a class="btn btn-sm btn-outline-secondary" href="/login" style="border-color: white;">
+                            Sign Up
+                        </a>
+                    @endauth
                 </div>
             </div>
         </header>
@@ -218,6 +233,7 @@
                 <a class="nav-item nav-link link-body-emphasis" href="/home">Home</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/portfolio">Portfolio</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/booking">Booking</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/order">Order</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/about">About Us</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/package">Package</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/ourprofile">Our Profile</a>
@@ -225,6 +241,22 @@
             </nav>
         </div>
     </div>
+
+    @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
 
     <div class="container">
         <div class="row g-4">
@@ -234,27 +266,33 @@
                 <input type="hidden" name="user_id" value="{{ $userId }}">
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama" required>
+                    <input type="text" class="form-control @error('nama') is-valid
+                    @enderror" name="nama" id="nama" value="{{ old ('nama') }}">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="text" class="form-control" id="email" name="email" required>
+                    <input type="text" class="form-control @error('email') is-valid
+                    @enderror" name="email" id="nama" value="{{ old ('email') }}">
                 </div>
                 <div class="mb-3">
                     <label for="no_telp" class="form-label">Nomor Telfon</label>
-                    <input type="text" class="form-control" id="no_telp" name="no_telp" required>
+                    <input type="text" class="form-control @error('no_telp') is-valid
+                    @enderror" name="no_telp" id="nama" value="{{ old ('no_telp') }}">
                 </div>
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
-                    <textarea class="form-control" id="alamat" name="alamat" rows="3" required></textarea>
+                    <textarea class="form-control @error('alamat') is-valid @enderror" name="alamat" id="alamat">{{ old('alamat') }}</textarea>
                 </div>
                 <div class="mb-3">
                     <label for="tgl_makeup" class="form-label">Tanggal Makeup</label>
-                    <input type="date" class="form-control" id="tgl_makeup" name="tgl_makeup" required>
+                    <input type="date" class="form-control" id="tgl_makeup" name="tgl_makeup" value="{{ old('tgl_makeup') }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="jam" class="form-label">Jam</label>
-                    <input type="time" class="form-control" id="jam" name="jam" required>
+                    <input type="time" class="form-control @error('jam') is-invalid @enderror" id="jam" name="jam" value="{{ old('jam') }}" required>
+                    @error('jam')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 {{-- <div class="mb-3">
                     <label for="pkt_makeup" class="form-label">Paket Makeup</label>
@@ -264,9 +302,11 @@
                 <div class="mb-3">
                     <label for="pkt_makeup" class="form-label">Pilih Paket Makeup</label>
                     <select class="form-control" id="pkt_makeup" name="pkt_makeup" required>
-                        <option value="" disabled selected>Pilih Paket Makeup</option>
+                        <option value="" disabled {{ old('pkt_makeup') ? '' : 'selected' }}>Pilih Paket Makeup</option>
                         @foreach($paketMakeup as $paket)
-                            <option value="{{ $paket->id }}">{{ $paket->nama_paket }}</option>
+                            <option value="{{ $paket->id }}" {{ old('pkt_makeup') == $paket->id ? 'selected' : '' }}>
+                                {{ $paket->nama_paket }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -274,38 +314,63 @@
                 <div class="mb-3">
                     <label for="jenis_paket" class="form-label">Pilih Jenis Paket</label>
                     <select class="form-control" id="jenis_paket" name="jenis_paket" required>
-                        <option value="" disabled selected>Pilih Jenis Paket</option>
+                        <option value="" disabled {{ old('jenis_paket') ? '' : 'selected' }}>Pilih Jenis Paket</option>
+                        @foreach($details as $jenis)
+                            <option value="{{ $jenis->id }}" {{ old('jenis_paket') == $jenis->id ? 'selected' : '' }}>
+                                {{ $jenis->name }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                    const paketSelect = document.getElementById("pkt_makeup");
-                    const jenisPaketSelect = document.getElementById("jenis_paket");
-                    paketSelect.addEventListener("change", function () {
-                        const paketId = this.value;
-                        // Hapus semua option di dropdown jenis paket
-                        jenisPaketSelect.innerHTML = '<option value="" disabled selected>Pilih Jenis Paket</option>';
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <textarea class="form-control @error('price') is-valid @enderror" name="price" id="price">{{ old('price') }}</textarea>
+                </div>
 
-                        if (paketId) {
-                            // Kirim AJAX request untuk mengambil jenis paket berdasarkan paketId
-                            fetch(`/booking/details/${paketId}`)
-                                .then(response => response.json())
-                                .then(data => {
-                                    // Tambahkan opsi ke dropdown jenis paket berdasarkan data yang diterima
-                                    data.details.forEach(jenis => {
-                                        const option = document.createElement("option");
-                                        option.value = jenis.id;
-                                        option.textContent = jenis.name; // Ganti dengan 'name' sesuai database
-                                        jenisPaketSelect.appendChild(option);
-                                    });
-                                })
-                                .catch(error => console.error("Error fetching jenis paket:", error));
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const paketSelect = document.getElementById("pkt_makeup");
+                        const jenisPaketSelect = document.getElementById("jenis_paket");
+                        const priceInput = document.getElementById("price");
+
+                        paketSelect.addEventListener("change", function() {
+                            const paketId = this.value;
+                            jenisPaketSelect.innerHTML =
+                                '<option value="" disabled selected>Pilih Jenis Paket</option>';
+
+                            if (paketId) {
+                                fetch(`/booking/details/${paketId}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        // Tambahkan opsi ke dropdown jenis paket berdasarkan data yang diterima
+                                        data.details.forEach(jenis => {
+                                            const option = document.createElement("option");
+                                            option.value = jenis.id;
+                                            option.textContent = jenis.name;
+                                            jenisPaketSelect.appendChild(option);
+                                        });
+                                    })
+                                    .catch(error => console.error("Error fetching jenis paket:", error));
+                            }
+                        });
+
+                        jenisPaketSelect.addEventListener("change", function() {
+                            const paketId = this.value;
+
+                            if (paketId) {
+                                fetch(`/booking/price/${paketId}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        // Menampilkan harga jenis paket yang dipilih
+                                        priceInput.value = data.price;
+                                    })
+                                    .catch(error => console.error("Error fetching price:", error));
                             }
                         });
                     });
                 </script>
-                    <button type="submit" class="btn btn-primary btn-profile">Booking Now</button>
+                <button type="submit" class="btn btn-primary btn-profile">Booking Now</button>
             </form>
         </div>
     </div>

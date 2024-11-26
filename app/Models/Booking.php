@@ -13,17 +13,7 @@ class Booking extends Model
     protected $table = 'booking';
 
     // Define the fillable properties
-    protected $fillable = [
-        'nama',
-        'email',
-        'no_telp',
-        'alamat',
-        'tgl_makeup',
-        'pkt_makeup',
-        'jam',
-        'jenis_paket',
-        'user_id'
-    ];
+    protected $fillable = ['nama', 'email', 'no_telp', 'alamat', 'tgl_makeup', 'pkt_makeup', 'jam', 'jenis_paket', 'price', 'user_id', 'status'];
 
     public function packagesMakeUp()
     {
@@ -38,5 +28,10 @@ class Booking extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'booking_id');
     }
 }

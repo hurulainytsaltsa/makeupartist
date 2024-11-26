@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('booking', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->after('id'); // Tambahkan kolom user_id
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Foreign key
+            $table->decimal('price', 10, 2)->after('jenis_paket');
         });
     }
 
@@ -23,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('booking', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+            $table->dropColumn('price');
         });
     }
 };

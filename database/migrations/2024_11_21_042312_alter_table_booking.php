@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('booking', function (Blueprint $table) {
-            $table->string('jam')->nullable()->after('pkt_makeup');
+            $table->string('status')->default('pending'); // Menambahkan kolom status
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('booking', function (Blueprint $table) {
-            $table->dropColumn('jam');
+            //
         });
     }
 };

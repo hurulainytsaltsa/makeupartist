@@ -49,6 +49,16 @@
                 </a>
             </li>
             <li>
+                <a href="/dashboard-order" aria-expanded="false">
+                    <div class="nav_icon_small">
+                        <img src="/img/menu-icon/order.png" alt="">
+                    </div>
+                    <div class="nav_title">
+                        <span>Orders</span>
+                    </div>
+                </a>
+            </li>
+            <li>
                 <a href="/dashboard-register" aria-expanded="false">
                     <div class="nav_icon_small">
                         <img src="/img/menu-icon/5.svg" alt="">
