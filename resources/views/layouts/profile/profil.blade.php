@@ -206,7 +206,20 @@
                             <path d="M21 21l-5.2-5.2" />
                         </svg>
                     </a>
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign up</a>
+                    @auth
+                        <!-- Jika user sudah login -->
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-secondary" style="border-color: white;">
+                                Log Out
+                            </button>
+                        </form>
+                    @else
+                        <!-- Jika user belum login -->
+                        <a class="btn btn-sm btn-outline-secondary" href="/login" style="border-color: white;">
+                            Sign Up
+                        </a>
+                    @endauth
                 </div>
             </div>
         </header>
@@ -216,6 +229,7 @@
                 <a class="nav-item nav-link link-body-emphasis" href="/home">Home</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/portfolio">Portfolio</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/booking">Booking</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/order">Order</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/about">About Us</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/package">Package</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/ourprofile">Our Profile</a>
@@ -227,9 +241,9 @@
     <div class="container">
         <h2 class="text-center profile-heading">Our Makeup Artists</h2>
         <!-- Button to add new MUA -->
-        <div class="text-end mb-4">
+        {{-- <div class="text-end mb-4">
             <a href="/ourprofile/create" class="btn btn-primary btn-profile">Add New Makeup Artist</a>
-        </div>
+        </div> --}}
 
         <div class="row g-4">
             @foreach ($mua_profiles as $mua)
@@ -242,7 +256,7 @@
                             <p class="profile-description">
                                 {{ $mua->pengalaman }} years of experience in {{ $mua->lokasi }}.
                             </p>
-                            <a href="/ourprofile/{{ $mua->id }}" class="btn btn-profile">View More</a>
+                            {{-- <a href="/ourprofile/{{ $mua->id }}" class="btn btn-profile">View More</a> --}}
                         </div>
                     </div>
                 </div>

@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('payment', function (Blueprint $table) {
             $table->id();
+            $table->enum('no_rekening', ['56792372343 - Bank BRI', '98765482637 - Bank BCA', '7432109876 9- Bank BNI']);
+            $table->string('bukti_pembayaran');
+            $table->enum('status_pembayaran', ['Payment Approved', 'Waiting for Approval'])->nullable();
+            $table->foreignId('booking_id');
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('payment');
     }
 };

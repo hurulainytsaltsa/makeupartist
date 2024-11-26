@@ -206,7 +206,20 @@
                             <path d="M21 21l-5.2-5.2" />
                         </svg>
                     </a>
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign up</a>
+                    @auth
+                    <!-- Jika user sudah login -->
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-secondary" style="border-color: white;">
+                            Log Out
+                        </button>
+                    </form>
+                @else
+                    <!-- Jika user belum login -->
+                    <a class="btn btn-sm btn-outline-secondary" href="/login" style="border-color: white;">
+                        Sign Up
+                    </a>
+                @endauth
                 </div>
             </div>
         </header>
@@ -216,6 +229,7 @@
                 <a class="nav-item nav-link link-body-emphasis" href="/home">Home</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/portfolio">Portfolio</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/booking">Booking</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/order">Order</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/about">About Us</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/package">Package</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/ourprofile">Our Profile</a>
@@ -231,40 +245,39 @@
         </div>
         <table class="table table-bordered" style="background-color: #ffffff;">
             <thead style="background-color: #f3b6c4; color: white;">
-                    <tr>
-                        <th scope="col" style="color: white;">Nomor</th>
-                        <th scope="col" style="color: white;">Nama</th>
-                        <th scope="col" style="color: white;">Email</th>
-                        <th scope="col" style="color: white;">Nomor Telepon</th>
-                        <th scope="col" style="color: white;">Alamat</th>
-                        <th scope="col" style="color: white;">Tanggal Makeup</th>
-                        <th scope="col" style="color: white;">Jam</th>
-                        <th scope="col" style="color: white;">Paket Makeup</th>
-                        <th scope="col" style="color: white;">Jenis Paket</th>
-                        {{-- <th scope="col" style="color: white;">Aksi</th> --}}
-                    </tr>
+                <tr>
+                    <th scope="col" style="color: white;">Nomor</th>
+                    <th scope="col" style="color: white;">Nama</th>
+                    <th scope="col" style="color: white;">Email</th>
+                    <th scope="col" style="color: white;">Nomor Telepon</th>
+                    <th scope="col" style="color: white;">Alamat</th>
+                    <th scope="col" style="color: white;">Tanggal Makeup</th>
+                    <th scope="col" style="color: white;">Jam</th>
+                    <th scope="col" style="color: white;">Paket Makeup</th>
+                    <th scope="col" style="color: white;">Jenis Paket</th>
+                    <th scope="col" style="color: white;">Payment</th>
+                </tr>
             </thead>
             <tbody>
                 <!-- Loop data booking di sini -->
-                @foreach($booking as $key => $bookingItem)
-                <tr>
-                    <th scope="row">{{ $key + 1 }}</th>
-                    <td>{{ $bookingItem->nama }}</td>
-                    <td>{{ $bookingItem->email }}</td>
-                    <td>{{ $bookingItem->no_telp }}</td>
-                    <td>{{ $bookingItem->alamat }}</td>
-                    <td>{{ $bookingItem->tgl_makeup }}</td>
-                    <td>{{ $bookingItem->jam}}</td>
-                    <td>{{ $bookingItem->packagesMakeUp->nama_paket ?? 'Tidak Ada Paket' }}</td>
-                    <td>{{ optional($bookingItem->DetailsMakeUp)->name ?? 'Tidak Ada Paket' }}</td>
-                    {{-- <td>
-                        <form action="/booking/{{ $bookingItem->id }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Hapus booking ini?')">Hapus</button>
-                        </form>
-                    </td> --}}
-                </tr>
+                @foreach ($booking as $key => $bookingItem)
+                    <tr>
+                        <th scope="row">{{ $key + 1 }}</th>
+                        <td>{{ $bookingItem->nama }}</td>
+                        <td>{{ $bookingItem->email }}</td>
+                        <td>{{ $bookingItem->no_telp }}</td>
+                        <td>{{ $bookingItem->alamat }}</td>
+                        <td>{{ $bookingItem->tgl_makeup }}</td>
+                        <td>{{ $bookingItem->jam }}</td>
+                        <td>{{ $bookingItem->packagesMakeUp->nama_paket ?? 'Tidak Ada Paket' }}</td>
+                        <td>{{ optional($bookingItem->DetailsMakeUp)->name ?? 'Tidak Ada Paket' }}</td>
+                        <td>
+                            <a href="{{ route('booking.show', $bookingItem->id) }}" class="btn btn-profile">Pay Now</a>
+
+
+                        </td>
+
+                    </tr>
                 @endforeach
             </tbody>
         </table>

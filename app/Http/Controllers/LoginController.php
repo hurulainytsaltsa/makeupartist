@@ -61,6 +61,6 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         // Redirect ke halaman /ourprofile atau halaman login
-        return redirect('/home');
+        return redirect('/login');
     }
 }

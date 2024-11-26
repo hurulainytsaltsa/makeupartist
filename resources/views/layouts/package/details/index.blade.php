@@ -19,6 +19,7 @@
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -32,9 +33,38 @@
             font-size: 2.5rem;
         }
 
+        .card {
+            border: none;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        .card-header {
+            background-color: #f7d1db;
+            color: #de8d9b;
+            font-weight: bold;
+        }
+
+        .btn-secondary {
+            background-color: #de8d9b;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #c77b8c;
+        }
+
         .container {
             margin-top: 50px;
         }
+
         .footer {
             background-color: #f8f9fa;
             padding: 20px;
@@ -100,6 +130,15 @@
         .float-end {
             float: right;
         }
+
+        .fade-in {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .fade-in.show {
+            opacity: 1;
+        }
     </style>
 
     <script>
@@ -112,6 +151,9 @@
                     item.classList.add("active");
                 }
             });
+
+            // Add fade-in effect
+            document.querySelector(".fade-in").classList.add("show");
         });
     </script>
 </head>
@@ -137,7 +179,20 @@
                             <path d="M21 21l-5.2-5.2" />
                         </svg>
                     </a>
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign up</a>
+                    @auth
+                        <!-- Jika user sudah login -->
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-secondary" style="border-color: white;">
+                                Log Out
+                            </button>
+                        </form>
+                    @else
+                        <!-- Jika user belum login -->
+                        <a class="btn btn-sm btn-outline-secondary" href="/login" style="border-color: white;">
+                            Sign Up
+                        </a>
+                    @endauth
                 </div>
             </div>
         </header>
@@ -147,6 +202,7 @@
                 <a class="nav-item nav-link link-body-emphasis" href="/home">Home</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/portfolio">Portfolio</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/booking">Booking</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/order">Order</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/about">About Us</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/package">Package</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/ourprofile">Our Profile</a>
@@ -154,27 +210,29 @@
             </nav>
         </div>
 
-        <h2 class="text-center mb-4">More Details For Our Package</h2>
-        <div class="container">
-            {{-- <h2 class="header">{{ $details->nama_paket }}</h2>
-            <p><strong>Deskripsi:</strong> {{ $details->deskripsi }}</p>
-            <p><strong>Harga:</strong> {{ $details->harga }}</p> --}}
-            <h3>Details</h3>
-            @if ($details->isEmpty())
-                <p>No details available for this package.</p>
-            @else
-            <ul class="list-group">
-                @foreach ($details as $detail)
-                    <li class="list-group-item">
-                        <h5>{{ $detail->name }}</h5>
-                        <p>{{ $detail->description }}</p> <!-- Fixed variable name -->
-                        <p><strong>Harga:</strong> {{ $detail->price }}</p>
-                    </li>
-                @endforeach
-            </ul>
-            @endif
-
-            <a href="/package" class="btn btn-secondary mt-3">Back to Packages</a>
+        <div class="fade-in">
+            <h2 class="text-center mb-4">More Details For Our Package</h2>
+            <div class="container">
+                @if ($details->isEmpty())
+                    <p>No details available for this package.</p>
+                @else
+                    <div class="row">
+                        @foreach ($details as $detail)
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header text-center">{{ $detail->name }}</div>
+                                    <div class="card-body">
+                                        <p>{{ $detail->description }}</p>
+                                        <p><strong>Bonus:</strong> {{ $detail->bonus }}</p>
+                                        <p><strong>Price:</strong> IDR {{ $detail->price }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+                <a href="/package" class="btn btn-secondary mt-3">Back to Packages</a>
+            </div>
         </div>
     </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\DetailsMakeUp;
 use App\Models\PackageMakeUp;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,8 +17,9 @@ class BookingController extends Controller
     public function index()
     {
         $booking = Booking::with('detailsMakeUp')
-        ->where('user_id', Auth::id()) // Filter berdasarkan user yang sedang login
-        ->get();
+            ->where('user_id', Auth::id()) // Filter berdasarkan user yang sedang login
+            ->where('status', 'pending')
+            ->get();
         return view('layouts.booking.booking', compact('booking'));
     }
 
@@ -28,7 +30,7 @@ class BookingController extends Controller
     {
         $paketMakeup = PackageMakeUp::all();
         $details = DetailsMakeUp::all();
-        $userId = Auth::id();  // Get the user ID
+        $userId = Auth::id(); // Get the user ID
         return view('layouts.booking.create_booking', compact('paketMakeup', 'details', 'userId'));
     }
 
@@ -47,7 +49,18 @@ class BookingController extends Controller
             'pkt_makeup' => 'required|integer',
             'jam' => 'required|date_format:H:i',
             'jenis_paket' => 'required|integer',
+            'price' => 'required|numeric',
         ]);
+
+        $exists = Booking::where('tgl_makeup', $validatedData['tgl_makeup'])
+        ->where('jam', $validatedData['jam'])
+        ->exists();
+
+        if ($exists) {
+            session()->flash('error', 'Waktu yang Anda pilih sudah dipesan. Silakan pilih waktu lain.');
+
+            return back()->withInput(); // Mengembalikan input sebelumnya
+        }
 
         $validatedData['user_id'] = Auth::id();
 
@@ -62,11 +75,16 @@ class BookingController extends Controller
             'pkt_makeup' => $validatedData['pkt_makeup'],
             'jam' => $validatedData['jam'],
             'jenis_paket' => $validatedData['jenis_paket'],
+            'price' => $validatedData['price'],
+
+
         ]);
 
         $userId = $validatedData['user_id'];
 
-        return redirect('/booking')->with('success', 'Portofolio added successfully.');
+        session()->flash('success', 'Booking berhasil dibuat.');
+
+        return redirect('/booking');
     }
 
     /**
@@ -74,8 +92,55 @@ class BookingController extends Controller
      */
     public function show(string $id)
     {
-        $details = DetailsMakeUp::all();
-        return view('booking', compact('details'));
+        $booking = Booking::with('detailsMakeup') // Relasi dengan tabel paket
+            ->where('id', $id)
+            ->firstOrFail();
+
+        return view('layouts.payment.payment', compact('booking'));
+    }
+
+    public function payment(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'no_rekening' => 'required|string',
+            'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Find the booking based on the ID passed to the method
+        $booking = Booking::findOrFail($id);
+
+        $filename = time() . '.' . $request->bukti_pembayaran->extension();
+        $request->bukti_pembayaran->move(public_path('images/bukti_pembayaran'), $filename);
+
+        // Save payment data to the Payment model
+        $payment = Payment::create([
+            'booking_id' => $booking->id,
+            'no_rekening' => $validatedData['no_rekening'],
+            'bukti_pembayaran' => $filename,
+            'status_pembayaran' => 'Waiting for Approval', // status bisa Anda sesuaikan
+        ]);
+
+        // Optionally update the booking status to 'paid' or similar if needed
+        $booking->update(['status' => 'paid']);
+
+        return redirect()->route('order.index')->with([
+            'booking' => $booking,
+            'payment' => $payment,
+        ]);
+    }
+
+    public function getPrice($paketId)
+    {
+        // Cari harga berdasarkan jenis_paket
+        $jenisPaket = DetailsMakeUp::find($paketId);
+
+        if ($jenisPaket) {
+            return response()->json([
+                'price' => $jenisPaket->price,  // Mengambil harga dari kolom 'price' di tabel DetailsMakeUp
+            ]);
+        }
+
+        return response()->json(['error' => 'Paket tidak ditemukan'], 404);
     }
 
     /**
@@ -108,5 +173,26 @@ class BookingController extends Controller
     {
         $details = DetailsMakeUp::where('package_makeup_id', $paketId)->get();
         return response()->json(['details' => $details]);
+    }
+
+    public function redirectToPayment(Request $request)
+    {
+        // Validasi data
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email',
+            'no_telp' => 'required|numeric',
+            'alamat' => 'required|string',
+            'tgl_makeup' => 'required|date',
+            'jam' => 'required',
+            'pkt_makeup' => 'required',
+            'jenis_paket' => 'required',
+        ]);
+
+        // Simpan data ke session sementara
+        session()->put('booking_data', $validated);
+
+        // Arahkan ke halaman pembayaran
+        return redirect('/payment');
     }
 }
