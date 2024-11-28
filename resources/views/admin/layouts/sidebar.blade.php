@@ -80,6 +80,16 @@
                     </div>
                 </a>
             </li>
+            <li>
+                <a href="/dashboard-calendar" aria-expanded="false">
+                    <div class="bi bi-calendar-heart-fill text-muted">
+                        <img src="" alt="">
+                    </div>
+                    <div class="nav_title">
+                        <span>Calendar</span>
+                    </div>
+                </a>
+            </li>
         </ul>
     </nav>
     <!--/ sidebar  -->

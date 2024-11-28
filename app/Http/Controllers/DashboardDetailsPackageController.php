@@ -59,7 +59,9 @@ class DashboardDetailsPackageController extends Controller
         $packageId = $validated['package_makeup_id'];
 
         // Redirect ke halaman detail dengan pesan sukses
-        return redirect()->route('dashboard-details_package.show', $packageId)
+        return redirect()->route('dashboard-details_package.show',
+
+        $packageId)
             ->with('pesan', 'Offer added successfully!');
     }
 

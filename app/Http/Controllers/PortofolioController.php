@@ -77,7 +77,7 @@ class PortofolioController extends Controller
          $validatedData = $request->validate([
             'nama_mua' => 'required|string|max:255',
             'review' => 'required',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Opsional jika tidak ada perubahan
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Cari profil MUA berdasarkan ID

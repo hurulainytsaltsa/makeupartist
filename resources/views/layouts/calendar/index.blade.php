@@ -10,7 +10,7 @@
     <meta name="generator" content="Hugo 0.122.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <title>MUA Profiles</title>
+    <title>Calendar</title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -21,87 +21,52 @@
     <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
     <meta name="theme-color" content="#712cf9">
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts for more chic typography -->
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@400;500&display=swap"
         rel="stylesheet">
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f7f7f7;
+            background-color: #f9f9f9;
             color: #333;
         }
 
         h2 {
-            font-family: 'Playfair Display', serif;
             color: #de8d9b;
-            font-size: 2.5rem;
-        }
-
-        .profile-card {
-            background-color: #fff;
-            border: none;
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.4s ease-in-out;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .profile-img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            border-bottom: 2px solid #de8d9b;
-        }
-
-        .profile-info {
-            padding: 20px;
+            margin-bottom: 30px;
             text-align: center;
         }
 
-        .profile-name {
-            font-size: 1.5rem;
-            font-family: 'Playfair Display', serif;
-            font-weight: 500;
-            color: #333;
+        #calendar {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
 
-        .profile-description {
-            color: #777;
-            font-size: 0.9rem;
-            margin-top: 10px;
-            margin-bottom: 15px;
+        .fc-button {
+            background-color: pink !important;
+            color: white !important;
+            border: none !important;
+            box-shadow: none !important;
         }
 
-        .btn-profile {
-            background-color: #de8d9b;
-            color: #fff;
-            border-radius: 30px;
-            padding: 10px 30px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            transition: background-color 0.3s;
+        .fc-button:hover {
+            background-color: #e0879e !important;
         }
 
-        .btn-profile:hover {
-            background-color: #c77a88;
+        .fc-button-active {
+            background-color: #de8d9b !important;
+            color: white !important;
         }
 
-        .container {
-            margin-top: 50px;
+        .fc-daygrid-day-number,
+        .fc-timegrid-axis-cushion,
+        .fc-col-header-cell-cushion {
+            color: pink !important;
         }
-
-        .profile-heading {
-            margin-bottom: 40px;
-        }
-
         .footer {
             background-color: #f8f9fa;
             padding: 20px;
@@ -169,7 +134,6 @@
         }
     </style>
 
-    {{-- Script for Navbar Active --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const currentLocation = location.pathname; // Ambil URL halaman saat ini
@@ -182,12 +146,12 @@
                 }
             });
         });
-
     </script>
+
 </head>
 
 <body>
-    <div class="container">
+    <div class="container my-5">
         <header class="border-bottom lh-1 py-3">
             <div class="row flex-nowrap justify-content-between align-items-center">
                 <div class="col-4 pt-1">
@@ -207,7 +171,20 @@
                             <path d="M21 21l-5.2-5.2" />
                         </svg>
                     </a>
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Sign up</a>
+                    @auth
+                        <!-- Jika user sudah login -->
+                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-secondary" style="border-color: white;">
+                                Log Out
+                            </button>
+                        </form>
+                    @else
+                        <!-- Jika user belum login -->
+                        <a class="btn btn-sm btn-outline-secondary" href="/login" style="border-color: white;">
+                            Sign Up
+                        </a>
+                    @endauth
                 </div>
             </div>
         </header>
@@ -217,44 +194,55 @@
                 <a class="nav-item nav-link link-body-emphasis" href="/home">Home</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/portfolio">Portfolio</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/booking">Booking</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/order">Order</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/calendar">Calendar</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/package">Package</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/ourprofile">Our Profile</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/account">My Account</a>
             </nav>
         </div>
+        <h2>Kalender Booking</h2>
+
+        {{-- <div class="row mb-3">
+            <div class="col text-start">
+                <a href="/makeupbyrani" class="btn btn-primary" style="background-color: pink; border-color: pink;">Back</a>
+            </div>
+        </div> --}}
+
+        <div id="calendar"></div>
     </div>
 
-    <div class="container">
-        <div class="row g-4">
-            <h2 class="text-center profile-heading">Add New MakeUp Artist</h2>
-            <form action="/ourprofile" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="mb-3">
-                    <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="nama" name="nama" required>
-                </div>
-                <div class="mb-3">
-                    <label for="pengalaman" class="form-label">Pengalaman</label>
-                    <textarea class="form-control" id="pengalaman" name="pengalaman" rows="3" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="lokasi" class="form-label">Lokasi</label>
-                    <textarea class="form-control" id="lokasi" name="lokasi" rows="3" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="portfolio_link" class="form-label">Portfolio Link</label>
-                    <input type="url" class="form-control" id="portfolio_link" name="portfolio_link"
-                        placeholder="https://example.com" required>
-                </div>
-                <div class="mb-3">
-                    <label for="profile_photo" class="form-label">Profile Photo</label>
-                    <input type="file" class="form-control" id="profile_photo" name="profile_photo">
-                </div>
-                <button type="submit" class="btn btn-primary btn-profile">Add MUA</button>
-            </form>
-        </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'id',
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: @json($calendars),
+                selectable: true,
+                editable: false,
+                eventTimeFormat: {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    meridiem: false
+                },
+                eventClick: function (info) {
+                    alert(`Event: ${info.event.title}`);
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
 
     <footer class="container footer">
         <div class="footer-content">
@@ -291,9 +279,9 @@
 
     </footer>
 
-
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
