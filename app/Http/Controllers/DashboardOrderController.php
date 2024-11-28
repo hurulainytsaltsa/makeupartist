@@ -86,4 +86,26 @@ class DashboardOrderController extends Controller
         // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('dashboard-order.index')->with('success', 'Booking dan pembayaran terkait berhasil dihapus.');
     }
+
+    public function confirmPayment($id)
+    {
+        $booking = Booking::findOrFail($id); // Pastikan Anda memiliki model Booking
+        if ($booking->payment) {
+            $booking->payment->status_pembayaran = 'Payment Approved';
+            $booking->payment->save();
+            return redirect()->back()->with('success', 'Pembayaran berhasil dikonfirmasi.');
+        }
+        return redirect()->back()->with('error', 'Pembayaran tidak ditemukan.');
+    }
+
+    public function rejectPayment($id)
+    {
+        $booking = Booking::findOrFail($id);
+        if ($booking->payment) {
+            $booking->payment->status_pembayaran = 'Payment Rejected';
+            $booking->payment->save();
+            return redirect()->back()->with('success', 'Pembayaran berhasil ditolak.');
+        }
+        return redirect()->back()->with('error', 'Pembayaran tidak ditemukan.');
+    }
 }

@@ -31,7 +31,7 @@
                 <td>{{ $detail->name }}</td>
                 <td>{{ $detail->type }}</td>
                 <td>{{ $detail->description }}</td>
-                <td>{{ number_format($detail->price, 0, ',', '.') }} IDR</td>
+                <td>Rp. {{ number_format($detail->price, 0, ',', '.') }}</td>
                 <td>{{ $detail->bonus }}</td>
                 <td>
                     <div class="d-flex">

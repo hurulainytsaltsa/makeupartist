@@ -23,4 +23,8 @@ class PackageMakeUp extends Model
         return $this->hasMany(DetailsMakeUp::class, 'package_makeup_id');
     }
 
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'pkt_makeup');
+    }
 }
