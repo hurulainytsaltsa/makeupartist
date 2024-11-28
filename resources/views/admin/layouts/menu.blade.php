@@ -29,101 +29,32 @@
                             </div>
                         </li>
                         <li>
-                            <a class="bell_notification_clicker" href="#"> <img
-                                    src="/img/menu-icon/bell.svg" alt="">
-                                <span>2</span>
+                            <a class="bell_notification_clicker" href="#"> <img src="/img/menu-icon/bell.svg"
+                                    alt="">
+                                    <span id="notification-count">0</span> <!-- Jumlah notifikasi -->
                             </a>
-                            <!-- Menu_NOtification_Wrap  -->
+                            <!-- Menu Notification -->
                             <div class="Menu_NOtification_Wrap">
                                 <div class="notification_Header">
                                     <h4>Notifications</h4>
                                 </div>
-                                <div class="Notification_body">
-                                    <!-- single_notify  -->
+                                <div class="Notification_body" id="notification-body">
+                                    <!-- AJAX Content Here -->
                                     <div class="single_notify d-flex align-items-center">
-                                        <div class="notify_thumb">
-                                            <a href="#"><img src="/img/staf/1.jpg" alt=""></a>
-                                        </div>
-                                        <div class="notify_content">
-                                            <a href="#">
-                                                <h5>Cool Marketing </h5>
-                                            </a>
-                                            <p>Lorem ipsum dolor sit amet</p>
-                                        </div>
-                                    </div>
-                                    <!-- single_notify  -->
-                                    <div class="single_notify d-flex align-items-center">
-                                        <div class="notify_thumb">
-                                            <a href="#"><img src="/img/staf/1.jpg" alt=""></a>
-                                        </div>
-                                        <div class="notify_content">
-                                            <a href="#">
-                                                <h5>Awesome packages</h5>
-                                            </a>
-                                            <p>Lorem ipsum dolor sit amet</p>
-                                        </div>
-                                    </div>
-                                    <!-- single_notify  -->
-                                    <div class="single_notify d-flex align-items-center">
-                                        <div class="notify_thumb">
-                                            <a href="#"><img src="/img/staf/1.jpg" alt=""></a>
-                                        </div>
-                                        <div class="notify_content">
-                                            <a href="#">
-                                                <h5>what a packages</h5>
-                                            </a>
-                                            <p>Lorem ipsum dolor sit amet</p>
-                                        </div>
-                                    </div>
-                                    <!-- single_notify  -->
-                                    <div class="single_notify d-flex align-items-center">
-                                        <div class="notify_thumb">
-                                            <a href="#"><img src="/img/staf/1.jpg" alt=""></a>
-                                        </div>
-                                        <div class="notify_content">
-                                            <a href="#">
-                                                <h5>Cool Marketing </h5>
-                                            </a>
-                                            <p>Lorem ipsum dolor sit amet</p>
-                                        </div>
-                                    </div>
-                                    <!-- single_notify  -->
-                                    <div class="single_notify d-flex align-items-center">
-                                        <div class="notify_thumb">
-                                            <a href="#"><img src="/img/staf/1.jpg" alt=""></a>
-                                        </div>
-                                        <div class="notify_content">
-                                            <a href="#">
-                                                <h5>Awesome packages</h5>
-                                            </a>
-                                            <p>Lorem ipsum dolor sit amet</p>
-                                        </div>
-                                    </div>
-                                    <!-- single_notify  -->
-                                    <div class="single_notify d-flex align-items-center">
-                                        <div class="notify_thumb">
-                                            <a href="#"><img src="/img/staf/1.jpg" alt=""></a>
-                                        </div>
-                                        <div class="notify_content">
-                                            <a href="#">
-                                                <h5>what a packages</h5>
-                                            </a>
-                                            <p>Lorem ipsum dolor sit amet</p>
-                                        </div>
+                                        <p>No new bookings.</p>
                                     </div>
                                 </div>
                                 <div class="nofity_footer">
                                     <div class="submit_button text-center pt_20">
-                                        <a href="#" class="btn_1">See More</a>
+                                        <a href="{{ route('dashboard-order.index') }}" class="btn_1">See All</a>
                                     </div>
                                 </div>
                             </div>
-                            <!--/ Menu_NOtification_Wrap  -->
+                            <!-- End Menu Notification -->
                         </li>
                         <li>
-                            <a class="CHATBOX_open" href="#"> <img src="/img/menu-icon/msg.svg"
-                                    alt="">
-                                <span>2</span> </a>
+                            <a class="CHATBOX_open" href="#"> <img src="/img/menu-icon/msg.svg" alt="">
+                                <span id="notification-count">0</span> <!-- Jumlah notifikasi -->
                         </li>
                     </div>
                     <div class="profile_info">
@@ -145,4 +76,143 @@
         </div>
     </div>
 </div>
+
+<style>
+    .single_notify {
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .single_notify.payment_notify {
+        border-left: 5px solid #28a745;
+    }
+
+    .single_notify.booking_notify {
+        border-left: 5px solid #007bff;
+    }
+
+    .single_notify p {
+        margin: 0;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .notify_group {
+        margin-bottom: 10px;
+        padding-top: 15px;
+    }
+
+    .notify_separator {
+        height: 1px;
+        background-color: #ddd;
+        margin: 10px 0;
+    }
+
+    .notification_Header h4 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #444;
+    }
+
+    .notification_body {
+        padding: 15px;
+    }
+
+    .btn_1 {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .btn_1:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<script>
+    // AJAX untuk mengambil notifikasi booking dan pembayaran
+    function fetchNotifications() {
+        fetch('/notifications') // Pastikan route ini sudah benar di backend
+            .then(response => response.json())
+            .then(data => {
+                // Update jumlah notifikasi
+                document.getElementById('notification-count').textContent = data.count;
+
+                // Update isi notifikasi
+                const notificationBody = document.getElementById('notification-body');
+                if (data.count > 0) {
+                    notificationBody.innerHTML = '';
+
+                    // Tambahkan notifikasi Pembayaran
+                    if (data.payments && data.payments.length > 0) {
+                        notificationBody.innerHTML += `
+                            <div class="notify_group">
+                                <h5 class="text-success">New Payments</h5>
+                                <div class="notify_separator"></div>
+                            </div>
+                        `;
+                        data.payments.forEach(notification => {
+                            const nama = notification.booking ? notification.booking.nama : 'Unknown';
+                            const tglMakeup = notification.booking ? notification.booking.tgl_makeup : 'N/A';
+                            const paketMakeup = notification.booking && notification.booking.packages_make_up ? notification.booking.packages_make_up.nama_paket : 'N/A';
+                            const jam = notification.booking ? notification.booking.jam : 'N/A';
+                            const bookingId = notification.booking ? notification.booking.id : '#';
+
+                            notificationBody.innerHTML += `
+                                <div class="single_notify payment_notify">
+                                    <a href="/dashboard-order/${bookingId}">
+                                        <p><strong>${nama}</strong>'s payment has been successfully confirmed for <b>${paketMakeup}</b> on <b>${tglMakeup}</b> at <b>${jam}</b>.</p>
+                                    </a>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    // Tambahkan notifikasi Booking
+                    if (data.bookings && data.bookings.length > 0) {
+                        notificationBody.innerHTML += `
+                            <div class="notify_group">
+                                <h5 class="text-primary">New Bookings</h5>
+                                <div class="notify_separator"></div>
+                            </div>
+                        `;
+                        data.bookings.forEach(notification => {
+                            const paketMakeup = notification.packages_make_up ? notification.packages_make_up.nama_paket : 'N/A';
+                            const bookingId = notification.id;
+
+                            notificationBody.innerHTML += `
+                                <div class="single_notify booking_notify">
+                                    <a href="/dashboard-booking/${bookingId}">
+                                        <p><strong>${notification.nama}</strong> has scheduled a <b>${paketMakeup}</b> makeup session on <b>${notification.tgl_makeup}</b> at <b>${notification.jam}</b>.</p>
+                                    </a>
+                                </div>
+                            `;
+                        });
+                    }
+                } else {
+                    // Jika tidak ada notifikasi baru
+                    notificationBody.innerHTML = `
+                        <div class="single_notify">
+                            <p>No new notifications.</p>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => console.error('Error fetching notifications:', error));
+    }
+
+    // Jalankan fetchNotifications setiap 10 detik
+    setInterval(fetchNotifications, 10000);
+    // Jalankan pertama kali saat halaman dimuat
+    fetchNotifications();
+</script>
+
+
 

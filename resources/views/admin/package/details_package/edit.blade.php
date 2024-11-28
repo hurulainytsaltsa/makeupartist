@@ -26,7 +26,7 @@
                 <div class="mb-3">
                     <label for="description" class="form-label">Deskripsi</label>
                     <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
-                        rows="3" required>{{ old('description', $detail->description) }}</textarea>
+                        rows="3">{{ old('description', $detail->description) }}</textarea>
                     @error('description')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -64,8 +64,7 @@
                 <!-- Bonus -->
                 <div class="mb-3">
                     <label for="bonus" class="form-label">Bonus</label>
-                    <textarea class="form-control @error('bonus') is-invalid @enderror" id="bonus" name="bonus" rows="3"
-                        required>{{ old('bonus', $detail->bonus) }}</textarea>
+                    <textarea class="form-control @error('bonus') is-invalid @enderror" id="bonus" name="bonus" rows="3">{{ old('bonus', $detail->bonus) }}</textarea>
                     @error('bonus')
                         <div class="invalid-feedback">
                             {{ $message }}
