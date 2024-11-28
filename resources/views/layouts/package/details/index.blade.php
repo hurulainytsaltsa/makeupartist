@@ -212,27 +212,61 @@
 
         <div class="fade-in">
             <h2 class="text-center mb-4">More Details For Our Package</h2>
-            <div class="container">
-                @if ($details->isEmpty())
-                    <p>No details available for this package.</p>
-                @else
+
+            @if ($details->isEmpty())
+                <p>No details available.</p>
+            @else
+                <div class="container">
+                    <h3>Packages</h3>
                     <div class="row">
-                        @foreach ($details as $detail)
+                        @foreach ($details->where('type', 'package') as $detail)
                             <div class="col-md-4">
                                 <div class="card">
                                     <div class="card-header text-center">{{ $detail->name }}</div>
                                     <div class="card-body">
                                         <p>{{ $detail->description }}</p>
-                                        <p><strong>Bonus:</strong> {{ $detail->bonus }}</p>
-                                        <p><strong>Price:</strong> IDR {{ $detail->price }}</p>
+                                        @if ($detail->bonus)
+                                            <p><strong>Bonus:</strong> {{ $detail->bonus }}</p>
+                                        @endif
+                                        <p><strong>Price:</strong> Rp. {{ number_format($detail->price, 0, ',', '.') }}</p>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
-                @endif
-                <a href="/package" class="btn btn-secondary mt-3">Back to Packages</a>
-            </div>
+
+                    <h3>Addons</h3>
+                    <div class="row">
+                        @foreach ($details->where('type', 'addon') as $detail)
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header text-center">{{ $detail->name }}</div>
+                                    <div class="card-body">
+                                        <p>{{ $detail->description }}</p>
+                                        <p><strong>Price:</strong> Rp. {{ number_format($detail->price, 0, ',', '.') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <h3>Services</h3>
+                    <div class="row">
+                        @foreach ($details->where('type', 'service') as $detail)
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header text-center">{{ $detail->name }}</div>
+                                    <div class="card-body">
+                                        <p>{{ $detail->description }}</p>
+                                        <p><strong>Price:</strong> Rp. {{ number_format($detail->price, 0, ',', '.') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+            <a href="/package" class="btn btn-secondary mt-3">Back to Packages</a>
         </div>
     </div>
 

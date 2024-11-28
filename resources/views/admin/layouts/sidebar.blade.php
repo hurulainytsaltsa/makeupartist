@@ -1,12 +1,14 @@
 <!-- sidebar  -->
     <nav class="sidebar">
-        <div class="logo d-flex justify-content-between">
-            <a class="large_logo" href="index.html"><img src="/images/headline.png" alt=""></a>
-            <a class="small_logo" href="index.html"><img src="/images/headline.png" alt=""></a>
-            <div class="sidebar_close_icon d-lg-none">
+        <div class="logo d-flex align-items-center" style="padding: 0; margin: 0;">
+            <a class="large_logo" href="/dashboard" style="flex: 4; padding: 0; margin: 0;">
+                <img src="/images/logo_mini.jpg" alt="" style="width: 100%; height: auto; object-fit: cover; display: block;">
+            </a>
+            <div class="sidebar_close_icon d-lg-none" style="flex: 1; text-align: center; padding: 0; margin: 0;">
                 <i class="ti-close"></i>
             </div>
         </div>
+
         <ul id="sidebar_menu">
             <li>
                 <a href="/dashboard" aria-expanded="false">
@@ -55,6 +57,16 @@
                     </div>
                     <div class="nav_title">
                         <span>Orders</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="/dashboard-booking" aria-expanded="false">
+                    <div class="nav_icon_small">
+                        <img src="/img/menu-icon/order.png" alt="">
+                    </div>
+                    <div class="nav_title">
+                        <span>Bookings</span>
                     </div>
                 </a>
             </li>

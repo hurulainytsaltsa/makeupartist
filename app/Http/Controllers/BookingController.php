@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\DetailsMakeUp;
 use App\Models\PackageMakeUp;
 use App\Models\Payment;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,8 +54,8 @@ class BookingController extends Controller
         ]);
 
         $exists = Booking::where('tgl_makeup', $validatedData['tgl_makeup'])
-        ->where('jam', $validatedData['jam'])
-        ->exists();
+            ->where('jam', $validatedData['jam'])
+            ->exists();
 
         if ($exists) {
             session()->flash('error', 'Waktu yang Anda pilih sudah dipesan. Silakan pilih waktu lain.');
@@ -194,5 +195,28 @@ class BookingController extends Controller
 
         // Arahkan ke halaman pembayaran
         return redirect('/payment');
+    }
+
+    public function getNotifications()
+    {
+        // Ambil data booking dengan status "pending"
+        $newBookings = Booking::with('packagesMakeUp') // Memuat relasi dari Booking ke PackageMakeUp
+            ->where('status', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        // Ambil data pembayaran dengan status "Waiting for Approval"
+        $newPayments = Payment::with(['booking.packagesMakeUp']) // Memuat relasi ke Booking dan PackageMakeUp
+            ->where('status_pembayaran', 'Waiting for Approval')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        return response()->json([
+            'count' => $newBookings->count() + $newPayments->count(),
+            'bookings' => $newBookings,
+            'payments' => $newPayments,
+        ]);
     }
 }
