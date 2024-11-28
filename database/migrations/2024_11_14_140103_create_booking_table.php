@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('tgl_makeup');
             $table->string('pkt_makeup');
-            $table->string('detail_paket');
+            $table->string('jenis_paket');
             $table->string('jam');
             $table->string('user_id');
             $table->timestamps();

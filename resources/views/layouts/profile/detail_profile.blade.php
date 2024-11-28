@@ -216,7 +216,7 @@
                 <a class="nav-item nav-link link-body-emphasis" href="/home">Home</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/portfolio">Portfolio</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/booking">Booking</a>
-                <a class="nav-item nav-link link-body-emphasis" href="/about">About Us</a>
+                <a class="nav-item nav-link link-body-emphasis" href="/calendar">Calendar</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/package">Package</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/ourprofile">Our Profile</a>
                 <a class="nav-item nav-link link-body-emphasis" href="/account">My Account</a>

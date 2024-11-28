@@ -199,7 +199,7 @@
                     @enderror
                 </div>
 
-                {{-- <div class="form-wrapper">
+                <div class="form-wrapper">
                     <img src="{{ captcha_src() }}" alt="Captcha" class="mb-2">
                     <input type="text" name="captcha" placeholder="Please Insert Captcha" class="form-control @error('captcha') is-invalid @enderror" style="border-color: #ffffff">
                     @error('captcha')
@@ -207,7 +207,7 @@
                         {{ $message }}
                     </div>
                     @enderror
-                </div> --}}
+                </div>
 
                 <button type="submit" class="btn btn-primary w-100 py-2">Register
                     <i class="bi bi-arrow-through-heart"></i>
