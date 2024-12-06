@@ -355,7 +355,7 @@
                 </p>
                 <p><strong>Jenis Paket:</strong> {{ optional($booking->DetailsMakeUp)->name ?? 'Tidak Ada Paket' }}
                 </p>
-                <p><strong>Price:</strong> {{ $booking->price }}</p>
+                <p><strong>Price:</strong> Rp{{ number_format($booking->price, 0, ',', '.') }} </p>
 
                 <!-- Data Pembayaran -->
                 @if ($booking->payment)
