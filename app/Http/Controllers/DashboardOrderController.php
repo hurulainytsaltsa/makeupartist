@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Calendar;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,7 +66,7 @@ class DashboardOrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**
@@ -89,13 +91,22 @@ class DashboardOrderController extends Controller
 
     public function confirmPayment($id)
     {
-        $booking = Booking::findOrFail($id); // Pastikan Anda memiliki model Booking
-        if ($booking->payment) {
-            $booking->payment->status_pembayaran = 'Payment Approved';
-            $booking->payment->save();
-            return redirect()->back()->with('success', 'Pembayaran berhasil dikonfirmasi.');
-        }
-        return redirect()->back()->with('error', 'Pembayaran tidak ditemukan.');
+        $booking = Booking::findOrFail($id); // Temukan pemesanan berdasarkan ID
+    if ($booking->payment) {
+        // Update status pembayaran
+        $booking->payment->status_pembayaran = 'Payment Approved';
+        $booking->payment->save();
+
+        Calendar::where('start', $booking->tgl_makeup . ' ' . $booking->jam)
+            ->update([
+                'title' => 'Not Available',
+                'status' => 'not available',
+                'color' => 'red',
+            ]);
+
+        return redirect()->back()->with('success', 'Pembayaran berhasil dikonfirmasi.');
+    }
+    return redirect()->back()->with('error', 'Pembayaran tidak ditemukan.');
     }
 
     public function rejectPayment($id)
@@ -108,4 +119,6 @@ class DashboardOrderController extends Controller
         }
         return redirect()->back()->with('error', 'Pembayaran tidak ditemukan.');
     }
+
+
 }

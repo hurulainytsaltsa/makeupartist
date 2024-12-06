@@ -37,13 +37,16 @@ class DashboardCalendarController extends Controller
             'color' => 'required|string',
         ]);
 
+        // Warna default berdasarkan status
+        $color = $validated['title'] === 'Not Available' ? 'red' : 'green';
+
         Calendar::create([
             'title' => $validated['title'],
             'start' => $validated['start'],
-            'color' => $validated['color']
+            'color' => $color,
         ]);
 
-        session()->flash('success', 'Booking berhasil dibuat.');
+        session()->flash('success', 'Event berhasil ditambahkan.');
 
         return redirect('/dashboard-calendar');
     }
@@ -102,4 +105,20 @@ class DashboardCalendarController extends Controller
         $calendar->delete();
         return redirect('/dashboard-calendar')->with('pesan', 'Data sudah berhasil dihapus');
     }
+
+    public function getEvents()
+    {
+        $events = Calendar::all();
+        $formattedEvents = $events->map(function ($event) {
+            return [
+                'title' => $event->title,
+                'start' => $event->start_time->toIso8601String(),
+                'end' => $event->end_time ? $event->end_time->toIso8601String() : $event->start_time->addHour()->toIso8601String(),
+                'color' => $event->status == 'not available' ? 'red' : 'green', // Gunakan status untuk menentukan warna
+            ];
+        });
+
+        return response()->json($formattedEvents);
+    }
+
 }
