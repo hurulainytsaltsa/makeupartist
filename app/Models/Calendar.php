@@ -18,4 +18,9 @@ class Calendar extends Model
         'color'
     ];
 
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class, 'start', 'tgl_makeup');
+    }
+
 }

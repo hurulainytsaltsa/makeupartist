@@ -34,7 +34,7 @@
                             <td>{{ $booking->jam }}</td>
                             <td>{{ $booking->packagesMakeUp->nama_paket ?? 'Tidak Ada Paket' }}</td>
                             <td>{{ optional($booking->DetailsMakeUp)->name ?? 'Tidak Ada Paket' }}</td>
-                            <td>{{ $booking->price }}</td>
+                            <td>Rp{{ number_format($booking->price, 0, ',', '.') }}</td>
                             <td>
                                 @if ($booking->status == 'pending')
                                     <span class="badge" style="background-color: #ffcccb; color: #b71c1c;">Waiting for Payment</span>

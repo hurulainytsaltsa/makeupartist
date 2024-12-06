@@ -42,7 +42,7 @@
                             <td>{{ $booking->jam }}</td>
                             <td>{{ $booking->packagesMakeUp->nama_paket ?? 'Tidak Ada Paket' }}</td>
                             <td>{{ optional($booking->DetailsMakeUp)->name ?? 'Tidak Ada Paket' }}</td>
-                            <td>{{ $booking->price }}</td>
+                            <td>Rp{{ number_format($booking->price, 0, ',', '.') }}</td>
                             {{-- <td>{{ $booking->payment->no_rekening ?? '-' }}</td> --}}
                             <td>
                                 {{-- {{ $booking->payment->status_pembayaran ?? 'Belum Dibayar' }} --}}

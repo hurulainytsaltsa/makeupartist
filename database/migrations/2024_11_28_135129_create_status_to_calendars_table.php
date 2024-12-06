@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('calendars', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->datetime('start');
-            $table->string('color');
-            $table->string('status');
-            $table->timestamps();
+        Schema::table('calendars', function (Blueprint $table) {
+            $table->string('status')->after('color')->default('available');
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('calendars');
+        Schema::table('calendars', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 };

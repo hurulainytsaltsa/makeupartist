@@ -47,7 +47,7 @@ class CalendarController extends Controller
 
         session()->flash('success', 'Booking berhasil dibuat.');
 
-        return redirect('/calendar');
+        return redirect('/dashboard-calendar');
     }
     /**
      * Display the specified resource.
