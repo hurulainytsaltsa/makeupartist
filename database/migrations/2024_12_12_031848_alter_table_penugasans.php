@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('calendars', function (Blueprint $table) {
-            $table->string('status')->after('color')->default('available');
+        Schema::table('penugasans', function (Blueprint $table) {
+            $table->string('jam')->after('tgl_makeup');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('calendars', function (Blueprint $table) {
-            $table->dropColumn('status');
+        Schema::table('penugasans', function (Blueprint $table) {
+            //
         });
     }
 };

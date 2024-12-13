@@ -61,6 +61,16 @@
                 </a>
             </li>
             <li>
+                <a href="/dashboard-assign" aria-expanded="false">
+                    <div class="nav_icon_small">
+                        <img src="/img/menu-icon/assign.png" alt="">
+                    </div>
+                    <div class="nav_title">
+                        <span>MUA Assignment</span>
+                    </div>
+                </a>
+            </li>
+            <li>
                 <a href="/dashboard-booking" aria-expanded="false">
                     <div class="nav_icon_small">
                         <img src="/img/menu-icon/order.png" alt="">

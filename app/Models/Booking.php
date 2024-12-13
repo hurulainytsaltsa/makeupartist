@@ -35,8 +35,17 @@ class Booking extends Model
         return $this->hasOne(Payment::class, 'booking_id');
     }
     public function calendar()
-{
-    return $this->hasOne(Calendar::class, 'start', 'tgl_makeup');
-}
+    {
+        return $this->hasOne(Calendar::class, 'start', 'tgl_makeup');
+    }
 
+    public function mua()
+    {
+        return $this->belongsTo(MuaProfile::class, 'nama');
+    }
+
+    public function penugasans()
+    {
+        return $this->hasMany(Penugasans::class, 'booking_id');
+    }
 }

@@ -12,11 +12,10 @@ class MuaProfile extends Model
     protected $table = 'mua_profiles';
 
     // Define the fillable properties
-    protected $fillable = [
-        'nama',
-        'pengalaman',
-        'lokasi',
-        'portfolio_link',
-        'profile_photo',
-    ];
+    protected $fillable = ['nama_mua', 'pengalaman', 'lokasi', 'portfolio_link', 'profile_photo'];
+
+    public function penugasans()
+    {
+        return $this->hasMany(Penugasans::class, 'nama_mua', 'nama_mua');
+    }
 }

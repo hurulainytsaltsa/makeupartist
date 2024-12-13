@@ -11,12 +11,7 @@ class Payment extends Model
 
     protected $table = 'payment';
 
-    protected $fillable = [
-        'no_rekening',
-        'bukti_pembayaran',
-        'status_pembayaran',
-        'booking_id',
-    ];
+    protected $fillable = ['no_rekening', 'bukti_pembayaran', 'status_pembayaran', 'booking_id'];
 
     // public function booking()
     // {
@@ -27,4 +22,11 @@ class Payment extends Model
     {
         return $this->belongsTo(Booking::class, 'booking_id');
     }
+
+    public function mua()
+    {
+        return $this->belongsTo(MuaProfile::class, 'mua_id');
+    }
+
+
 }

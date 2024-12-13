@@ -36,7 +36,7 @@ class DashboardPMuaProfileController extends Controller
     {
         // Validate input
         $validatedData = $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama_mua' => 'required|string|max:255',
             'pengalaman' => 'required',
             'lokasi' => 'required|string|max:255',
             'portfolio_link' => 'required|url', // Validate for portfolio link
@@ -49,7 +49,7 @@ class DashboardPMuaProfileController extends Controller
 
         // Create a new MUA profile
         $muaProfile = MuaProfile::create([
-            'nama' => $validatedData['nama'],
+            'nama_mua' => $validatedData['nama'],
             'pengalaman' => $validatedData['pengalaman'],
             'lokasi' => $validatedData['lokasi'],
             'portfolio_link' => $validatedData['portfolio_link'],
@@ -86,7 +86,7 @@ class DashboardPMuaProfileController extends Controller
     {
         // Validasi input dari form
         $validatedData = $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama_mua' => 'required|string|max:255',
             'pengalaman' => 'required',
             'lokasi' => 'required|string|max:255',
             'portfolio_link' => 'required|url',
@@ -112,7 +112,7 @@ class DashboardPMuaProfileController extends Controller
         }
 
         // Perbarui data lainnya
-        $mua->nama = $validatedData['nama'];
+        $mua->nama = $validatedData['nama_mua'];
         $mua->pengalaman = $validatedData['pengalaman'];
         $mua->lokasi = $validatedData['lokasi'];
         $mua->portfolio_link = $validatedData['portfolio_link'];

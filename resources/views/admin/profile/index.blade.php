@@ -26,7 +26,7 @@
         @foreach ($mua_profiles as $mua)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $mua->nama }}</td>
+                <td>{{ $mua->nama_mua }}</td>
                 <td>{{ $mua->pengalaman }}</td>
                 <td>{{ $mua->lokasi }}</td>
                 <td>{{ $mua->portfolio_link }}</td>
