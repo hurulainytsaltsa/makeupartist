@@ -9,8 +9,8 @@
         <form action="/dashboard-profile" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
-                <label for="nama" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="nama" name="nama" required>
+                <label for="nama_mua" class="form-label">Nama MUA</label>
+                <input type="text" class="form-control" id="nama_mua" name="nama_mua" required>
             </div>
             <div class="mb-3">
                 <label for="pengalaman" class="form-label">Pengalaman</label>

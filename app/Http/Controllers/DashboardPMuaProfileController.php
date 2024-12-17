@@ -49,7 +49,7 @@ class DashboardPMuaProfileController extends Controller
 
         // Create a new MUA profile
         $muaProfile = MuaProfile::create([
-            'nama_mua' => $validatedData['nama'],
+            'nama_mua' => $validatedData['nama_mua'],
             'pengalaman' => $validatedData['pengalaman'],
             'lokasi' => $validatedData['lokasi'],
             'portfolio_link' => $validatedData['portfolio_link'],
@@ -75,7 +75,6 @@ class DashboardPMuaProfileController extends Controller
     {
          // Retrieve a single MUA profile by its ID
          $mua = MuaProfile::findOrFail($id);
-
          return view('admin.profile.edit', compact('mua'));
     }
 
@@ -93,7 +92,6 @@ class DashboardPMuaProfileController extends Controller
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Opsional jika tidak ada perubahan
         ]);
 
-        // Cari profil MUA berdasarkan ID
         $mua = MuaProfile::findOrFail($id);
 
         // Jika ada gambar baru di-upload, hapus gambar lama dan upload gambar baru
@@ -112,7 +110,7 @@ class DashboardPMuaProfileController extends Controller
         }
 
         // Perbarui data lainnya
-        $mua->nama = $validatedData['nama_mua'];
+        $mua->nama_mua = $validatedData['nama_mua'];
         $mua->pengalaman = $validatedData['pengalaman'];
         $mua->lokasi = $validatedData['lokasi'];
         $mua->portfolio_link = $validatedData['portfolio_link'];

@@ -9,6 +9,7 @@ use App\Models\Payment;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -17,6 +18,12 @@ class BookingController extends Controller
      */
     public function index()
     {
+        $timeThreshold = now()->subHours(12);
+        // Menghapus booking yang lebih tua dari 12 jam dan statusnya 'pending'
+        Booking::where('status', 'pending')
+            ->where('created_at', '<', $timeThreshold)
+            ->delete();
+
         $booking = Booking::with('detailsMakeUp')
             ->where('user_id', Auth::id()) // Filter berdasarkan user yang sedang login
             ->where('status', 'pending')
@@ -43,15 +50,37 @@ class BookingController extends Controller
         $validatedData = $request->validate([
             'user_id' => 'required|exists:users,id',
             'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
             'no_telp' => 'required|numeric',
             'alamat' => 'required|min:5',
-            'tgl_makeup' => 'required|date',
+            'tgl_makeup' => 'required|date|after_or_equal:today',
             'pkt_makeup' => 'required|integer',
             'jam' => 'required|date_format:H:i',
             'jenis_paket' => 'required|integer',
             'price' => 'required|numeric',
         ]);
+
+        // Cek jika user sudah memiliki booking yang pending
+        $existingBooking = Booking::where('user_id', Auth::id())
+            ->where('status', 'pending')
+            ->exists();
+
+        if ($existingBooking) {
+            session()->flash('error', 'Hanya bisa membooking sekali! Harap selesaikan pembayaran terlebih dahulu.');
+            return back()->withInput();
+        }
+
+        $requestedDateTime = date('Y-m-d H:i:s', strtotime($validatedData['tgl_makeup'] . ' ' . $validatedData['jam']));
+
+        $isAvailable = \Illuminate\Support\Facades\DB::table('calendars')
+            ->where('start', $requestedDateTime)
+            ->where('title', 'Available')
+            ->exists();
+
+        if (!$isAvailable) {
+            session()->flash('error', 'Jam tersebut tidak tersedia. Silakan pilih waktu lain.');
+            return back()->withInput();
+        }
 
         $exists = Booking::where('tgl_makeup', $validatedData['tgl_makeup'])
             ->where('jam', $validatedData['jam'])
@@ -59,13 +88,11 @@ class BookingController extends Controller
 
         if ($exists) {
             session()->flash('error', 'Waktu yang Anda pilih sudah dipesan. Silakan pilih waktu lain.');
-
-            return back()->withInput(); // Mengembalikan input sebelumnya
+            return back()->withInput();
         }
 
         $validatedData['user_id'] = Auth::id();
 
-        // Create a new MUA profile
         $booking = Booking::create([
             'user_id' => $validatedData['user_id'],
             'nama' => $validatedData['nama'],
@@ -77,14 +104,11 @@ class BookingController extends Controller
             'jam' => $validatedData['jam'],
             'jenis_paket' => $validatedData['jenis_paket'],
             'price' => $validatedData['price'],
-
-
+            'status' => 'pending',
+            'created_at' => now(),
         ]);
 
-        $userId = $validatedData['user_id'];
-
         session()->flash('success', 'Booking berhasil dibuat.');
-
         return redirect('/booking');
     }
 

@@ -10,8 +10,16 @@
             @csrf
             <div class="mb-3">
                 <label for="nama_mua" class="form-label">Nama MUA</label>
-                <input type="text" class="form-control" id="nama_mua" name="nama_mua" required>
+                <select class="form-control" id="nama_mua" name="nama_mua" required>
+                    <option value="" disabled {{ old('nama_mua') ? '' : 'selected' }}>Pilih Nama MUA</option>
+                    @foreach ($muaProfiles as $mua)
+                        <option value="{{ $mua->nama_mua }}" {{ old('nama_mua') == $mua->nama_mua ? 'selected' : '' }}>
+                            {{ $mua->nama_mua }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
+
             <div class="mb-3">
                 <label for="review" class="form-label">Review</label>
                 <textarea class="form-control" id="review" name="review" rows="3" required></textarea>
