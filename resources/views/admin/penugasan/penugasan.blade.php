@@ -42,7 +42,7 @@
 
                 <td>
                     <div class="d-flex">
-                        <a title="Edit Data" href="">
+                        <a title="Edit Data" href="{{ route('dashboard-assign.edit', $penugasan->id) }}">
                             <button class="btn btn-warning btn-sm me-2" type="button">
                                 <i class="bi bi-pencil"></i>
                             </button>
@@ -93,6 +93,7 @@
                 });
             }
         </script>
+
     </table>
 
 @endsection

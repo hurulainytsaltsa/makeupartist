@@ -53,7 +53,8 @@
                         <select name="nama_mua" id="nama_mua" class="form-control" required onchange="setMuaId()">
                             <option value="" disabled selected>Pilih Nama MUA</option>
                             @foreach ($muaProfiles as $mua)
-                                <option value="{{ $mua->nama_mua }}" data-id="{{ $mua->id }}">{{ $mua->nama_mua }}</option>
+                                <option value="{{ $mua->nama_mua }}" data-id="{{ $mua->id }}">{{ $mua->nama_mua }}
+                                </option>
                             @endforeach
                         </select>
 

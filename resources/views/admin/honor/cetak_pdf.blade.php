@@ -147,6 +147,7 @@
     <div class="footer">
         <p>&copy; {{ date('Y') }} MakeUp By Rani. Semua Hak Dilindungi.</p>
     </div>
+
 </body>
 
 </html>

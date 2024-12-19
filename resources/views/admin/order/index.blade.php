@@ -44,7 +44,9 @@
                             <td>{{ $booking->packagesMakeUp->nama_paket ?? 'Tidak Ada Paket' }}</td>
                             <td>{{ optional($booking->DetailsMakeUp)->name ?? 'Tidak Ada Paket' }}</td>
                             <td>Rp{{ number_format($booking->price, 0, ',', '.') }}</td>
+                            {{-- <td>{{ $booking->payment->no_rekening ?? '-' }}</td> --}}
                             <td>
+                                {{-- {{ $booking->payment->status_pembayaran ?? 'Belum Dibayar' }} --}}
                                 @if ($booking->payment->status_pembayaran == 'Payment Rejected')
                                     <span class="badge" style="background-color: #ffcccb; color: #b71c1c;">Payment
                                         Rejected</span>
@@ -79,8 +81,9 @@
                                         <button class="btn btn-success me-2" type="button"><i
                                                 class="bi bi-eye"></i></button>
                                     </a>
-                                    <a title="Edit Data" href="{{ route('penugasan.index', $booking->id) }}"><button class="btn btn-warning  me-2"
-                                            type="button"><i class="bi bi-pencil"></i></button></a>
+                                    <a title="Edit Data" href="{{ route('penugasan.index', $booking->id) }}"><button
+                                            class="btn btn-warning  me-2" type="button"><i
+                                                class="bi bi-pencil"></i></button></a>
                                     <form action="{{ route('dashboard-order.destroy', $booking->id) }}" method="POST"
                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus pesanan ini?');"
                                         class="d-inline">

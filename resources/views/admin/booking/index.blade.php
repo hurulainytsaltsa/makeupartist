@@ -69,4 +69,5 @@
             {{ $booking->links() }}
         </div>
     </div>
+
 @endsection

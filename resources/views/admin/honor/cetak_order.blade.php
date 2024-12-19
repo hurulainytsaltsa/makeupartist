@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,33 +11,41 @@
             font-size: 8;
             margin: 20px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #000;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
-        h1, h3 {
+
+        h1,
+        h3 {
             text-align: center;
         }
+
         .total {
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
     <h1>Laporan Pemesanan</h1>
 
     <!-- Menampilkan Jenis Laporan -->
     <h3>
-        @if(request('week'))
+        @if (request('week'))
             Minggu {{ request('week') }} Tahun {{ request('year') }}
         @elseif(request('month') && request('year'))
             Bulan {{ date('F', mktime(0, 0, 0, (int) request('month'), 1)) }} Tahun {{ (int) request('year') }}
@@ -64,24 +73,25 @@
                 $totalBiayaLayanan = 0;
                 $totalBiayaMUA = 0; // Inisialisasi total biaya MUA
             @endphp
-            @foreach($orders as $key => $order)
-            @php
-                $biayaLayanan = $order->gaji_kotor - $order->gaji_bersih;
-                $totalGajiKotor += $order->gaji_kotor;
-                $totalBiayaLayanan += $biayaLayanan;
-                $biayaMUA = $order->gaji_bersih; // Gaji MUA adalah gaji bersih
-                $totalBiayaMUA += $biayaMUA; // Tambahkan ke total biaya MUA
-            @endphp
-            <tr>
-                <td>{{ $key + 1 }}</td>
-                <td>{{ $order->muaProfile->nama_mua }}</td>
-                <td>{{ $order->penugasan->pkt_makeup ?? 'N/A' }} - {{ $order->penugasan->jenis_paket ?? 'N/A' }}</td>
-                <td>{{ $order->id }}</td>
-                <td>{{ $order->created_at->format('d-m-Y') }}</td>
-                <td>Rp {{ number_format($order->gaji_kotor, 0, ',', '.') }}</td> <!-- Tampilkan gaji kotor -->
-                <td>Rp {{ number_format($order->gaji_bersih, 0, ',', '.') }}</td>
-                <td>Rp {{ number_format($biayaLayanan, 0, ',', '.') }}</td> <!-- Hitung biaya layanan -->
-            </tr>
+            @foreach ($orders as $key => $order)
+                @php
+                    $biayaLayanan = $order->gaji_kotor - $order->gaji_bersih;
+                    $totalGajiKotor += $order->gaji_kotor;
+                    $totalBiayaLayanan += $biayaLayanan;
+                    $biayaMUA = $order->gaji_bersih; // Gaji MUA adalah gaji bersih
+                    $totalBiayaMUA += $biayaMUA; // Tambahkan ke total biaya MUA
+                @endphp
+                <tr>
+                    <td>{{ $key + 1 }}</td>
+                    <td>{{ $order->muaProfile->nama_mua }}</td>
+                    <td>{{ $order->penugasan->pkt_makeup ?? 'N/A' }} - {{ $order->penugasan->jenis_paket ?? 'N/A' }}
+                    </td>
+                    <td>{{ $order->id }}</td>
+                    <td>{{ $order->created_at->format('d-m-Y') }}</td>
+                    <td>Rp {{ number_format($order->gaji_kotor, 0, ',', '.') }}</td> <!-- Tampilkan gaji kotor -->
+                    <td>Rp {{ number_format($order->gaji_bersih, 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($biayaLayanan, 0, ',', '.') }}</td> <!-- Hitung biaya layanan -->
+                </tr>
             @endforeach
         </tbody>
         <tfoot>
@@ -89,7 +99,8 @@
                 <td colspan="5" class="total" style="text-align: right;">Total:</td>
                 <td class="total">Rp {{ number_format($totalGajiKotor, 0, ',', '.') }}</td>
                 <td class="total">Rp {{ number_format($totalBiayaMUA, 0, ',', '.') }}</td> <!-- Total Biaya MUA -->
-                <td class="total">Rp {{ number_format($totalBiayaLayanan, 0, ',', '.') }}</td> <!-- Total Biaya Layanan -->
+                <td class="total">Rp {{ number_format($totalBiayaLayanan, 0, ',', '.') }}</td>
+                <!-- Total Biaya Layanan -->
             </tr>
         </tfoot>
     </table>
@@ -111,4 +122,5 @@
     </table>
 
 </body>
+
 </html>

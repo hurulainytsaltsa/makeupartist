@@ -107,7 +107,7 @@
                         <tbody>
                             @foreach ($honors as $key => $honor)
                                 <tr>
-                                    <td>{{($honors->currentPage() - 1) * $honors->perPage() + $key + 1 }}</td>
+                                    <td>{{ ($honors->currentPage() - 1) * $honors->perPage() + $key + 1 }}</td>
                                     <td>{{ $honor->penugasan_id }}</td>
                                     <td>{{ $honor->muaProfile->nama_mua ?? 'Nama tidak tersedia' }}</td>
                                     <td>Rp {{ number_format($honor->gaji_kotor, 0, ',', '.') }}</td>
@@ -116,32 +116,37 @@
                                     <td>
                                         <div class="d-flex flex-wrap gap-2">
                                             <!-- Tombol Show -->
-                                            <a href="{{ route('dashboard-honor.show', $honor->penugasan_id) }}" class="btn btn-success btn-sm">
+                                            <a href="{{ route('dashboard-honor.show', $honor->penugasan_id) }}"
+                                                class="btn btn-success btn-sm">
                                                 <i class="bi bi-eye"></i>
                                             </a>
 
                                             <!-- Tombol Delete -->
-                                            <form action="{{ route('dashboard-honor.destroy', $honor->id) }}" method="POST" class="d-inline"
+                                            <form action="{{ route('dashboard-honor.destroy', $honor->id) }}"
+                                                method="POST" class="d-inline"
                                                 onsubmit="return confirm('Are you sure you want to delete this honor?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                                                <button type="submit" class="btn btn-danger btn-sm"><i
+                                                        class="bi bi-trash"></i></button>
                                             </form>
 
                                             <!-- Tombol Lihat Bukti Pembayaran -->
                                             @if ($honor->bukti_pembayaran)
-                                            <a href="{{ asset('images/bukti_honor/' . $honor->bukti_pembayaran) }}" target="_blank" class="btn btn-info btn-sm">
-                                                Lihat Bukti
-                                            </a>
+                                                <a href="{{ asset('images/bukti_honor/' . $honor->bukti_pembayaran) }}"
+                                                    target="_blank" class="btn btn-info btn-sm">
+                                                    Lihat Bukti
+                                                </a>
                                             @else
                                                 <!-- Form Upload Bukti Pembayaran -->
-                                                <form action="{{ route('dashboard-honor.upload-payment', $honor->id) }}" method="POST"
-                                                    enctype="multipart/form-data" class="d-inline">
+                                                <form action="{{ route('dashboard-honor.upload-payment', $honor->id) }}"
+                                                    method="POST" enctype="multipart/form-data" class="d-inline">
                                                     @csrf
                                                     <div class="d-flex align-items-center gap-2">
                                                         <input type="file" name="bukti_pembayaran" accept="image/*,.pdf"
                                                             class="form-control form-control-sm" required>
-                                                        <button type="submit" class="btn btn-primary btn-sm">Upload</button>
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-sm">Upload</button>
                                                     </div>
                                                 </form>
                                             @endif

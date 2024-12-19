@@ -21,7 +21,7 @@ class DashboardOrderController extends Controller
             ->whereIn('status', ['paid', 'completed'])
             ->get();
 
-            // dd($bookings->pluck('status'));
+        // dd($bookings->pluck('status'));
 
         // Mengirimkan data bookings dengan relasi payment ke view
         return view('admin.order.index', compact('bookings'));
@@ -60,18 +60,13 @@ class DashboardOrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-
-    }
+    public function edit(string $id) {}
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-    }
+    public function update(Request $request, string $id) {}
 
     /**
      * Remove the specified resource from storage.

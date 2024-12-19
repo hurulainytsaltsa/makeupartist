@@ -288,4 +288,5 @@ class DashboardHonorController extends Controller
 
         return redirect()->back()->with('success', 'Bukti pembayaran berhasil diunggah.');
     }
+
 }

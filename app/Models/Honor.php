@@ -19,6 +19,7 @@ class Honor extends Model
         'bukti_pembayaran',
     ];
 
+
     // Relasi ke tabel penugasans
     public function penugasan()
     {
