@@ -11,10 +11,10 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama"
-                        name="nama" value="{{ old('nama', $mua->nama_mua) }}" required>
-                    @error('nama')
+                    <label for="nama_mua" class="form-label">Nama</label>
+                    <input type="text" class="form-control @error('nama_mua') is-invalid @enderror" id="nama_mua"
+                        name="nama_mua" value="{{ old('nama_mua', $mua->nama_mua) }}" required>
+                    @error('nama_mua')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>

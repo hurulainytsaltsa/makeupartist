@@ -49,7 +49,7 @@ class DashboardPMuaProfileController extends Controller
 
         // Create a new MUA profile
         $muaProfile = MuaProfile::create([
-            'nama_mua' => $validatedData['nama'],
+            'nama_mua' => $validatedData['nama_mua'],
             'pengalaman' => $validatedData['pengalaman'],
             'lokasi' => $validatedData['lokasi'],
             'portfolio_link' => $validatedData['portfolio_link'],
@@ -112,7 +112,7 @@ class DashboardPMuaProfileController extends Controller
         }
 
         // Perbarui data lainnya
-        $mua->nama = $validatedData['nama_mua'];
+        $mua->nama_mua = $validatedData['nama_mua'];
         $mua->pengalaman = $validatedData['pengalaman'];
         $mua->lokasi = $validatedData['lokasi'];
         $mua->portfolio_link = $validatedData['portfolio_link'];
