@@ -18,10 +18,8 @@ class DashboardOrderController extends Controller
     public function index()
     {
         $bookings = Booking::with('detailsMakeUp') // Relasi dengan tabel detailsMakeUp
-            ->whereIn('status', ['paid', 'completed'])
+            ->where('status', 'paid') // Tambahkan filter untuk hanya mengambil data yang berstatus 'paid'
             ->get();
-
-            // dd($bookings->pluck('status'));
 
         // Mengirimkan data bookings dengan relasi payment ke view
         return view('admin.order.index', compact('bookings'));
@@ -50,7 +48,7 @@ class DashboardOrderController extends Controller
     {
         $bookings = Booking::with('detailsMakeUp', 'payment') // Relasi dengan tabel detailsMakeUp dan payment
             ->where('id', $id) // Filter berdasarkan booking_id
-            ->whereIn('status', ['paid', 'completed'])
+            ->where('status', 'paid')
             ->firstOrFail(); // Jika tidak ditemukan, lempar error 404
 
         // Mengirimkan data booking ke view

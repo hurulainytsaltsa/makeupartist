@@ -96,7 +96,19 @@ class DashboardPenugasanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Cari penugasan berdasarkan ID
+        $penugasan = Penugasans::find($id);
+
+        // Periksa apakah penugasan ditemukan
+        if (!$penugasan) {
+            return redirect()->route('dashboard-assign.show')->with('error', 'Penugasan tidak ditemukan.');
+        }
+
+        // Mengambil semua MUA Profiles untuk opsi pilihan
+        $muaProfiles = MuaProfile::all();
+
+        // Tampilkan form edit dan kirim data penugasan
+        return view('admin.penugasan.edit', compact('penugasan', 'muaProfiles'));
     }
 
     /**
@@ -104,7 +116,42 @@ class DashboardPenugasanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validasi input untuk update penugasan
+        $request->validate([
+            'nama_mua' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
+            'no_telp' => 'required|string|max:20',
+            'alamat' => 'required|string|max:255',
+            'tgl_makeup' => 'required|date',
+            'jam' => 'required|string',
+            'pkt_makeup' => 'required|string|max:255',
+            'jenis_paket' => 'required|string|max:255',
+        ]);
+
+        // Cari penugasan berdasarkan ID
+        $penugasan = Penugasans::find($id);
+
+        // Periksa apakah penugasan ditemukan
+        if (!$penugasan) {
+            return redirect()->route('dashboard-assign.show')->with('error', 'Penugasan tidak ditemukan.');
+        }
+
+        // Update semua data penugasan
+        $penugasan->nama_mua = $request->nama_mua;
+        $penugasan->nama = $request->nama;
+        $penugasan->no_telp = $request->no_telp;
+        $penugasan->alamat = $request->alamat;
+        $penugasan->tgl_makeup = $request->tgl_makeup;
+        $penugasan->jam = $request->jam;
+        $penugasan->pkt_makeup = $request->pkt_makeup;
+        $penugasan->jenis_paket = $request->jenis_paket;
+
+        // Simpan perubahan
+        if ($penugasan->save()) {
+            return redirect()->route('dashboard-assign.show')->with('success', 'Penugasan berhasil diperbarui.');
+        } else {
+            return redirect()->back()->with('error', 'Gagal memperbarui penugasan.');
+        }
     }
 
     /**
