@@ -11,7 +11,7 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="nama_mua" class="form-label">Nama</label>
+                    <label for="nama_mua" class="form-label">Nama MUA</label>
                     <input type="text" class="form-control @error('nama_mua') is-invalid @enderror" id="nama_mua"
                         name="nama_mua" value="{{ old('nama_mua', $mua->nama_mua) }}" required>
                     @error('nama_mua')

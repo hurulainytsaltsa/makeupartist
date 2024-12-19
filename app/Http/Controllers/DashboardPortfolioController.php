@@ -20,11 +20,11 @@ class DashboardPortfolioController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        $portofolio = Portofolio::all();
-        return view('admin.portofolio.create', compact('portofolio'));
-    }
-
+{
+    // Ambil data nama MUA dari MuaProfile untuk dropdown
+    $muaProfiles = \App\Models\MuaProfile::all();
+    return view('admin.portofolio.create', compact('muaProfiles'));
+}
     /**
      * Store a newly created resource in storage.
      */
@@ -36,11 +36,9 @@ class DashboardPortfolioController extends Controller
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Save the profile photo to a specified directory
         $filename = time() . '.' . $request->gambar->extension();
         $request->gambar->move(public_path('images/gambar'), $filename);
 
-        // Create a new MUA profile
         $portofolio = Portofolio::create([
             'nama_mua' => $validatedData['nama_mua'],
             'review' => $validatedData['review'],
@@ -65,7 +63,8 @@ class DashboardPortfolioController extends Controller
     public function edit(string $id)
     {
         $portofolio = Portofolio::findOrFail($id);
-        return view('admin.portofolio.edit', compact('portofolio'));
+        $muaProfiles = \App\Models\MuaProfile::all();
+        return view('admin.portofolio.edit', compact('portofolio', 'muaProfiles'));
     }
 
     /**

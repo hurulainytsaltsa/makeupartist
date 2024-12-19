@@ -11,13 +11,15 @@
             @csrf
             <div class="mb-3">
                 <label for="nama_mua" class="form-label">Nama MUA</label>
-                <input type="text" class="form-control @error('nama_mua') is-invalid @enderror" id="nama_mua"
-                    name="nama_mua" value="{{ old('nama_mua', $portofolio->nama_mua) }}" required>
-                @error('nama_mua')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                @enderror
+                <select class="form-control" id="nama_mua" name="nama_mua" required>
+                    <option value="" disabled>Pilih Nama MUA</option>
+                    @foreach ($muaProfiles as $mua)
+                        <option value="{{ $mua->nama_mua }}"
+                            {{ (old('nama_mua') ?? $portofolio->nama_mua) == $mua->nama_mua ? 'selected' : '' }}>
+                            {{ $mua->nama_mua }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-3">

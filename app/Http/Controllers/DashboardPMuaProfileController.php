@@ -75,7 +75,6 @@ class DashboardPMuaProfileController extends Controller
     {
          // Retrieve a single MUA profile by its ID
          $mua = MuaProfile::findOrFail($id);
-
          return view('admin.profile.edit', compact('mua'));
     }
 
@@ -93,7 +92,6 @@ class DashboardPMuaProfileController extends Controller
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Opsional jika tidak ada perubahan
         ]);
 
-        // Cari profil MUA berdasarkan ID
         $mua = MuaProfile::findOrFail($id);
 
         // Jika ada gambar baru di-upload, hapus gambar lama dan upload gambar baru

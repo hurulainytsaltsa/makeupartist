@@ -17,4 +17,9 @@ class Portofolio extends Model
         'review',
         'gambar',
     ];
+
+    public function namaMUA()
+    {
+        return $this->belongsTo(MuaProfile::class, 'nama_mua');
+    }
 }
