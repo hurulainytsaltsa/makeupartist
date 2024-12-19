@@ -9,7 +9,6 @@
         <form action="/dashboard-profile" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
-<<<<<<<<< Temporary merge branch 1
                 <label for="nama_mua" class="form-label">Nama MUA</label>
                 <input type="text" class="form-control" id="nama_mua" name="nama_mua" required>
             </div>
