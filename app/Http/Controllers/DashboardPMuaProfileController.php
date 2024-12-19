@@ -73,9 +73,9 @@ class DashboardPMuaProfileController extends Controller
      */
     public function edit(string $id)
     {
-         // Retrieve a single MUA profile by its ID
-         $mua = MuaProfile::findOrFail($id);
-         return view('admin.profile.edit', compact('mua'));
+        // Retrieve a single MUA profile by its ID
+        $mua = MuaProfile::findOrFail($id);
+        return view('admin.profile.edit', compact('mua'));
     }
 
     /**
@@ -142,4 +142,5 @@ class DashboardPMuaProfileController extends Controller
         // Redirect kembali ke halaman profil dengan pesan sukses
         return redirect('/dashboard-profile')->with('pesan', 'Data sudah berhasil dihapus');
     }
+
 }

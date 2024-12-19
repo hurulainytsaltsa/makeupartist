@@ -18,4 +18,9 @@ class MuaProfile extends Model
     {
         return $this->hasMany(Penugasans::class, 'nama_mua', 'nama_mua');
     }
+
+    public function honors()
+    {
+        return $this->hasMany(Honor::class, 'mua_id', 'id');
+    }
 }

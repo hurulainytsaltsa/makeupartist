@@ -71,8 +71,9 @@
                                         <button class="btn btn-success me-2" type="button"><i
                                                 class="bi bi-eye"></i></button>
                                     </a>
-                                    <a title="Edit Data" href="{{ route('penugasan.index', $booking->id) }}"><button class="btn btn-warning  me-2"
-                                            type="button"><i class="bi bi-pencil"></i></button></a>
+                                    <a title="Edit Data" href="{{ route('penugasan.index', $booking->id) }}"><button
+                                            class="btn btn-warning  me-2" type="button"><i
+                                                class="bi bi-pencil"></i></button></a>
                                     <form action="{{ route('dashboard-order.destroy', $booking->id) }}" method="POST"
                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus pesanan ini?');"
                                         class="d-inline">
