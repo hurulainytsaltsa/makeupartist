@@ -27,6 +27,7 @@
                         {{-- <th>No. Rekening</th> --}}
                         <th>Status Pembayaran</th>
                         <th>Bukti Pembayaran</th>
+                        <th>Status Order</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -43,9 +44,7 @@
                             <td>{{ $booking->packagesMakeUp->nama_paket ?? 'Tidak Ada Paket' }}</td>
                             <td>{{ optional($booking->DetailsMakeUp)->name ?? 'Tidak Ada Paket' }}</td>
                             <td>Rp{{ number_format($booking->price, 0, ',', '.') }}</td>
-                            {{-- <td>{{ $booking->payment->no_rekening ?? '-' }}</td> --}}
                             <td>
-                                {{-- {{ $booking->payment->status_pembayaran ?? 'Belum Dibayar' }} --}}
                                 @if ($booking->payment->status_pembayaran == 'Payment Rejected')
                                     <span class="badge" style="background-color: #ffcccb; color: #b71c1c;">Payment
                                         Rejected</span>
@@ -63,6 +62,15 @@
                                         alt="Bukti Pembayaran" style="width: 100px; height: auto; border-radius: 5px;">
                                 @else
                                     <em>Belum Ada Bukti</em>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($booking->status == 'pending')
+                                    <span class="badge" style="background-color: #ffcccb; color: #b71c1c;">Pending</span>
+                                @elseif($booking->status == 'completed')
+                                    <span class="badge" style="background-color: #d4edda; color: #155724;">Completed</span>
+                                @elseif($booking->status == 'paid')
+                                    <span class="badge" style="background-color: #fff9c4; color: #f57f17;">Paid</span>
                                 @endif
                             </td>
                             <td>

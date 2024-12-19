@@ -16,6 +16,7 @@
     <table class="table table-bordered">
         <tr>
             <th>No</th>
+            <th>No Penugasan</th>
             <th>Nama Customer</th>
             <th>No telepon</th>
             <th>Alamat</th>
@@ -29,6 +30,7 @@
         @foreach ($penugasan as $penugasan)
             <tr>
                 <td>{{ $loop->iteration }}</td>
+                <td>{{ $penugasan->id }}</td>
                 <td>{{ $penugasan->nama }}</td>
                 <td>{{ $penugasan->no_telp }}</td>
                 <td>{{ $penugasan->alamat }}</td>
@@ -40,16 +42,29 @@
 
                 <td>
                     <div class="d-flex">
-                        <a title="Edit Data" href=""><button class="btn btn-warning  me-2" type="button"><i
-                                    class="bi bi-pencil"></i></button></a>
+                        <a title="Edit Data" href="">
+                            <button class="btn btn-warning btn-sm me-2" type="button">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </a>
                         <form action="{{ route('dashboard-assign.destroy', $penugasan->id) }}" method="POST"
-                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus assignment ini?');" class="d-inline">
+                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus assignment ini?');"
+                            class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger" type="submit" title="Hapus">
+                            <button class="btn btn-danger btn-sm me-2" type="submit" title="Hapus">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
+                        @if ($penugasan->booking->status !== 'completed')
+                            <form action="{{ route('dashboard-assign.mark-completed', $penugasan->booking_id) }}"
+                                method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn btn-success btn-sm">Mark as Completed</button>
+                            </form>
+                        @else
+                            <button class="btn btn-secondary btn-sm" disabled>Completed</button>
+                        @endif
                     </div>
                 </td>
             </tr>
