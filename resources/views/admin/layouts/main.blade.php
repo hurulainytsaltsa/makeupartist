@@ -19,6 +19,9 @@
 
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- date picker -->
+    <link rel="stylesheet" href="/css/admin/date-picker.css" />
 </head>
 
 <body class="crm_body_bg">
@@ -70,6 +73,11 @@
 
     <!-- SweetAlert2 JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.all.min.js"></script>
+
+    <!-- datepicker  -->
+    <script src="/js/admin/datepicker.js"></script>
+    <script src="/js/admin/datepicker.en.js"></script>
+    <script src="/js/admin/datepicker.custom.js"></script>
 </body>
 
 </html>
