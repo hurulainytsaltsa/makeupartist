@@ -3,7 +3,7 @@
 @section('navCalendar', 'active')
 
 @section('content')
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Event</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
 
     <style>
         body {
@@ -60,9 +60,9 @@
             margin-right: 5px;
         }
     </style>
-</head>
+{{-- </head>
 
-<body>
+<body> --}}
     <div class="container my-5">
         <div class="text-center mb-4">
             <h1>Daftar Semua Event</h1>
@@ -106,11 +106,11 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
+    {{-- <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </body>
-</html>
+</html> --}}
 (@endsection)

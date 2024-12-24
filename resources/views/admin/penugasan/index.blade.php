@@ -3,16 +3,16 @@
 @section('navPackage', 'active')
 
 @section('content')
-<div class="container">
-    <h2 class="text-center">Penugasan Order</h2>
+    <div class="container">
+        <h2 class="text-center">Penugasan Order</h2>
 
-    @if ($booking)
-    <form action="{{ route('penugasan.store', $booking->id) }}" method="POST">
-            @csrf
+        @if ($booking)
+            <form action="{{ route('penugasan.store', $booking->id) }}" method="POST">
+                @csrf
 
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5>Booking Details:</h5>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Booking Details:</h5>
 
                         <!-- Nama Customer -->
                         <div class="mb-3">
@@ -53,18 +53,35 @@
                         <select name="nama_mua" id="nama_mua" class="form-control" required onchange="setMuaId()">
                             <option value="" disabled selected>Pilih Nama MUA</option>
                             @foreach ($muaProfiles as $mua)
-                                <option value="{{ $mua->nama_mua }}" data-id="{{ $mua->id }}">{{ $mua->nama_mua }}</option>
+                                <option value="{{ $mua->nama_mua }}" data-id="{{ $mua->id }}">{{ $mua->nama_mua }}
+                                </option>
                             @endforeach
                         </select>
 
+                        <input type="hidden" name="mua_id" id="mua_id" value="">
 
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn btn-custom">Simpan Penugasan</button>
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-custom">Simpan Penugasan</button>
+                    </div>
                 </div>
-            </div>
-        </form>
-    @else
-        <p>Tidak ada data booking untuk ditampilkan.</p>
-    @endif
-</div>
+            </form>
+        @else
+            <p>Tidak ada data booking untuk ditampilkan.</p>
+        @endif
+    </div>
+
+    <script>
+        function setMuaId() {
+            const select = document.getElementById('nama_mua');
+            const selectedOption = select.options[select.selectedIndex];
+            const muaIdInput = document.getElementById('mua_id');
+
+            if (selectedOption.value) {
+                muaIdInput.value = selectedOption.getAttribute('data-id');
+                console.log('ID MUA yang dipilih:', muaIdInput.value); // Log untuk debugging
+            } else {
+                muaIdInput.value = '';
+            }
+        }
+    </script>
 @endsection

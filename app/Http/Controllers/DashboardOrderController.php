@@ -18,7 +18,7 @@ class DashboardOrderController extends Controller
     public function index()
     {
         $bookings = Booking::with('detailsMakeUp') // Relasi dengan tabel detailsMakeUp
-            ->where('status', 'paid') // Tambahkan filter untuk hanya mengambil data yang berstatus 'paid'
+            ->whereIn('status', ['paid', 'completed'])
             ->get();
 
             // dd($bookings->pluck('status'));
@@ -50,7 +50,7 @@ class DashboardOrderController extends Controller
     {
         $bookings = Booking::with('detailsMakeUp', 'payment') // Relasi dengan tabel detailsMakeUp dan payment
             ->where('id', $id) // Filter berdasarkan booking_id
-            ->where('status', 'paid')
+            ->whereIn('status', ['paid', 'completed'])
             ->firstOrFail(); // Jika tidak ditemukan, lempar error 404
 
         // Mengirimkan data booking ke view
@@ -60,13 +60,18 @@ class DashboardOrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id) {}
+    public function edit(string $id)
+    {
+
+    }
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {}
+    public function update(Request $request, string $id)
+    {
+    }
 
     /**
      * Remove the specified resource from storage.

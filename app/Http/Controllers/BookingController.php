@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\DetailsMakeUp;
 use App\Models\PackageMakeUp;
 use App\Models\Payment;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ class BookingController extends Controller
     public function index()
     {
         $timeThreshold = now()->subHours(12);
+
         // Menghapus booking yang lebih tua dari 12 jam dan statusnya 'pending'
         Booking::where('status', 'pending')
             ->where('created_at', '<', $timeThreshold)
@@ -243,4 +245,22 @@ class BookingController extends Controller
             'payments' => $newPayments,
         ]);
     }
+
+    public function handle()
+    {
+        $timeThreshold = now()->subHours(12);
+
+        Booking::where('status', 'pending')
+            ->where('created_at', '<', $timeThreshold)
+            ->delete();
+
+        $this->$this->info('Expired bookings have been deleted.');
+    }
+
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('bookings:delete-expired')->hourly();
+    }
+
+
 }

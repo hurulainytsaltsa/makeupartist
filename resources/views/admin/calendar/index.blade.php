@@ -3,16 +3,16 @@
 @section('navCalendar', 'active')
 
 @section('content')
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
+<head> --}}
+    {{-- <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalender Booking</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet"> --}}
 
     <style>
         body {
@@ -56,9 +56,9 @@
             color: pink !important;
         }
     </style>
-</head>
+{{-- </head>
 
-<body>
+<body> --}}
     <div class="container my-5">
         <h2>Kalender Booking</h2>
 
@@ -111,6 +111,6 @@
             calendar.render();
         });
     </script>
-</body>
-</html>
+{{-- </body>
+</html> --}}
 @endsection
