@@ -21,7 +21,9 @@ class DashboardOrderController extends Controller
             ->whereIn('status', ['paid', 'completed'])
             ->get();
 
-            // dd($bookings->pluck('status'));
+<<<<<<<<< Temporary merge branch 1
+=========
+        // dd($bookings->pluck('status'));
 
         // Mengirimkan data bookings dengan relasi payment ke view
         return view('admin.order.index', compact('bookings'));
