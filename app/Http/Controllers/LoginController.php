@@ -41,9 +41,11 @@ class LoginController extends Controller
         }
 
         // Jika gagal, kembali ke halaman login dengan error
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+        return back()
+            ->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ])
+            ->onlyInput('email');
     }
 
     /**
@@ -62,5 +64,19 @@ class LoginController extends Controller
 
         // Redirect ke halaman /ourprofile atau halaman login
         return redirect('/login');
+    }
+
+    public function logoutAdmin(Request $request)
+    {
+        Auth::logout(); // Logout user
+
+        // Invalidasi session
+        $request->session()->invalidate();
+
+        // Regenerasi token untuk keamanan
+        $request->session()->regenerateToken();
+
+        // Redirect ke halaman login
+        return redirect('/login')->with('success', 'Anda berhasil logout.');
     }
 }
