@@ -32,7 +32,7 @@ class Booking extends Model
 
     public function payment()
     {
-        return $this->hasOne(Payment::class, 'booking_id');
+        return $this->hasOne(Payment::class, 'booking_id', 'id');
     }
     public function calendar()
     {
@@ -44,8 +44,8 @@ class Booking extends Model
         return $this->belongsTo(MuaProfile::class, 'nama');
     }
 
-    public function penugasans()
-    {
-        return $this->hasMany(Penugasans::class, 'booking_id');
-    }
+    public function penugasan()
+{
+    return $this->hasOne(Penugasans::class, 'booking_id', 'id');
+}
 }

@@ -20,49 +20,49 @@
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
                     <input type="text" name="nama" id="nama" class="form-control"
-                           value="{{ $penugasan->nama }}" required>
+                           value="{{ $penugasan->nama }}" required readonly>
                 </div>
 
                 <!-- Nomor Telepon -->
                 <div class="mb-3">
                     <label for="no_telp" class="form-label">Nomor Telepon</label>
                     <input type="text" name="no_telp" id="no_telp" class="form-control"
-                           value="{{ $penugasan->no_telp }}" required>
+                           value="{{ $penugasan->no_telp }}" required readonly>
                 </div>
 
                 <!-- Alamat -->
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
                     <input type="text" name="alamat" id="alamat" class="form-control"
-                           value="{{ $penugasan->alamat }}" required>
+                           value="{{ $penugasan->alamat }}" required readonly>
                 </div>
 
                 <!-- Tanggal Makeup -->
                 <div class="mb-3">
                     <label for="tgl_makeup" class="form-label">Tanggal Makeup</label>
                     <input type="date" name="tgl_makeup" id="tgl_makeup" class="form-control"
-                           value="{{ $penugasan->tgl_makeup }}" required>
+                           value="{{ $penugasan->tgl_makeup }}" required readonly>
                 </div>
 
                 <!-- Jam -->
                 <div class="mb-3">
                     <label for="jam" class="form-label">Jam</label>
                     <input type="time" name="jam" id="jam" class="form-control"
-                           value="{{ $penugasan->jam }}" required>
+                           value="{{ $penugasan->jam }}" required readonly>
                 </div>
 
                 <!-- Paket Makeup -->
                 <div class="mb-3">
                     <label for="pkt_makeup" class="form-label">Paket Makeup</label>
                     <input type="text" name="pkt_makeup" id="pkt_makeup" class="form-control"
-                           value="{{ $penugasan->pkt_makeup }}" required>
+                           value="{{ $penugasan->pkt_makeup }}" required readonly>
                 </div>
 
                 <!-- Jenis Paket -->
                 <div class="mb-3">
                     <label for="jenis_paket" class="form-label">Jenis Paket</label>
                     <input type="text" name="jenis_paket" id="jenis_paket" class="form-control"
-                           value="{{ $penugasan->jenis_paket }}" required>
+                           value="{{ $penugasan->jenis_paket }}" required readonly>
                 </div>
 
                 <!-- Nama MUA -->

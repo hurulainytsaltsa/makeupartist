@@ -11,6 +11,8 @@ class LoginController extends Controller
     /**
      * Tampilkan halaman login.
      */
+
+    //  Menampilkan halaman login.
     public function index()
     {
         return view('layouts.login');
@@ -21,7 +23,6 @@ class LoginController extends Controller
      */
     public function authenticate(Request $request): RedirectResponse
     {
-        // Validasi input
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -29,18 +30,15 @@ class LoginController extends Controller
 
         // Cek autentikasi
         if (Auth::attempt($credentials)) {
-            // Regenerasi session
             $request->session()->regenerate();
 
-            // Arahkan berdasarkan nilai isAdmin
             if (Auth::user()->isAdmin) {
-                return redirect()->intended('/dashboard'); // Admin
+                return redirect()->intended('/dashboard');
             } else {
-                return redirect()->intended('/home'); // Non-admin
+                return redirect()->intended('/home');
             }
         }
 
-        // Jika gagal, kembali ke halaman login dengan error
         return back()
             ->withErrors([
                 'email' => 'The provided credentials do not match our records.',
@@ -53,19 +51,16 @@ class LoginController extends Controller
      */
     public function logout(Request $request): RedirectResponse
     {
-        // Logout user
         Auth::logout();
 
-        // Invalidasi session
         $request->session()->invalidate();
-
-        // Regenerasi token session
         $request->session()->regenerateToken();
 
-        // Redirect ke halaman /ourprofile atau halaman login
         return redirect('/login');
     }
 
+
+    // Logout khusus untuk admin.
     public function logoutAdmin(Request $request)
     {
         Auth::logout(); // Logout user

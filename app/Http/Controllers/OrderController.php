@@ -13,11 +13,13 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  menampilkan data order pada halaman customer
     public function index()
     {
-        $bookings = Booking::with('detailsMakeUp') // Relasi dengan tabel detailsMakeUp
-        ->where('user_id', Auth::id()) // Filter berdasarkan user yang sedang login
-        ->where('status', 'paid') // Tambahkan filter untuk hanya mengambil data yang berstatus 'paid'
+        $bookings = Booking::with('detailsMakeUp')
+        ->where('user_id', Auth::id())
+        ->where('status', 'paid')
         ->get();
 
 

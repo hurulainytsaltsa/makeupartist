@@ -10,6 +10,8 @@ class DashboardBookingController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  Menampilkan daftar booking
     public function index()
     {
         $booking = Booking::latest()->paginate(10);
@@ -35,6 +37,8 @@ class DashboardBookingController extends Controller
     /**
      * Display the specified resource.
      */
+
+    //  Menampilkan detail booking berdasarkan ID.
     public function show(string $id)
     {
         $booking = Booking::findOrFail($id);
@@ -62,6 +66,13 @@ class DashboardBookingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $booking = Booking::with('payment')->findOrFail($id);
+        if ($booking->payment) {
+            $booking->payment->delete();
+        }
+
+        $booking->delete();
+
+        return redirect()->route('dashboard-booking.index')->with('success', 'Booking dan pembayaran terkait berhasil dihapus.');
     }
 }

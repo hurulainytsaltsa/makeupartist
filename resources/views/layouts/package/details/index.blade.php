@@ -137,6 +137,7 @@
     .float-end {
         float: right;
     }
+
 </style>
 
 @section('content')
@@ -173,7 +174,6 @@
                                 <div class="card">
                                     <div class="card-header text-center">{{ $detail->name }}</div>
                                     <div class="card-body">
-                                        <p>{{ $detail->description }}</p>
                                         <p><strong>Price:</strong> Rp. {{ number_format($detail->price, 0, ',', '.') }}</p>
                                     </div>
                                 </div>
@@ -188,7 +188,6 @@
                                 <div class="card">
                                     <div class="card-header text-center">{{ $detail->name }}</div>
                                     <div class="card-body">
-                                        <p>{{ $detail->description }}</p>
                                         <p><strong>Price:</strong> Rp. {{ number_format($detail->price, 0, ',', '.') }}</p>
                                     </div>
                                 </div>

@@ -38,11 +38,11 @@
                             <button class="btn btn-success me-2" type="button"><i class="bi bi-eye"></i></button>
                         </a>
                         <a title="Edit Data" href="dashboard-package/{{ $paket->id }}/edit"><button
-                                class="btn btn-warning  me-2" type="button"><i class="bi bi-pencil"></i></button></a>
-                        <form action="/dashboard-package/{{ $paket->id }}" method="post" class="d-inline">
+                                class="btn btn-warning me-2" type="button"><i class="bi bi-pencil"></i></button></a>
+                        <form id="deleteForm{{ $paket->id }}" action="/dashboard-package/{{ $paket->id }}" method="post" class="d-inline">
                             @method('DELETE')
                             @csrf
-                            <button title="Hapus Data" class="btn btn-danger" onclick="confirmDelete({{ $paket->id }})">
+                            <button type="button" title="Hapus Data" class="btn btn-danger" onclick="confirmDelete({{ $paket->id }})">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
@@ -50,30 +50,31 @@
                 </td>
             </tr>
         @endforeach
-         <!-- SweetAlert2 JavaScript -->
-         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.all.min.js"></script>
 
-         <script>
-             function confirmDelete(id) {
-                 Swal.fire({
-                     title: 'Yakin ingin menghapus?',
-                     text: "Data yang dihapus tidak bisa dikembalikan!",
-                     icon: 'warning',
-                     showCancelButton: true,
-                     confirmButtonText: 'Ya, Hapus!',
-                     cancelButtonText: 'Batal',
-                     reverseButtons: true,
-                     width: '300px',
-                     padding: '20px',
-                     fontSize: '14px',
-                 }).then((result) => {
-                     if (result.isConfirmed) {
-                         // Pastikan form untuk menghapus data dikirim
-                         document.getElementById('deleteForm' + id).submit();
-                     }
-                 });
-             }
-         </script>
+        <!-- SweetAlert2 JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.all.min.js"></script>
+
+        <script>
+            function confirmDelete(id) {
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: "Data yang dihapus tidak bisa dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true,
+                    width: '300px',
+                    padding: '20px',
+                    fontSize: '14px',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Pastikan form untuk menghapus data dikirim setelah konfirmasi
+                        document.getElementById('deleteForm' + id).submit();
+                    }
+                });
+            }
+        </script>
     </table>
     {{ $paketMakeup->links() }}
 @endsection

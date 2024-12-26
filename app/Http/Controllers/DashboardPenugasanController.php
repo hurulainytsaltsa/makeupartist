@@ -15,23 +15,21 @@ class DashboardPenugasanController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  menampilkan detail data order dan form penambahan penugasan MUA
     public function index($id)
     {
-        // Mengambil booking berdasarkan id yang diminta
-        $booking = Booking::with(['packagesMakeUp', 'DetailsMakeUp', 'payment'])
-            ->where('id', $id) // Pastikan hanya mengambil data dengan ID yang sesuai
-            ->first(); // Menggunakan first() untuk menangani kondisi jika data tidak ditemukan
 
-        // Cek apakah booking ada
+        $booking = Booking::with(['packagesMakeUp', 'DetailsMakeUp', 'payment'])
+            ->where('id', $id)
+            ->first();
+
+
         if (!$booking) {
-            // Jika booking tidak ditemukan, redirect atau tampilkan error
             return redirect()->route('dashboard-order.index')->with('error', 'Booking tidak ditemukan.');
         }
 
-        // Mengambil semua MUA Profiles
         $muaProfiles = MuaProfile::all();
-
-        // Kirim data ke view
         return view('admin.penugasan.index', compact('booking', 'muaProfiles'));
     }
 
@@ -46,34 +44,36 @@ class DashboardPenugasanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    //  menyimpan data penugasan MUA yang baru ditambahkan ke database
     public function store($bookingId, Request $request)
     {
         Log::info('Data yang diterima:', $request->all());
-        // Validasi input untuk nama MUA
+
         $request->validate([
             'nama_mua' => 'required|string|max:255',
-            'mua_id' => 'required|integer|exists:mua_profiles,id', // Validasi ID MUA
+            'mua_id' => 'required|integer|exists:mua_profiles,id',
         ]);
 
-        // Ambil data booking berdasarkan ID
+
         $booking = Booking::find($bookingId);
 
         if (!$booking) {
             return redirect()->back()->with('error', 'Data booking tidak ditemukan.');
         }
 
-        // Simpan data ke tabel penugasan
+
         $penugasan = new Penugasans();
         $penugasan->booking_id = $booking->id;
-        $penugasan->nama = $booking->nama; // Data dari booking
-        $penugasan->no_telp = $booking->no_telp; // Data dari booking
-        $penugasan->alamat = $booking->alamat; // Data dari booking
-        $penugasan->tgl_makeup = $booking->tgl_makeup; // Data dari booking
-        $penugasan->jam = $booking->jam; // Data dari booking
-        $penugasan->pkt_makeup = $booking->packagesMakeUp->nama_paket ?? 'Tidak Ada Paket'; // Data dari relasi booking
-        $penugasan->jenis_paket = $booking->DetailsMakeUp->name ?? 'Tidak Ada Paket'; // Data dari relasi booking
+        $penugasan->nama = $booking->nama;
+        $penugasan->no_telp = $booking->no_telp;
+        $penugasan->alamat = $booking->alamat;
+        $penugasan->tgl_makeup = $booking->tgl_makeup;
+        $penugasan->jam = $booking->jam;
+        $penugasan->pkt_makeup = $booking->packagesMakeUp->nama_paket ?? 'Tidak Ada Paket';
+        $penugasan->jenis_paket = $booking->DetailsMakeUp->name ?? 'Tidak Ada Paket';
         $penugasan->nama_mua = $request->nama_mua;
-        $penugasan->mua_id = $request->mua_id; // Simpan ID MUA
+        $penugasan->mua_id = $request->mua_id;
 
         if ($penugasan->save()) {
             return redirect()->route('dashboard-assign.show')->with('success', 'Penugasan berhasil disimpan.');
@@ -85,6 +85,8 @@ class DashboardPenugasanController extends Controller
     /**
      * Display the specified resource.
      */
+
+    // menampilkan data penugasan
     public function show()
     {
         $penugasan = Penugasans::latest()->paginate(10);
@@ -94,29 +96,27 @@ class DashboardPenugasanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    //  menampilkan form edit untuk data penugasan berdasarkan id
     public function edit(string $id)
     {
-        // Cari penugasan berdasarkan ID
-        $penugasan = Penugasans::find($id);
 
-        // Periksa apakah penugasan ditemukan
+        $penugasan = Penugasans::find($id);
         if (!$penugasan) {
             return redirect()->route('dashboard-assign.show')->with('error', 'Penugasan tidak ditemukan.');
         }
-
-        // Mengambil semua MUA Profiles untuk opsi pilihan
         $muaProfiles = MuaProfile::all();
-
-        // Tampilkan form edit dan kirim data penugasan
         return view('admin.penugasan.edit', compact('penugasan', 'muaProfiles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
+
+    //  mengupdate data di database
     public function update(Request $request, string $id)
     {
-        // Validasi input untuk update penugasan
+
         $request->validate([
             'nama_mua' => 'required|string|max:255',
             'nama' => 'required|string|max:255',
@@ -128,15 +128,15 @@ class DashboardPenugasanController extends Controller
             'jenis_paket' => 'required|string|max:255',
         ]);
 
-        // Cari penugasan berdasarkan ID
+
         $penugasan = Penugasans::find($id);
 
-        // Periksa apakah penugasan ditemukan
+
         if (!$penugasan) {
             return redirect()->route('dashboard-assign.show')->with('error', 'Penugasan tidak ditemukan.');
         }
 
-        // Update semua data penugasan
+
         $penugasan->nama_mua = $request->nama_mua;
         $penugasan->nama = $request->nama;
         $penugasan->no_telp = $request->no_telp;
@@ -146,7 +146,7 @@ class DashboardPenugasanController extends Controller
         $penugasan->pkt_makeup = $request->pkt_makeup;
         $penugasan->jenis_paket = $request->jenis_paket;
 
-        // Simpan perubahan
+
         if ($penugasan->save()) {
             return redirect()->route('dashboard-assign.show')->with('success', 'Penugasan berhasil diperbarui.');
         } else {
@@ -157,17 +157,19 @@ class DashboardPenugasanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+    //  menghapus data berdasarkan id
     public function destroy(string $id)
     {
-        // Cari penugasan berdasarkan ID
         $penugasan = Penugasans::find($id);
 
-        // Periksa apakah penugasan ditemukan
         if (!$penugasan) {
             return redirect()->back()->with('error', 'Penugasan tidak ditemukan.');
         }
 
-        // Hapus penugasan
+        // Menghapus entri terkait di tabel honors yang memiliki penugasan_id
+        $penugasan->honors()->delete(); // Pastikan relasi telah terdefinisi di model Penugasans
+
         if ($penugasan->delete()) {
             return redirect()->route('dashboard-assign.show')->with('success', 'Penugasan berhasil dihapus.');
         } else {
@@ -175,6 +177,7 @@ class DashboardPenugasanController extends Controller
         }
     }
 
+    //  Menandai booking sebagai selesai dan menambahkan data honor untuk MUA.
     public function markAsCompleted($id)
     {
         $booking = Booking::find($id);
@@ -189,18 +192,16 @@ class DashboardPenugasanController extends Controller
             return redirect()->back()->with('error', 'Gagal menyelesaikan penugasan.');
         }
 
-        // Menyimpan data honor
         $honor = new Honor();
         $penugasan = Penugasans::where('booking_id', $booking->id)->first();
 
         if ($penugasan) {
             $honor->penugasan_id = $penugasan->id;
 
-            // Mencari ID MUA berdasarkan nama
             $muaProfile = MuaProfile::where('nama_mua', $penugasan->nama_mua)->first();
 
             if ($muaProfile) {
-                $honor->mua_id = $muaProfile->id; // Menggunakan ID MUA yang ditemukan
+                $honor->mua_id = $muaProfile->id;
             } else {
                 Log::error('MUA not found: ' . $penugasan->nama_mua);
                 return redirect()->back()->with('error', 'MUA tidak ditemukan.');

@@ -11,7 +11,7 @@ class Penugasans extends Model
 
     protected $table = 'penugasans';
 
-    protected $fillable = ['booking_id', 'nama', 'no_telp', 'alamat', 'tgl_makeup','jam', 'pkt_makeup', 'jenis_paket', 'nama_mua'];
+    protected $fillable = ['booking_id', 'nama', 'no_telp', 'alamat', 'tgl_makeup', 'jam', 'pkt_makeup', 'jenis_paket', 'nama_mua'];
 
     public function booking()
     {
@@ -34,9 +34,19 @@ class Penugasans extends Model
         return $this->belongsTo(MuaProfile::class, 'nama_mua', 'nama_mua');
     }
 
+    public function muaId()
+    {
+        return $this->belongsTo(MuaProfile::class, 'mua_id', 'id');
+    }
+
     public function payment()
     {
         return $this->belongsTo(Payment::class, 'payment_id');
+    }
+
+    public function honors()
+    {
+        return $this->hasMany(Honor::class, 'penugasan_id', 'id');
     }
 
     // public function booking1()

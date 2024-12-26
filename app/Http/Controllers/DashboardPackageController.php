@@ -10,6 +10,8 @@ class DashboardPackageController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  menampilkan daftar paket makeup
     public function index()
     {
         $paketMakeup = PackageMakeUp::latest()->paginate(10);
@@ -19,6 +21,8 @@ class DashboardPackageController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    //  menampilkan form untuk menambahkan paket makeup baru
     public function create()
     {
         $paketMakeup = PackageMakeUp::all();
@@ -28,9 +32,11 @@ class DashboardPackageController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    //  menyimpan data baru ke database
     public function store(Request $request)
     {
-         // Validate input
+
          $validatedData = $request->validate([
             'nama_paket' => 'required|string|max:255',
             'deskripsi' => 'required|string|max:255',
@@ -38,11 +44,11 @@ class DashboardPackageController extends Controller
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Save the profile photo to a specified directory
+
         $filename = time() . '.' . $request->photo->extension();
         $request->photo->move(public_path('images/package'), $filename);
 
-        // Create a new Package MakeUp
+
         $paketMakeup = PackageMakeUp::create([
             'nama_paket' => $validatedData['nama_paket'],
             'deskripsi' => $validatedData['deskripsi'],
@@ -56,9 +62,11 @@ class DashboardPackageController extends Controller
     /**
      * Display the specified resource.
      */
+
+    //  menampilkan detail paket makeup berdasarkan id
     public function show(string $id)
     {
-        $paketMakeup = PackageMakeup::with('details')->find($id); // Mengambil paket beserta details
+        $paketMakeup = PackageMakeup::with('details')->find($id);
 
         if (!$paketMakeup) {
             return redirect('/dashboard-package')->with('error', 'Paket tidak ditemukan');
@@ -69,6 +77,8 @@ class DashboardPackageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    //  menampilkan form edit untuk data paket makeup berdasarkan id
     public function edit(string $id)
     {
         $paketMakeup = PackageMakeUp::findOrFail($id);
@@ -78,9 +88,11 @@ class DashboardPackageController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+    //  memperbaru data yang diupdate di database
     public function update(Request $request, string $id)
     {
-        // Validate input
+
         $validatedData = $request->validate([
             'nama_paket' => 'required|string|max:255',
             'deskripsi' => 'required|string|max:255',
@@ -90,51 +102,48 @@ class DashboardPackageController extends Controller
 
         $paketMakeup = PackageMakeUp::findOrFail($id);
 
-         // Jika ada gambar baru di-upload, hapus gambar lama dan upload gambar baru
+
          if ($request->hasFile('photo')) {
-            // Hapus file gambar lama jika ada
+
             if ($paketMakeup->photo && file_exists(public_path('images/package/' . $paketMakeup->photo))) {
                 unlink(public_path('images/package/' . $paketMakeup->photo));
             }
 
-            // Upload gambar baru
+
             $filename = time() . '.' . $request->photo->extension();
             $request->photo->move(public_path('images/package'), $filename);
 
-            // Perbarui nama file gambar dalam database
+
             $paketMakeup->photo = $filename;
         }
 
-        // Perbarui data lainnya
+
         $paketMakeup->nama_paket = $validatedData['nama_paket'];
         $paketMakeup->deskripsi = $validatedData['deskripsi'];
         $paketMakeup->harga = $validatedData['harga'];
 
-        // Simpan perubahan ke database
-        $paketMakeup->save();
 
-        // Redirect kembali ke halaman profil dengan pesan sukses
+        $paketMakeup->save();
         return redirect('/dashboard-package')->with('pesan', 'Package MakeUp updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
+
+    //  menghapus data paket makeup berdasarkan id
     public function destroy(string $id)
     {
-         // Cari Paket berdasarkan ID
+
          $paketMakeup = PackageMakeUp::findOrFail($id);
 
-         // Jika ada foto, hapus file foto tersebut dari direktori
+
          if ($paketMakeup->photo && file_exists(public_path('images/package/' . $paketMakeup->photo))) {
-             // Hapus foto dari folder
              unlink(public_path('images/package/' . $paketMakeup->photo));
          }
 
-         // Hapus data Paket dari database
          $paketMakeup->delete();
 
-         // Redirect kembali ke halaman profil dengan pesan sukses
          return redirect('/dashboard-package')->with('pesan', 'Package Delete Successfully.');
     }
 }

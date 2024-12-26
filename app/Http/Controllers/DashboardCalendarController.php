@@ -11,6 +11,8 @@ class DashboardCalendarController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  Menampilkan semua data kalender
     public function index()
     {
         $calendars = Calendar::all();
@@ -20,6 +22,8 @@ class DashboardCalendarController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    //  Menampilkan form untuk menambah event kalender.
     public function create()
     {
         $calendars = Calendar::all();
@@ -29,6 +33,8 @@ class DashboardCalendarController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    //  Menyimpan event baru ke dalam database.
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -54,6 +60,8 @@ class DashboardCalendarController extends Controller
     /**
      * Display the specified resource.
      */
+
+    //  Menampilkan detail semua event kalender.
     public function show(string $id)
     {
         $calendars = Calendar::all();
@@ -63,6 +71,8 @@ class DashboardCalendarController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    //  Menampilkan form untuk mengedit event berdasarkan ID.
     public function edit(string $id)
     {
         $calendar = Calendar::findOrFail($id);
@@ -72,6 +82,8 @@ class DashboardCalendarController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+    //  Memperbarui event di database berdasarkan ID.
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
@@ -99,6 +111,8 @@ class DashboardCalendarController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+    //  Menghapus event dari database berdasarkan ID.
     public function destroy(string $id)
     {
         $calendar = Calendar::findOrFail($id);
@@ -106,6 +120,7 @@ class DashboardCalendarController extends Controller
         return redirect('/dashboard-calendar')->with('pesan', 'Data sudah berhasil dihapus');
     }
 
+    //  Mengambil semua data event kalender untuk ditampilkan di halaman pengguna
     public function getEvents()
     {
         $events = Calendar::all();
@@ -114,7 +129,7 @@ class DashboardCalendarController extends Controller
                 'title' => $event->title,
                 'start' => $event->start_time->toIso8601String(),
                 'end' => $event->end_time ? $event->end_time->toIso8601String() : $event->start_time->addHour()->toIso8601String(),
-                'color' => $event->status == 'not available' ? 'red' : 'green', // Gunakan status untuk menentukan warna
+                'color' => $event->status == 'not available' ? 'red' : 'green',
             ];
         });
 
