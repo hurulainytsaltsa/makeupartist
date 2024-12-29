@@ -15,14 +15,14 @@ class DashboardOrderController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  Menampilkan daftar booking.
     public function index()
     {
-        $bookings = Booking::with('detailsMakeUp') // Relasi dengan tabel detailsMakeUp
+        $bookings = Booking::with('detailsMakeUp', 'payment') // Relasi dengan tabel detailsMakeUp
             ->whereIn('status', ['paid', 'completed'])
             ->get();
 
-<<<<<<<<< Temporary merge branch 1
-=========
         // dd($bookings->pluck('status'));
 
         // Mengirimkan data bookings dengan relasi payment ke view
@@ -48,14 +48,15 @@ class DashboardOrderController extends Controller
     /**
      * Display the specified resource.
      */
+
+    //  Menampilkan detail booking tertentu berdasarkan ID.
     public function show(string $id)
     {
-        $bookings = Booking::with('detailsMakeUp', 'payment') // Relasi dengan tabel detailsMakeUp dan payment
-            ->where('id', $id) // Filter berdasarkan booking_id
+        $bookings = Booking::with('detailsMakeUp', 'payment')
+            ->where('id', $id)
             ->whereIn('status', ['paid', 'completed'])
-            ->firstOrFail(); // Jika tidak ditemukan, lempar error 404
+            ->firstOrFail();
 
-        // Mengirimkan data booking ke view
         return view('admin.order.details', compact('bookings'));
     }
 
@@ -64,9 +65,7 @@ class DashboardOrderController extends Controller
      */
     public function edit(string $id)
     {
-
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -78,28 +77,38 @@ class DashboardOrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+    //  Menghapus data booking tertentu beserta pembayaran terkait.
     public function destroy(string $id)
     {
-        // Cari data booking berdasarkan ID
-        $booking = Booking::with('payment')->findOrFail($id);
+        $booking = Booking::with(['payment', 'penugasan.honors'])->findOrFail($id);
 
-        // Hapus data pembayaran terkait jika ada
+        // Hapus data di honors
+        foreach ($booking->penugasan->honors ?? [] as $honor) {
+            $honor->delete();
+        }
+
+        // Hapus data di penugasan
+        if ($booking->penugasan) {
+            $booking->penugasan->delete();
+        }
+
+        // Hapus data pembayaran
         if ($booking->payment) {
-            $booking->payment->delete(); // Hapus pembayaran terkait
+            $booking->payment->delete();
         }
 
         // Hapus data booking
         $booking->delete();
 
-        // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('dashboard-order.index')->with('success', 'Booking dan pembayaran terkait berhasil dihapus.');
     }
 
+    // Mengonfirmasi pembayaran untuk booking berdasarkan ID
     public function confirmPayment($id)
     {
-        $booking = Booking::findOrFail($id); // Temukan pemesanan berdasarkan ID
+        $booking = Booking::findOrFail($id);
         if ($booking->payment) {
-            // Update status pembayaran
             $booking->payment->status_pembayaran = 'Payment Approved';
             $booking->payment->save();
 
@@ -113,6 +122,7 @@ class DashboardOrderController extends Controller
         return redirect()->back()->with('error', 'Pembayaran tidak ditemukan.');
     }
 
+    // Menolak pembayaran untuk booking berdasarkan ID
     public function rejectPayment($id)
     {
         $booking = Booking::findOrFail($id);

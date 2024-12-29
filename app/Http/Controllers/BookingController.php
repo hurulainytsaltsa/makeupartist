@@ -17,17 +17,18 @@ class BookingController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  Menampilkan daftar booking pada halaman customer
     public function index()
     {
         $timeThreshold = now()->subHours(12);
 
-        // Menghapus booking yang lebih tua dari 12 jam dan statusnya 'pending'
         Booking::where('status', 'pending')
             ->where('created_at', '<', $timeThreshold)
             ->delete();
 
         $booking = Booking::with('detailsMakeUp')
-            ->where('user_id', Auth::id()) // Filter berdasarkan user yang sedang login
+            ->where('user_id', Auth::id())
             ->where('status', 'pending')
             ->get();
         return view('layouts.booking.booking', compact('booking'));
@@ -36,17 +37,21 @@ class BookingController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    //  menampilkan form booking untuk customer
     public function create()
     {
         $paketMakeup = PackageMakeUp::all();
         $details = DetailsMakeUp::all();
-        $userId = Auth::id(); // Get the user ID
+        $userId = Auth::id();
         return view('layouts.booking.create_booking', compact('paketMakeup', 'details', 'userId'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
+    //  Simpan booking baru ke database
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -62,7 +67,6 @@ class BookingController extends Controller
             'price' => 'required|numeric',
         ]);
 
-        // Cek jika user sudah memiliki booking yang pending
         $existingBooking = Booking::where('user_id', Auth::id())
             ->where('status', 'pending')
             ->exists();
@@ -117,15 +121,18 @@ class BookingController extends Controller
     /**
      * Display the specified resource.
      */
+
+    // menampilkan detail booking dan form pembayaran untuk customer berdasarkan ID.
     public function show(string $id)
     {
-        $booking = Booking::with('detailsMakeup') // Relasi dengan tabel paket
+        $booking = Booking::with('detailsMakeup')
             ->where('id', $id)
             ->firstOrFail();
 
         return view('layouts.payment.payment', compact('booking'));
     }
 
+    // Validasi data pembayaran dan menyimpan ke database
     public function payment(Request $request, $id)
     {
         $validatedData = $request->validate([
@@ -133,21 +140,20 @@ class BookingController extends Controller
             'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Find the booking based on the ID passed to the method
+
         $booking = Booking::findOrFail($id);
 
         $filename = time() . '.' . $request->bukti_pembayaran->extension();
         $request->bukti_pembayaran->move(public_path('images/bukti_pembayaran'), $filename);
 
-        // Save payment data to the Payment model
+
         $payment = Payment::create([
             'booking_id' => $booking->id,
             'no_rekening' => $validatedData['no_rekening'],
             'bukti_pembayaran' => $filename,
-            'status_pembayaran' => 'Waiting for Approval', // status bisa Anda sesuaikan
+            'status_pembayaran' => 'Waiting for Approval',
         ]);
 
-        // Optionally update the booking status to 'paid' or similar if needed
         $booking->update(['status' => 'paid']);
 
         return redirect()->route('order.index')->with([
@@ -156,14 +162,15 @@ class BookingController extends Controller
         ]);
     }
 
+
+    // menampilkan harga paket berdasarkan ID.
     public function getPrice($paketId)
     {
-        // Cari harga berdasarkan jenis_paket
         $jenisPaket = DetailsMakeUp::find($paketId);
 
         if ($jenisPaket) {
             return response()->json([
-                'price' => $jenisPaket->price,  // Mengambil harga dari kolom 'price' di tabel DetailsMakeUp
+                'price' => $jenisPaket->price,
             ]);
         }
 
@@ -189,19 +196,20 @@ class BookingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
     public function destroy(string $id)
     {
-        $booking = Booking::findOrFail($id);
-        $booking->delete();
-        return redirect('/booking')->with('pesan', 'Data sudah berhasil dihapus');
+
     }
 
+    // menampilkan detail makeup berdasarkan ID paket.
     public function showDetails($paketId)
     {
         $details = DetailsMakeUp::where('package_makeup_id', $paketId)->get();
         return response()->json(['details' => $details]);
     }
 
+    // Pindah ke halaman pembayaran dengan menyimpan data sementara.
     public function redirectToPayment(Request $request)
     {
         // Validasi data
@@ -223,17 +231,17 @@ class BookingController extends Controller
         return redirect('/payment');
     }
 
+
+    // Ambil notifikasi booking dan pembayaran baru.
     public function getNotifications()
     {
-        // Ambil data booking dengan status "pending"
-        $newBookings = Booking::with('packagesMakeUp') // Memuat relasi dari Booking ke PackageMakeUp
+        $newBookings = Booking::with('packagesMakeUp')
             ->where('status', 'pending')
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
 
-        // Ambil data pembayaran dengan status "Waiting for Approval"
-        $newPayments = Payment::with(['booking.packagesMakeUp']) // Memuat relasi ke Booking dan PackageMakeUp
+        $newPayments = Payment::with(['booking.packagesMakeUp'])
             ->where('status_pembayaran', 'Waiting for Approval')
             ->orderBy('created_at', 'desc')
             ->take(5)
@@ -246,6 +254,7 @@ class BookingController extends Controller
         ]);
     }
 
+    // handle data booking sesuai ketentuan jam
     public function handle()
     {
         $timeThreshold = now()->subHours(12);
@@ -257,6 +266,7 @@ class BookingController extends Controller
         $this->$this->info('Expired bookings have been deleted.');
     }
 
+    // memastikan booking yang kadaluarsa dihapus secara berkala
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('bookings:delete-expired')->hourly();

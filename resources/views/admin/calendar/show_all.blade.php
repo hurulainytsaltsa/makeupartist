@@ -72,6 +72,7 @@
             <table class="table table-bordered text-center">
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>ID</th>
                         <th>Judul</th>
                         <th>Waktu Mulai</th>
@@ -82,6 +83,7 @@
                 <tbody>
                     @foreach($calendars as $calendar)
                         <tr>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $calendar->id }}</td>
                             <td>{{ $calendar->title }}</td>
                             <td>{{ \Carbon\Carbon::parse($calendar->start)->format('d-m-Y H:i') }}</td>
@@ -91,16 +93,39 @@
                                     <i class="bi bi-pencil-square"></i>Edit
                                 </a>
 
-                                <form action="{{ route('dashboard-calendar.destroy', $calendar->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus event ini?')">
-                                    @csrf
+                                <form id="deleteForm{{ $calendar->id }}" action="{{ route('dashboard-calendar.destroy', $calendar->id) }}" method="post" class="d-inline">
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">
+                                    @csrf
+                                    <button type="button" title="Hapus Data" class="btn btn-danger btn-sm" onclick="confirmDelete({{ $calendar->id }})">
                                         <i class="bi bi-trash"></i>Hapus
                                     </button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.all.min.js"></script>
+
+                    <script>
+                        function confirmDelete(id) {
+                            Swal.fire({
+                                title: 'Yakin ingin menghapus?',
+                                text: "Data yang dihapus tidak bisa dikembalikan!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya, Hapus!',
+                                cancelButtonText: 'Batal',
+                                reverseButtons: true,
+                                width: '300px',
+                                padding: '20px',
+                                fontSize: '14px',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Pastikan form untuk menghapus data dikirim setelah konfirmasi
+                                    document.getElementById('deleteForm' + id).submit();
+                                }
+                            });
+                        }
+                    </script>
                 </tbody>
             </table>
         </div>
@@ -113,4 +138,4 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </body>
 </html> --}}
-(@endsection)
+@endsection

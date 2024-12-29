@@ -47,12 +47,10 @@
                                 <i class="bi bi-pencil"></i>
                             </button>
                         </a>
-                        <form action="{{ route('dashboard-assign.destroy', $penugasan->id) }}" method="POST"
-                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus assignment ini?');"
-                            class="d-inline">
-                            @csrf
+                        <form id="deleteForm{{ $penugasan->id }}" action="{{ route('dashboard-assign.destroy', $penugasan->id) }}" method="post" class="d-inline">
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm me-2" type="submit" title="Hapus">
+                            @csrf
+                            <button type="button" title="Hapus Data" class="btn btn-danger btn-sm me-2" onclick="confirmDelete({{ $penugasan->id }})">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
@@ -69,7 +67,6 @@
                 </td>
             </tr>
         @endforeach
-        <!-- SweetAlert2 JavaScript -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.all.min.js"></script>
 
         <script>
@@ -87,13 +84,12 @@
                     fontSize: '14px',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Pastikan form untuk menghapus data dikirim
+                        // Pastikan form untuk menghapus data dikirim setelah konfirmasi
                         document.getElementById('deleteForm' + id).submit();
                     }
                 });
             }
         </script>
-
     </table>
 
 @endsection

@@ -44,6 +44,11 @@ class Penugasans extends Model
         return $this->belongsTo(Payment::class, 'payment_id');
     }
 
+    public function honors()
+    {
+        return $this->hasMany(Honor::class, 'penugasan_id', 'id');
+    }
+
     // public function booking1()
     // {
     //     return $this->belongsTo(Booking::class, 'nama');

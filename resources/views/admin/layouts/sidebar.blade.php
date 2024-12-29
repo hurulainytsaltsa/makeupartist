@@ -100,6 +100,16 @@
                     </div>
                 </a>
             </li>
+            <li>
+                <a href="/dashboard-honor" aria-expanded="false">
+                    <div class="bi bi-cash-coin text-muted">
+                        <img src="" alt="">
+                    </div>
+                    <div class="nav_title">
+                        <span>Income Summary</span>
+                    </div>
+                </a>
+            </li>
         </ul>
     </nav>
 

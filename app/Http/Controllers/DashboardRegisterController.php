@@ -12,6 +12,8 @@ class DashboardRegisterController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  menampilkan form register untuk admin
     public function index()
     {
         return view('admin.layouts.register');
@@ -29,6 +31,8 @@ class DashboardRegisterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    //  menyimpan register baru di database
     public function store(Request $request)
     {
         // Validasi input

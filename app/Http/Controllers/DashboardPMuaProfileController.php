@@ -10,6 +10,8 @@ class DashboardPMuaProfileController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  menampilkan daftar profile MUA
     public function index()
     {
         // Ambil semua profil MUA dari database
@@ -23,6 +25,8 @@ class DashboardPMuaProfileController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+     //  menampilkan form untuk menambahkan profile MUA baru.
     public function create()
     {
         $mua_profiles = MuaProfile::all();
@@ -32,22 +36,21 @@ class DashboardPMuaProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    //  menyimpan data profiles MUA yang baru di database
     public function store(Request $request)
     {
-        // Validate input
         $validatedData = $request->validate([
             'nama_mua' => 'required|string|max:255',
             'pengalaman' => 'required',
             'lokasi' => 'required|string|max:255',
-            'portfolio_link' => 'required|url', // Validate for portfolio link
+            'portfolio_link' => 'required|url',
             'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Save the profile photo to a specified directory
         $filename = time() . '.' . $request->profile_photo->extension();
         $request->profile_photo->move(public_path('images/profile_photos'), $filename);
 
-        // Create a new MUA profile
         $muaProfile = MuaProfile::create([
             'nama_mua' => $validatedData['nama_mua'],
             'pengalaman' => $validatedData['pengalaman'],
@@ -62,6 +65,8 @@ class DashboardPMuaProfileController extends Controller
     /**
      * Display the specified resource.
      */
+
+    //  menampilkan detail profiles MUA berdasarkan ID
     public function show(string $id)
     {
         $mua = MuaProfile::findOrFail($id);
@@ -71,9 +76,10 @@ class DashboardPMuaProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    //  menampilkan form untuk update profiles MUA berdasarkan ID
     public function edit(string $id)
     {
-        // Retrieve a single MUA profile by its ID
         $mua = MuaProfile::findOrFail($id);
         return view('admin.profile.edit', compact('mua'));
     }
@@ -81,65 +87,55 @@ class DashboardPMuaProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+    //  menyimpan perubahan data pada database
     public function update(Request $request, string $id)
     {
-        // Validasi input dari form
         $validatedData = $request->validate([
             'nama_mua' => 'required|string|max:255',
             'pengalaman' => 'required',
             'lokasi' => 'required|string|max:255',
             'portfolio_link' => 'required|url',
-            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Opsional jika tidak ada perubahan
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $mua = MuaProfile::findOrFail($id);
 
-        // Jika ada gambar baru di-upload, hapus gambar lama dan upload gambar baru
         if ($request->hasFile('profile_photo')) {
-            // Hapus file gambar lama jika ada
             if ($mua->profile_photo && file_exists(public_path('images/profile_photos/' . $mua->profile_photo))) {
                 unlink(public_path('images/profile_photos/' . $mua->profile_photo));
             }
 
-            // Upload gambar baru
             $filename = time() . '.' . $request->profile_photo->extension();
             $request->profile_photo->move(public_path('images/profile_photos'), $filename);
 
-            // Perbarui nama file gambar dalam database
             $mua->profile_photo = $filename;
         }
 
-        // Perbarui data lainnya
         $mua->nama_mua = $validatedData['nama_mua'];
         $mua->pengalaman = $validatedData['pengalaman'];
         $mua->lokasi = $validatedData['lokasi'];
         $mua->portfolio_link = $validatedData['portfolio_link'];
 
-        // Simpan perubahan ke database
         $mua->save();
 
-        // Redirect kembali ke halaman profil dengan pesan sukses
         return redirect('/dashboard-profile')->with('pesan', 'MUA profile updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
+
+    //  menghapus data profiles berdasarkan ID
     public function destroy(string $id)
     {
-        // Cari profil MUA berdasarkan ID
         $mua = MuaProfile::findOrFail($id);
 
-        // Jika ada foto profil, hapus file foto tersebut dari direktori
         if ($mua->profile_photo && file_exists(public_path('images/profile_photos/' . $mua->profile_photo))) {
-            // Hapus foto dari folder
             unlink(public_path('images/profile_photos/' . $mua->profile_photo));
         }
 
-        // Hapus data MUA dari database
         $mua->delete();
-
-        // Redirect kembali ke halaman profil dengan pesan sukses
         return redirect('/dashboard-profile')->with('pesan', 'Data sudah berhasil dihapus');
     }
 

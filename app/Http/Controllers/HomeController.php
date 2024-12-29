@@ -11,6 +11,8 @@ class HomeController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  Menampilkan data untuk halaman dashboard admin.
     public function index()
     {
         $totalBookings = Booking::count();
@@ -20,7 +22,6 @@ class HomeController extends Controller
             ->take(10)
             ->get();
 
-        // Menghitung pendapatan hanya untuk booking dengan status 'completed' pada bulan ini
         $monthlyRevenue = Booking::whereMonth('created_at', now()->month)
             ->where('status', 'completed')
             ->sum('price');

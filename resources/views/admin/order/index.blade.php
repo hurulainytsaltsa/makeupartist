@@ -46,18 +46,21 @@
                             <td>Rp{{ number_format($booking->price, 0, ',', '.') }}</td>
                             {{-- <td>{{ $booking->payment->no_rekening ?? '-' }}</td> --}}
                             <td>
-                                {{-- {{ $booking->payment->status_pembayaran ?? 'Belum Dibayar' }} --}}
-                                @if ($booking->payment->status_pembayaran == 'Payment Rejected')
+                                @if (optional($booking->payment)->status_pembayaran == 'Payment Rejected')
                                     <span class="badge" style="background-color: #ffcccb; color: #b71c1c;">Payment
                                         Rejected</span>
-                                @elseif($booking->payment->status_pembayaran == 'Payment Approved')
+                                @elseif(optional($booking->payment)->status_pembayaran == 'Payment Approved')
                                     <span class="badge" style="background-color: #d4edda; color: #155724;">Payment
                                         Approved</span>
-                                @elseif($booking->payment->status_pembayaran == 'Waiting for Approval')
+                                @elseif(optional($booking->payment)->status_pembayaran == 'Waiting for Approval')
                                     <span class="badge" style="background-color: #fff9c4; color: #f57f17;">Waiting for
                                         Approval</span>
+                                @else
+                                    <span class="badge" style="background-color: #e0e0e0; color: #757575;">Belum
+                                        Dibayar</span>
                                 @endif
                             </td>
+
                             <td>
                                 @if ($booking->payment && $booking->payment->bukti_pembayaran)
                                     <img src="{{ asset('images/bukti_pembayaran/' . $booking->payment->bukti_pembayaran) }}"
@@ -84,12 +87,10 @@
                                     <a title="Edit Data" href="{{ route('penugasan.index', $booking->id) }}"><button
                                             class="btn btn-warning  me-2" type="button"><i
                                                 class="bi bi-pencil"></i></button></a>
-                                    <form action="{{ route('dashboard-order.destroy', $booking->id) }}" method="POST"
-                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus pesanan ini?');"
-                                        class="d-inline">
-                                        @csrf
+                                    <form id="deleteForm{{ $booking->id }}" action="{{ route('dashboard-order.destroy', $booking->id) }}" method="post" class="d-inline">
                                         @method('DELETE')
-                                        <button class="btn btn-danger" type="submit" title="Hapus">
+                                        @csrf
+                                        <button type="button" title="Hapus Data" class="btn btn-danger" onclick="confirmDelete({{ $booking->id }})">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
@@ -97,6 +98,29 @@
                             </td>
                         </tr>
                     @endforeach
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.all.min.js"></script>
+
+                    <script>
+                        function confirmDelete(id) {
+                            Swal.fire({
+                                title: 'Yakin ingin menghapus?',
+                                text: "Data yang dihapus tidak bisa dikembalikan!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya, Hapus!',
+                                cancelButtonText: 'Batal',
+                                reverseButtons: true,
+                                width: '300px',
+                                padding: '20px',
+                                fontSize: '14px',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Pastikan form untuk menghapus data dikirim setelah konfirmasi
+                                    document.getElementById('deleteForm' + id).submit();
+                                }
+                            });
+                        }
+                    </script>
                 </tbody>
             </table>
         </div>

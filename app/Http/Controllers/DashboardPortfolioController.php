@@ -10,6 +10,8 @@ class DashboardPortfolioController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  menampilkan daftar portofolio
     public function index()
     {
         $portofolio = Portofolio::latest()->paginate(10);
@@ -19,15 +21,18 @@ class DashboardPortfolioController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    //  menampilkan form untuk menambahkan portofolio baru
     public function create()
-{
-    // Ambil data nama MUA dari MuaProfile untuk dropdown
-    $muaProfiles = \App\Models\MuaProfile::all();
-    return view('admin.portofolio.create', compact('muaProfiles'));
-}
+    {
+        $muaProfiles = \App\Models\MuaProfile::all();
+        return view('admin.portofolio.create', compact('muaProfiles'));
+    }
     /**
      * Store a newly created resource in storage.
      */
+
+    //  menyimpan portofolio yang baru ditambah di database
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -51,6 +56,8 @@ class DashboardPortfolioController extends Controller
     /**
      * Display the specified resource.
      */
+
+    //  menampilkan detail portofolio
     public function show(string $id)
     {
         $portofolio = Portofolio::findOrFail($id);
@@ -60,6 +67,8 @@ class DashboardPortfolioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
+    //  menampilkan form edit untuk update portofolio berdasarkan ID
     public function edit(string $id)
     {
         $portofolio = Portofolio::findOrFail($id);
@@ -70,61 +79,49 @@ class DashboardPortfolioController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+    //  menyimpan perubahan pada portofolio di database
     public function update(Request $request, string $id)
     {
-         // Validasi input dari form
-         $validatedData = $request->validate([
+        $validatedData = $request->validate([
             'nama_mua' => 'required|string|max:255',
             'review' => 'required',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Opsional jika tidak ada perubahan
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Cari profil MUA berdasarkan ID
         $portofolio = Portofolio::findOrFail($id);
 
-        // Jika ada gambar baru di-upload, hapus gambar lama dan upload gambar baru
         if ($request->hasFile('gambar')) {
-            // Hapus file gambar lama jika ada
             if ($portofolio->gambar && file_exists(public_path('images/gambar/' . $portofolio->gambar))) {
                 unlink(public_path('images/gambar/' . $portofolio->gambar));
             }
 
-            // Upload gambar baru
             $filename = time() . '.' . $request->gambar->extension();
             $request->gambar->move(public_path('images/gambar'), $filename);
-
-            // Perbarui nama file gambar dalam database
             $portofolio->gambar = $filename;
         }
 
-        // Perbarui data lainnya
         $portofolio->nama_mua = $validatedData['nama_mua'];
         $portofolio->review = $validatedData['review'];
 
-        // Simpan perubahan ke database
         $portofolio->save();
-
-        // Redirect kembali ke halaman profil dengan pesan sukses
         return redirect('/dashboard-portfolio')->with('success', 'MUA portfolio updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
+
+    //  menghapus portofolio berdasarkan id
     public function destroy(string $id)
     {
         $portofolio = Portofolio::findOrFail($id);
-
-        // Jika ada foto profil, hapus file foto tersebut dari direktori
         if ($portofolio->gambar && file_exists(public_path('images/gambar/' . $portofolio->gambar))) {
-            // Hapus foto dari folder
             unlink(public_path('images/gambar/' . $portofolio->gambar));
         }
 
-        // Hapus data MUA dari database
         $portofolio->delete();
 
-        // Redirect kembali ke halaman profil dengan pesan sukses
         return redirect('/dashboard-portfolio')->with('pesan', 'Data sudah berhasil dihapus');
     }
 }

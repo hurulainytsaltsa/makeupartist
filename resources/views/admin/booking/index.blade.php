@@ -51,19 +51,41 @@
                                         <button class="btn btn-success me-2" type="button"><i
                                                 class="bi bi-eye"></i></button>
                                     </a>
-                                    <form action="{{ route('dashboard-booking.destroy', $bookings->id) }}" method="POST"
-                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus pesanan ini?');"
-                                        class="d-inline">
-                                        @csrf
+                                    <form id="deleteForm{{ $bookings->id }}" action="{{ route('dashboard-booking.destroy', $bookings->id) }}" method="post" class="d-inline">
                                         @method('DELETE')
-                                        <button class="btn btn-danger" type="submit" title="Hapus">
+                                        @csrf
+                                        <button type="button" title="Hapus Data" class="btn btn-danger" onclick="confirmDelete({{ $bookings->id }})">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
+
                                 </div>
                             </td>
                         </tr>
                     @endforeach
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.all.min.js"></script>
+
+                    <script>
+                        function confirmDelete(id) {
+                            Swal.fire({
+                                title: 'Yakin ingin menghapus?',
+                                text: "Data yang dihapus tidak bisa dikembalikan!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya, Hapus!',
+                                cancelButtonText: 'Batal',
+                                reverseButtons: true,
+                                width: '300px',
+                                padding: '20px',
+                                fontSize: '14px',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Pastikan form untuk menghapus data dikirim setelah konfirmasi
+                                    document.getElementById('deleteForm' + id).submit();
+                                }
+                            });
+                        }
+                    </script>
                 </tbody>
             </table>
             {{ $booking->links() }}

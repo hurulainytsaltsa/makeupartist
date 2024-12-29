@@ -14,9 +14,13 @@ class DashboardHonorController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  Menampilkan daftar honor yang ada.
     public function index()
     {
-        $honors = Honor::with(['muaProfile', 'penugasan'])->latest()->paginate(10);
+        $honors = Honor::with(['muaProfile', 'penugasan'])
+            ->latest()
+            ->paginate(10);
         $muaProfiles = \App\Models\MuaProfile::all();
         return view('admin.honor.index', compact('honors', 'muaProfiles'));
     }
@@ -24,6 +28,8 @@ class DashboardHonorController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    //  Menampilkan form untuk menambah honor baru.
     public function create()
     {
         // Menampilkan form untuk menambah honor
@@ -33,6 +39,8 @@ class DashboardHonorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    //  Menyimpan honor baru ke dalam database.
     public function store(Request $request)
     {
         // Validasi input
@@ -60,10 +68,11 @@ class DashboardHonorController extends Controller
         }
     }
 
-
     /**
      * Display the specified resource.
      */
+
+    //  Menampilkan detail honor berdasarkan penugasan.
     public function show($penugasan_id)
     {
         // Ambil data penugasan berdasarkan ID
@@ -80,10 +89,11 @@ class DashboardHonorController extends Controller
         return view('admin.honor.show', compact('mua', 'penugasan', 'honors'));
     }
 
-
     /**
      * Show the form for editing the specified resource.
      */
+
+    //  Menampilkan form untuk mengedit honor yang ada berdasarkan ID
     public function edit(string $id)
     {
         // Menampilkan form untuk mengedit honor
@@ -94,6 +104,8 @@ class DashboardHonorController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+    //  Memperbarui data honor di database
     public function update(Request $request, string $id)
     {
         // Validasi input
@@ -121,6 +133,8 @@ class DashboardHonorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+
+    //  Menghapus honor berdasarkan ID.
     public function destroy(string $id)
     {
         // Cari honor berdasarkan ID dan hapus
@@ -133,6 +147,7 @@ class DashboardHonorController extends Controller
         }
     }
 
+    // filter data honor berdasarkan filter yang diberikan.
     public function filter(Request $request)
     {
         // Ambil input filter
@@ -146,8 +161,7 @@ class DashboardHonorController extends Controller
 
         // Filter berdasarkan bulan
         if ($month) {
-            $query->whereMonth('created_at', date('m', strtotime($month)))
-                ->whereYear('created_at', date('Y', strtotime($month)));
+            $query->whereMonth('created_at', date('m', strtotime($month)))->whereYear('created_at', date('Y', strtotime($month)));
         }
 
         // Filter berdasarkan tahun
@@ -157,8 +171,12 @@ class DashboardHonorController extends Controller
 
         // Filter berdasarkan minggu
         if ($week) {
-            $startOfWeek = now()->setISODate(now()->year, $week)->startOfWeek();
-            $endOfWeek = now()->setISODate(now()->year, $week)->endOfWeek();
+            $startOfWeek = now()
+                ->setISODate(now()->year, $week)
+                ->startOfWeek();
+            $endOfWeek = now()
+                ->setISODate(now()->year, $week)
+                ->endOfWeek();
             $query->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
         }
 
@@ -176,6 +194,7 @@ class DashboardHonorController extends Controller
         return view('admin.honor.index', compact('honors', 'muaProfiles'));
     }
 
+    // Mencetak laporan honor dalam format PDF.
     public function cetakHonorPdf(Request $request)
     {
         // Ambil data honor sesuai filter
@@ -188,8 +207,7 @@ class DashboardHonorController extends Controller
 
         // Filter sesuai input
         if ($month) {
-            $query->whereMonth('created_at', date('m', strtotime($month)))
-                ->whereYear('created_at', date('Y', strtotime($month)));
+            $query->whereMonth('created_at', date('m', strtotime($month)))->whereYear('created_at', date('Y', strtotime($month)));
         }
 
         if ($year) {
@@ -197,8 +215,12 @@ class DashboardHonorController extends Controller
         }
 
         if ($week) {
-            $startOfWeek = now()->setISODate(now()->year, $week)->startOfWeek();
-            $endOfWeek = now()->setISODate(now()->year, $week)->endOfWeek();
+            $startOfWeek = now()
+                ->setISODate(now()->year, $week)
+                ->startOfWeek();
+            $endOfWeek = now()
+                ->setISODate(now()->year, $week)
+                ->endOfWeek();
             $query->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
         }
 
@@ -222,6 +244,8 @@ class DashboardHonorController extends Controller
         return $pdf->stream('Laporan-Honor-MUA.pdf');
     }
 
+
+    // Mencetak laporan order dalam format PDF.
     public function cetakOrderPdf(Request $request)
     {
         // Ambil data order sesuai filter
@@ -244,8 +268,12 @@ class DashboardHonorController extends Controller
         }
 
         if ($week) {
-            $startOfWeek = now()->setISODate(now()->year, $week)->startOfWeek();
-            $endOfWeek = now()->setISODate(now()->year, $week)->endOfWeek();
+            $startOfWeek = now()
+                ->setISODate(now()->year, $week)
+                ->startOfWeek();
+            $endOfWeek = now()
+                ->setISODate(now()->year, $week)
+                ->endOfWeek();
             $query->whereBetween('created_at', [$startOfWeek, $endOfWeek]);
         }
 
@@ -270,6 +298,7 @@ class DashboardHonorController extends Controller
         return $pdf->stream('Laporan-Order.pdf');
     }
 
+    // Mengunggah bukti pembayaran dan memperbarui status honor menjadi 'Sudah Dibayar'.
     public function uploadPayment(Request $request, $id)
     {
         $request->validate([
@@ -288,5 +317,4 @@ class DashboardHonorController extends Controller
 
         return redirect()->back()->with('success', 'Bukti pembayaran berhasil diunggah.');
     }
-
 }

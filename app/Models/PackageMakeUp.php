@@ -11,18 +11,12 @@ class PackageMakeUp extends Model
     protected $table = 'package_makeup';
 
     // Define the fillable properties
-    protected $fillable = [
-        'nama_paket',
-        'deskripsi',
-        'harga',
-        'photo',
-    ];
+    protected $fillable = ['nama_paket', 'deskripsi', 'harga', 'photo'];
 
     public function details()
     {
-        return $this->hasMany(DetailsMakeUp::class, 'package_makeup_id');
+        return $this->hasMany(DetailsMakeUp::class);
     }
-
     public function bookings()
     {
         return $this->hasMany(Booking::class, 'pkt_makeup');

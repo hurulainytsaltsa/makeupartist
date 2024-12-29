@@ -12,6 +12,8 @@ class RegisterController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  Menampilkan halaman register untuk customer
     public function index()
     {
         return view('layouts.register');
@@ -29,6 +31,8 @@ class RegisterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    //   Menyimpan data user baru ke database.
     public function store(Request $request)
     {
         // Validasi input

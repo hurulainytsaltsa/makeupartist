@@ -11,15 +11,15 @@ class HistoryController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  Menampilkan daftar riwayat pemesanan pengguna yang sedang login.
     public function index()
     {
-        // Ambil semua pemesanan untuk user yang sedang login
-        $bookings = Booking::with(['detailsMakeUp', 'packagesMakeUp', 'payment']) // Tambahkan relasi yang diperlukan
-            ->where('user_id', Auth::id()) // Filter berdasarkan user yang sedang login
-            ->orderBy('created_at', 'desc') // Urutkan berdasarkan tanggal terbaru
+        $bookings = Booking::with(['detailsMakeUp', 'packagesMakeUp', 'payment'])
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
             ->get();
 
-        // Mengirimkan data bookings ke view
         return view('layouts.order.index', compact('bookings'));
     }
 
@@ -43,6 +43,8 @@ class HistoryController extends Controller
     /**
      * Display the specified resource.
      */
+
+    //   Menampilkan detail riwayat pemesanan tertentu berdasarkan ID.
     public function show(string $id)
     {
         $booking = Booking::with(['packagesMakeUp', 'DetailsMakeUp', 'payment'])->findOrFail($id);

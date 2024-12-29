@@ -10,6 +10,8 @@ class DetailsMakeUpController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    //  Menampilkan semua detail paket makeup.
     public function index()
     {
         $details = DetailsMakeUp::all();
@@ -35,6 +37,8 @@ class DetailsMakeUpController extends Controller
     /**
      * Display the specified resource.
      */
+
+    //   Menampilkan detail paket berdasarkan ID package_makeup.
     public function show(string $id)
     {
         // Mengambil data berdasarkan package_makeup_id yang sesuai

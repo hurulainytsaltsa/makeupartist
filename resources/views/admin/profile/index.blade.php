@@ -26,14 +26,13 @@
         @foreach ($mua_profiles as $mua)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $mua->nama }}</td>
                 <td>{{ $mua->nama_mua }}</td>
                 <td>{{ $mua->pengalaman }}</td>
                 <td>{{ $mua->lokasi }}</td>
                 <td>{{ $mua->portfolio_link }}</td>
                 <td>
                     <img src="images/profile_photos/{{ $mua['profile_photo'] }}" style="max-width: 150px; margin-top: 10px;"
-                        class="profile-img" alt="Image for {{ $mua['nama'] }}">
+                        class="profile-img" alt="Image for {{ $mua['nama_mua'] }}">
                 </td>
                 <td>
                     <div class="d-flex">
@@ -41,11 +40,11 @@
                             <button class="btn btn-success me-2" type="button"><i class="bi bi-eye"></i></button>
                         </a>
                         <a title="Edit Data" href="dashboard-profile/{{ $mua->id }}/edit"><button
-                                class="btn btn-warning  me-2" type="button"><i class="bi bi-pencil"></i></button></a>
-                        <form action="/dashboard-profile/{{ $mua->id }}" method="post" class="d-inline">
+                                class="btn btn-warning me-2" type="button"><i class="bi bi-pencil"></i></button></a>
+                        <form id="deleteForm{{ $mua->id }}" action="/dashboard-profile/{{ $mua->id }}" method="post" class="d-inline">
                             @method('DELETE')
                             @csrf
-                            <button title="Hapus Data" class="btn btn-danger" onclick="confirmDelete({{ $mua->id }})">
+                            <button type="button" title="Hapus Data" class="btn btn-danger" onclick="confirmDelete({{ $mua->id }})">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
@@ -53,30 +52,31 @@
                 </td>
             </tr>
         @endforeach
-         <!-- SweetAlert2 JavaScript -->
-         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.all.min.js"></script>
 
-         <script>
-             function confirmDelete(id) {
-                 Swal.fire({
-                     title: 'Yakin ingin menghapus?',
-                     text: "Data yang dihapus tidak bisa dikembalikan!",
-                     icon: 'warning',
-                     showCancelButton: true,
-                     confirmButtonText: 'Ya, Hapus!',
-                     cancelButtonText: 'Batal',
-                     reverseButtons: true,
-                     width: '300px',
-                     padding: '20px',
-                     fontSize: '14px',
-                 }).then((result) => {
-                     if (result.isConfirmed) {
-                         // Pastikan form untuk menghapus data dikirim
-                         document.getElementById('deleteForm' + id).submit();
-                     }
-                 });
-             }
-         </script>
+        <!-- SweetAlert2 JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.0/dist/sweetalert2.all.min.js"></script>
+
+        <script>
+            function confirmDelete(id) {
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: "Data yang dihapus tidak bisa dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true,
+                    width: '300px',
+                    padding: '20px',
+                    fontSize: '14px',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Pastikan form untuk menghapus data dikirim setelah konfirmasi
+                        document.getElementById('deleteForm' + id).submit();
+                    }
+                });
+            }
+        </script>
     </table>
     {{ $mua_profiles->links() }}
 @endsection

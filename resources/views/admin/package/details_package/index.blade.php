@@ -41,7 +41,7 @@
                         <form id="deleteForm{{ $detail->id }}" action="{{ route('dashboard-details_package.destroy', $detail->id) }}" method="post" class="d-inline">
                             @method('DELETE')
                             @csrf
-                            <button title="Hapus Data" class="btn btn-danger" onclick="confirmDelete({{ $detail->id }})">
+                            <button type="button" title="Hapus Data" class="btn btn-danger" onclick="confirmDelete({{ $detail->id }})">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
@@ -68,7 +68,7 @@
                     fontSize: '14px',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Pastikan form untuk menghapus data dikirim
+                        // Pastikan form untuk menghapus data dikirim setelah konfirmasi
                         document.getElementById('deleteForm' + id).submit();
                     }
                 });
