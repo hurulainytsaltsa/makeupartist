@@ -1,13 +1,13 @@
 <!-- sidebar  -->
-<nav class="sidebar">
-    <div class="logo d-flex align-items-center" style="padding: 0; margin: 0;">
-        <a class="large_logo" href="/dashboard" style="flex: 4; padding: 0; margin: 0;">
-            <img src="/images/logo_mini.jpg" alt="" style="width: 100%; height: auto; object-fit: cover; display: block;">
-        </a>
-        <div class="sidebar_close_icon d-lg-none" style="flex: 1; text-align: center; padding: 0; margin: 0;">
-            <i class="ti-close"></i>
+    <nav class="sidebar">
+        <div class="logo d-flex align-items-center" style="padding: 0; margin: 0;">
+            <a class="large_logo" href="/dashboard" style="flex: 4; padding: 0; margin: 0;">
+                <img src="/images/logo_mini.jpg" alt="" style="width: 100%; height: auto; object-fit: cover; display: block;">
+            </a>
+            <div class="sidebar_close_icon d-lg-none" style="flex: 1; text-align: center; padding: 0; margin: 0;">
+                <i class="ti-close"></i>
+            </div>
         </div>
-    </div>
 
         <ul id="sidebar_menu">
             <li>
@@ -113,4 +113,4 @@
         </ul>
     </nav>
 
-<!--/ sidebar  -->
+    <!--/ sidebar  -->

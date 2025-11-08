@@ -132,6 +132,26 @@
         .float-end {
             float: right;
         }
+        .fc .fc-toolbar-title {
+            font-size: 1.1rem;
+        }
+
+        .fc .fc-toolbar button {
+            font-size: 0.9rem;
+            padding: 6px 12px;
+        }
+
+        @media (max-width: 768px) {
+            .fc .fc-toolbar-title {
+                font-size: 1rem;
+            }
+
+            .fc .fc-toolbar button {
+                font-size: 0.8rem;
+                padding: 5px 10px;
+            }
+        }
+
     </style>
 
     <script>

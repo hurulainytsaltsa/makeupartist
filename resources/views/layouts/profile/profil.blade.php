@@ -152,9 +152,9 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="profile-card">
                         <img src="{{ asset('images/profile_photos/' . $mua->profile_photo) }}"
-                            alt="Profile of {{ $mua->nama_mua }}" class="profile-img">
+                            alt="Profile of {{ $mua->nama }}" class="profile-img">
                         <div class="profile-info">
-                            <h4 class="profile-name">{{ $mua->nama_mua }}</h4>
+                            <h4 class="profile-name">{{ $mua->nama }}</h4>
                             <p class="profile-description">
                                 {{ $mua->pengalaman }} years of experience in {{ $mua->lokasi }}.
                             </p>

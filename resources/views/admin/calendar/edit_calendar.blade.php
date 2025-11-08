@@ -3,7 +3,7 @@
 @section('navCalendar', 'active')
 
 @section('content')
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,7 @@
     <title>Edit Event</title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -64,8 +64,8 @@
             margin-right: 5px;
         }
     </style>
-{{-- </head>
-<body> --}}
+</head>
+<body>
     <div class="container my-5">
         <!-- Header -->
         <div class="text-center mb-4">
@@ -106,12 +106,12 @@
                 <i class="bi bi-save"></i>Update Event
             </button>
     </div>
-{{--
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-</body> --}}
+</body>
 </html>
 @endsection

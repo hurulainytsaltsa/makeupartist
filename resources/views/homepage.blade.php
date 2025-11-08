@@ -187,15 +187,12 @@
         /* Add underline on hover */
     }
 
-
-
     .nav-scroller {
         position: relative;
         z-index: 2;
         height: 2.75rem;
         overflow-y: hidden;
     }
-
 
     .nav-scroller .nav {
         display: flex;
@@ -211,7 +208,6 @@
     .btn-bd-primary {
         --bd-violet-bg: #712cf9;
         --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
         --bs-btn-font-weight: 600;
         --bs-btn-color: var(--bs-white);
         --bs-btn-bg: var(--bd-violet-bg);

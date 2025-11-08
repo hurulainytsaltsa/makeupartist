@@ -3,7 +3,7 @@
 @section('navCalendar', 'active')
 
 @section('content')
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,7 @@
     <title>Tambah Event Baru</title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
@@ -47,8 +47,8 @@
             border-color: #e0879e;
         }
     </style>
-{{-- </head>
-<body> --}}
+</head>
+<body>
     <div class="container my-5">
         <h1 class="text-center mb-4">Tambah Event Baru</h1>
         <form method="POST" action="{{ route('calendar.store') }}">
@@ -86,7 +86,7 @@
         </form>
     </div>
 
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html> --}}
+</html>
 @endsection

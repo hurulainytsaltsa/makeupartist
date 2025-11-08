@@ -23,7 +23,7 @@
                     <div class="card" style="border-radius: 1rem; background-color: #ffc1cb; border-color: white;">
                         <div class="row g-0">
                             <div class="col-md-6 col-lg-5 d-none d-md-block">
-                                <img src="images/form1.jpg"
+                                <img src="img/login.jpg"
                                     alt="login form" class="image-holder1" style="border-radius: 1rem 0 0 1rem; object-fit: cover; display: block; width: 100%; height: 100%;" />
                             </div>
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">

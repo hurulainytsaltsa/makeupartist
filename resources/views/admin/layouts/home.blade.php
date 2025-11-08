@@ -1,6 +1,5 @@
 @extends('admin.layouts.main')
 @section('title', 'Dashboard Admin')
-@section('navHomePage', 'active')
 
 @section('content')
     <div class="container">

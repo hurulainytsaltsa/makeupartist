@@ -23,6 +23,4 @@ class MuaProfile extends Model
     {
         return $this->hasMany(Honor::class, 'mua_id', 'id');
     }
-
-
 }

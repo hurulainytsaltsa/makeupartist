@@ -3,7 +3,7 @@
 @section('navCreateBooking', 'active')
 
 <style>
-    body {
+    .body {
         font-family: 'Poppins', sans-serif;
         background-color: #f7f7f7;
         color: #333;
@@ -13,6 +13,94 @@
         font-family: 'Playfair Display', serif;
         color: #de8d9b;
         font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .booking-form {
+        background: #fff;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form .mb-3 {
+        position: relative;
+    }
+
+    form .form-label {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+    form .form-control {
+        border: 2px solid #de8d9b;
+        border-radius: 8px;
+        padding: 12px 15px;
+        font-size: 1rem;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+    form .form-control:focus {
+        border-color: #c77a88;
+        box-shadow: 0 0 8px rgba(199, 122, 136, 0.2);
+    }
+
+    form .form-control.is-invalid {
+        border-color: #ff6b6b;
+    }
+
+    form textarea {
+        resize: none;
+    }
+
+    form select {
+        background: #fff;
+    }
+
+    form .form-control::placeholder {
+        color: #aaa;
+        font-size: 0.9rem;
+    }
+
+    form button {
+        background-color: #de8d9b;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 12px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+    }
+
+    form button:hover {
+        background-color: #c77a88;
+    }
+
+    .form-icon {
+        position: absolute;
+        top: 38px;
+        left: 10px;
+        font-size: 1.2rem;
+        color: #de8d9b;
+    }
+
+    form .btn-profile {
+        margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        form {
+            padding: 20px;
+        }
+
+        form button {
+            font-size: 0.9rem;
+        }
     }
 
     .profile-card {
@@ -63,10 +151,17 @@
         text-transform: uppercase;
         font-size: 0.9rem;
         transition: background-color 0.3s;
+        box-shadow: none;
+        outline: #c77a88;
+        border: #c77a88;
+        box-shadow: none;
     }
 
     .btn-profile:hover {
         background-color: #c77a88;
+        box-shadow: #c77a88;
+        outline: #c77a88;
+        color: #c77a88;
     }
 
     .container {
@@ -149,49 +244,49 @@
 </style>
 
 @section('content')
-    <div class="container">
-        <div class="row">
-
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+    @endif
 
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
+
+    <div class="container">
         <div class="row g-4">
-            <h2 class="text-center profile-heading">Booking Now</h2>
-            <div class="col-12">
-                @if (session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-            </div>
-            <form action="/booking" method="post" enctype="multipart/form-data">
+            <h2 class="text-center profile-heading" style="border: #c77a88">Booking Now</h2>
+            <form action="/booking" method="post" enctype="multipart/form-data" class="booking-form">
                 @csrf
                 <input type="hidden" name="user_id" value="{{ $userId }}">
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                    <input type="text" class="form-control @error('nama') is-valid
+                    @enderror"
                         name="nama" id="nama" value="{{ old('nama') }}">
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror"
-                        name="email" id="email" value="{{ old('email') }}">
+                    <input type="text" class="form-control @error('email') is-valid
+                    @enderror"
+                        name="email" id="nama" value="{{ old('email') }}">
                 </div>
                 <div class="mb-3">
-                    <label for="no_telp" class="form-label">Nomor Telepon</label>
-                    <input type="text" class="form-control @error('no_telp') is-invalid @enderror"
-                        name="no_telp" id="no_telp" value="{{ old('no_telp') }}">
+                    <label for="no_telp" class="form-label">Nomor Telfon</label>
+                    <input type="text" class="form-control @error('no_telp') is-valid
+                    @enderror"
+                        name="no_telp" id="nama" value="{{ old('no_telp') }}">
                 </div>
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
-                    <textarea class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat">{{ old('alamat') }}</textarea>
+                    <textarea class="form-control @error('alamat') is-valid @enderror" name="alamat" id="alamat">{{ old('alamat') }}</textarea>
                 </div>
                 <div class="mb-3">
                     <label for="tgl_makeup" class="form-label">Tanggal Makeup</label>
@@ -206,11 +301,16 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
+                {{-- <div class="mb-3">
+                    <label for="pkt_makeup" class="form-label">Paket Makeup</label>
+                    <input type="text" class="form-control" id="pkt_makeup" name="pkt_makeup" required>
+                </div> --}}
+                <!-- Dropdown untuk memilih Paket Makeup -->
                 <div class="mb-3">
                     <label for="pkt_makeup" class="form-label">Pilih Paket Makeup</label>
                     <select class="form-control" id="pkt_makeup" name="pkt_makeup" required>
-                        <option value="" disabled {{ old('pkt_makeup') ? '' : 'selected' }}>Pilih Paket Makeup</option>
+                        <option value="" disabled {{ old('pkt_makeup') ? '' : 'selected' }}>Pilih Paket Makeup
+                        </option>
                         @foreach ($paketMakeup as $paket)
                             <option value="{{ $paket->id }}" {{ old('pkt_makeup') == $paket->id ? 'selected' : '' }}>
                                 {{ $paket->nama_paket }}
@@ -222,7 +322,8 @@
                 <div class="mb-3">
                     <label for="jenis_paket" class="form-label">Pilih Jenis Paket</label>
                     <select class="form-control" id="jenis_paket" name="jenis_paket" required>
-                        <option value="" disabled {{ old('jenis_paket') ? '' : 'selected' }}>Pilih Jenis Paket</option>
+                        <option value="" disabled {{ old('jenis_paket') ? '' : 'selected' }}>Pilih Jenis Paket
+                        </option>
                         @foreach ($details as $jenis)
                             <option value="{{ $jenis->id }}" {{ old('jenis_paket') == $jenis->id ? 'selected' : '' }}>
                                 {{ $jenis->name }}
@@ -233,7 +334,7 @@
 
                 <div class="mb-3">
                     <label for="price" class="form-label">Price</label>
-                    <input type="text" class="form-control" id="price" name="price" value="{{ old('price') }}" readonly>
+                    <textarea class="form-control @error('price') is-valid @enderror" name="price" id="price">{{ old('price') }}</textarea>
                 </div>
 
                 <script>
@@ -251,6 +352,7 @@
                                 fetch(`/booking/details/${paketId}`)
                                     .then(response => response.json())
                                     .then(data => {
+                                        // Tambahkan opsi ke dropdown jenis paket berdasarkan data yang diterima
                                         data.details.forEach(jenis => {
                                             const option = document.createElement("option");
                                             option.value = jenis.id;
@@ -269,6 +371,7 @@
                                 fetch(`/booking/price/${paketId}`)
                                     .then(response => response.json())
                                     .then(data => {
+                                        // Menampilkan harga jenis paket yang dipilih
                                         priceInput.value = data.price;
                                     })
                                     .catch(error => console.error("Error fetching price:", error));
@@ -276,10 +379,9 @@
                         });
                     });
                 </script>
-
-                <button type="submit" class="btn btn-primary btn-profile">Booking Now</button>
+                <button type="submit" class="btn btn-profile">Booking Now</button>
             </form>
         </div>
     </div>
-@endsection
 
+@endsection

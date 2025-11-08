@@ -39,6 +39,7 @@ class LoginController extends Controller
             }
         }
 
+        // Jika gagal, kembali ke halaman login dengan error
         return back()
             ->withErrors([
                 'email' => 'The provided credentials do not match our records.',
@@ -59,8 +60,6 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
-
-    // Logout khusus untuk admin.
     public function logoutAdmin(Request $request)
     {
         Auth::logout(); // Logout user
